@@ -5,7 +5,8 @@
              Title="{Binding Title}"
              xmlns:local="clr-namespace:TimeTrackingMobile.ViewModels"  
              xmlns:model="clr-namespace:TimeTrackingMobile.Models"  
-             x:Name="BrowseItemsPage">
+             x:Name="BrowseItemsPage"
+             BackgroundColor="{StaticResource PageBackgroundColor}">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Command="{Binding AddItemCommand}" />
@@ -55,5 +56,4 @@
             </CollectionView>
         </StackLayout>
     </RefreshView>
-
 </ContentPage>
