@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTrackingMobile.iOS", "T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTrackingMobile", "TimeTrackingMobile\TimeTrackingMobile\TimeTrackingMobile.csproj", "{720FB1D2-DCEB-4F12-B236-23E51860361C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTrackingAPI", "TimeTrackingAPI\TimeTrackingAPI.csproj", "{DF7F5CD9-8C1D-4CAC-82A1-0E936BD555DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -81,6 +83,18 @@ Global
 		{720FB1D2-DCEB-4F12-B236-23E51860361C}.Release|x64.Build.0 = Release|Any CPU
 		{720FB1D2-DCEB-4F12-B236-23E51860361C}.Release|x86.ActiveCfg = Release|Any CPU
 		{720FB1D2-DCEB-4F12-B236-23E51860361C}.Release|x86.Build.0 = Release|Any CPU
+		{DF7F5CD9-8C1D-4CAC-82A1-0E936BD555DD}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{DF7F5CD9-8C1D-4CAC-82A1-0E936BD555DD}.Debug|ARM.Build.0 = Debug|Any CPU
+		{DF7F5CD9-8C1D-4CAC-82A1-0E936BD555DD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DF7F5CD9-8C1D-4CAC-82A1-0E936BD555DD}.Debug|x64.Build.0 = Debug|Any CPU
+		{DF7F5CD9-8C1D-4CAC-82A1-0E936BD555DD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DF7F5CD9-8C1D-4CAC-82A1-0E936BD555DD}.Debug|x86.Build.0 = Debug|Any CPU
+		{DF7F5CD9-8C1D-4CAC-82A1-0E936BD555DD}.Release|ARM.ActiveCfg = Release|Any CPU
+		{DF7F5CD9-8C1D-4CAC-82A1-0E936BD555DD}.Release|ARM.Build.0 = Release|Any CPU
+		{DF7F5CD9-8C1D-4CAC-82A1-0E936BD555DD}.Release|x64.ActiveCfg = Release|Any CPU
+		{DF7F5CD9-8C1D-4CAC-82A1-0E936BD555DD}.Release|x64.Build.0 = Release|Any CPU
+		{DF7F5CD9-8C1D-4CAC-82A1-0E936BD555DD}.Release|x86.ActiveCfg = Release|Any CPU
+		{DF7F5CD9-8C1D-4CAC-82A1-0E936BD555DD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
