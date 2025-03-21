@@ -1,3 +1,7 @@
+using TimeTrackingAPI.Models; // <- Dodaj to na górze
+using Microsoft.EntityFrameworkCore;
+
+
 namespace TimeTrackingAPI
 {
     public class Program
@@ -5,6 +9,9 @@ namespace TimeTrackingAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddDbContext<TimeTrackingDBContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TimeTrackingDBContext")));
 
             // Add services to the container.
 
