@@ -1,14 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TimeTrackingMobile.Views.ItemDetailPage"
-             Title="{Binding Title}">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage
+    x:Class="TimeTrackingMobile.Views.ItemDetailPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="{Binding Title}"
+    BackgroundColor="{StaticResource PageBackgroundColor}">
 
-    <StackLayout Spacing="20" Padding="15">
-        <Label Text="Text:" FontSize="Medium" />
-        <Label Text="{Binding Text}" FontSize="Small"/>
-        <Label Text="Description:" FontSize="Medium" />
-        <Label Text="{Binding Description}" FontSize="Small"/>
+    <StackLayout Padding="20">
+        <Frame HasShadow="True" CornerRadius="12" Padding="20" BackgroundColor="White">
+            <StackLayout Spacing="10">
+                <Label Text="Text:" Style="{StaticResource HeaderLabelStyle}" />
+                <Label Text="{Binding Text}" Style="{StaticResource BodyLabelStyle}" />
+
+                <Label Text="Description:" Style="{StaticResource HeaderLabelStyle}" />
+                <Label Text="{Binding Description}" Style="{StaticResource BodyLabelStyle}" />
+            </StackLayout>
+        </Frame>
     </StackLayout>
-    
 </ContentPage>

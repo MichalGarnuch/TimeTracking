@@ -20,37 +20,46 @@
              IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
 
         <StackLayout Padding="20">
-            <Label Text="Time Tracking App (UWP)" 
-               FontSize="Large" 
-               HorizontalOptions="Center" />
+            <Label Text="Time Tracking App (UWP)"
+                   Style="{StaticResource HeaderLabelStyle}"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,10"/>
 
-            <Button Text="Start Timer" 
-                Margin="0,20,0,0" />
+            <Button Text="Start Timer"
+                    HorizontalOptions="Center" />
+            <Button Text="Stop Timer"
+                    HorizontalOptions="Center" />
 
-            <Button Text="Stop Timer" 
-                Margin="0,10,0,0" />
-
-            <CollectionView x:Name="ItemsListView"
-                        ItemsSource="{Binding Items}"
-                        SelectionMode="None">
+            <!-- Karty w CollectionView -->
+            <CollectionView
+                x:Name="ItemsListView"
+                ItemsSource="{Binding Items}"
+                SelectionMode="None"
+                Margin="0,20,0,0">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Padding="10" x:DataType="model:Item">
-                            <Label Text="{Binding Text}" 
-                               LineBreakMode="NoWrap" 
-                               Style="{DynamicResource ListItemTextStyle}" 
-                               FontSize="16" />
-                            <Label Text="{Binding Description}" 
-                               LineBreakMode="NoWrap"
-                               Style="{DynamicResource ListItemDetailTextStyle}"
-                               FontSize="13" />
-                            <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer 
-                                NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"		
-                                CommandParameter="{Binding .}" />
-                            </StackLayout.GestureRecognizers>
-                        </StackLayout>
+                        <Frame HasShadow="True"
+                               CornerRadius="12"
+                               Padding="10"
+                               Margin="0,0,0,15"
+                               BackgroundColor="White">
+                            <StackLayout x:DataType="model:Item">
+                                <Label Text="{Binding Text}"
+                                       Style="{DynamicResource BodyLabelStyle}"
+                                       FontSize="16"
+                                       Margin="0,0,0,2"/>
+                                <Label Text="{Binding Description}"
+                                       Style="{DynamicResource BodyLabelStyle}"
+                                       FontSize="13"
+                                       TextColor="#555" />
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        NumberOfTapsRequired="1"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"
+                                        CommandParameter="{Binding .}" />
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

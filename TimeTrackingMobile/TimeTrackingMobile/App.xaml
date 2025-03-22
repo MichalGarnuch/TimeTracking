@@ -20,6 +20,14 @@
         <Color x:Key="LightTextColor">#FFFFFF</Color>
         <Color x:Key="PageBackgroundColor">#F1F5F9</Color>
         <!-- jasnoszary tło -->
+        <!-- Kolor cienia do ramek (delikatny szary) -->
+        <Color x:Key="ShadowColor">#80000000</Color>
+
+        <!-- Gradient do banerów (opcjonalnie) -->
+        <LinearGradientBrush x:Key="AccentGradient" EndPoint="0,1">
+            <GradientStop Color="#00BCD4" Offset="0" />
+            <GradientStop Color="#008BA2" Offset="1" />
+        </LinearGradientBrush>
 
         <!-- Styl dla nagłówków (większy, pogrubiony) -->
         <Style x:Key="HeaderLabelStyle" TargetType="Label">

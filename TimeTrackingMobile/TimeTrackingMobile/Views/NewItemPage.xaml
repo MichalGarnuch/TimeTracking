@@ -9,16 +9,25 @@
     ios:Page.UseSafeArea="true"
     BackgroundColor="{StaticResource PageBackgroundColor}">
 
-    <StackLayout Spacing="15" Padding="15">
-        <Label Text="Text" Style="{StaticResource HeaderLabelStyle}" />
-        <Entry Text="{Binding Text, Mode=TwoWay}" FontSize="Medium" />
+    <StackLayout Padding="20" Spacing="10">
+        <Frame HasShadow="True" CornerRadius="12" Padding="20" BackgroundColor="White">
+            <StackLayout Spacing="15">
+                <Label Text="Create new Item"
+                       Style="{StaticResource HeaderLabelStyle}"
+                       Margin="0,0,0,10"/>
 
-        <Label Text="Description" Style="{StaticResource HeaderLabelStyle}" />
-        <Editor Text="{Binding Description, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Small" Margin="0" />
+                <Label Text="Text" Style="{StaticResource BodyLabelStyle}" />
+                <Entry Text="{Binding Text, Mode=TwoWay}" FontSize="Medium" />
 
-        <StackLayout Orientation="Horizontal" Spacing="10">
-            <Button Text="Cancel" Command="{Binding CancelCommand}" />
-            <Button Text="Save" Command="{Binding SaveCommand}" />
+                <Label Text="Description" Style="{StaticResource BodyLabelStyle}" />
+                <Editor Text="{Binding Description, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Small" Margin="0" />
+            </StackLayout>
+        </Frame>
+
+        <!-- Przyciski na dole -->
+        <StackLayout Orientation="Horizontal" Spacing="10" HorizontalOptions="CenterAndExpand">
+            <Button Text="Cancel" Command="{Binding CancelCommand}" WidthRequest="120"/>
+            <Button Text="Save" Command="{Binding SaveCommand}" WidthRequest="120"/>
         </StackLayout>
     </StackLayout>
 </ContentPage>

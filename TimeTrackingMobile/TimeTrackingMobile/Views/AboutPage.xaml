@@ -17,33 +17,38 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!-- Górny baner (z obrazkiem/tytułem) -->
-        <StackLayout Grid.Row="0"
-                     BackgroundColor="{StaticResource AccentColor}"
-                     VerticalOptions="FillAndExpand" 
-                     HorizontalOptions="Fill"
-                     Padding="0,20,0,0">
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
-                <Image Source="xamarin_logo.png" 
+        <!-- Górny baner z gradientem -->
+        <Frame Grid.Row="0"
+               CornerRadius="0"
+               HasShadow="False"
+               Padding="0">
+            <Frame.Background>
+                <StaticResource Key="AccentGradient"/>
+            </Frame.Background>
+            <StackLayout VerticalOptions="CenterAndExpand"
+                         HorizontalOptions="CenterAndExpand">
+                <Image Source="xamarin_logo.png"
                        VerticalOptions="Center"
-                       HeightRequest="64" 
+                       HeightRequest="64"
                        Margin="0,20,0,20"/>
             </StackLayout>
-        </StackLayout>
+        </Frame>
 
         <!-- Treść przewijana -->
         <ScrollView Grid.Row="1" Padding="20">
             <StackLayout Spacing="10">
                 <Label Text="About This App"
-                       Style="{StaticResource HeaderLabelStyle}" />
-                <Label Text="Make changes to your XAML file and save to see your UI update in the running app with XAML Hot Reload. Give it a try!"
+                       Style="{StaticResource HeaderLabelStyle}" 
+                       Margin="0,0,0,10"/>
+
+                <Label Text="This is a time tracking app, built with Xamarin.Forms and .NET. Make changes to your XAML file and see the UI update with Hot Reload!"
                        Style="{StaticResource BodyLabelStyle}" />
 
                 <Label Style="{StaticResource BodyLabelStyle}">
                     <Label.FormattedText>
                         <FormattedString>
                             <Span Text="Learn more at " />
-                            <Span Text="https://aka.ms/xamarin-quickstart" 
+                            <Span Text="https://aka.ms/xamarin-quickstart"
                                   FontAttributes="Bold"
                                   TextColor="{StaticResource AccentColor}" />
                         </FormattedString>
@@ -52,7 +57,6 @@
 
                 <Button Text="Learn more"
                         Command="{Binding OpenWebCommand}" />
-
             </StackLayout>
         </ScrollView>
     </Grid>

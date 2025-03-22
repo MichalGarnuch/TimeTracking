@@ -6,18 +6,41 @@
     Shell.NavBarIsVisible="False"
     BackgroundColor="{StaticResource PageBackgroundColor}">
 
-    <StackLayout VerticalOptions="CenterAndExpand"
+    <StackLayout VerticalOptions="FillAndExpand"
                  HorizontalOptions="CenterAndExpand"
-                 Padding="20"
-                 Spacing="20">
+                 Spacing="0">
 
-        <Label Text="Welcome to TimeTracking!"
-               Style="{StaticResource HeaderLabelStyle}"
-               HorizontalOptions="Center" />
+        <!-- Górny baner: Frame z gradientem -->
+        <Frame HasShadow="False"
+               CornerRadius="0"
+               Padding="0"
+               HeightRequest="200">
+            <Frame.Background>
+                <StaticResource Key="AccentGradient"/>
+            </Frame.Background>
+            <StackLayout HorizontalOptions="Center"
+                         VerticalOptions="Center">
+                <Label Text="TimeTracking Login"
+                       FontSize="Large"
+                       TextColor="White"
+                       FontAttributes="Bold"/>
+            </StackLayout>
+        </Frame>
 
-        <Button Text="Login"
-                Command="{Binding LoginCommand}"
-                WidthRequest="180"
-                HorizontalOptions="Center" />
+        <!-- Reszta strony -->
+        <StackLayout Padding="20" Spacing="20" VerticalOptions="CenterAndExpand">
+            <Label Text="Please sign in"
+                   Style="{StaticResource HeaderLabelStyle}"
+                   HorizontalOptions="Center" />
+
+            <!-- ewentualnie Entry na login i hasło -->
+            <Entry Placeholder="Username..." />
+            <Entry Placeholder="Password..." IsPassword="True" />
+
+            <Button Text="Login"
+                    Command="{Binding LoginCommand}"
+                    WidthRequest="180"
+                    HorizontalOptions="Center" />
+        </StackLayout>
     </StackLayout>
 </ContentPage>
