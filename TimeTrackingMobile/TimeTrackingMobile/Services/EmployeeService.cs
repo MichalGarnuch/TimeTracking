@@ -8,7 +8,7 @@ namespace TimeTrackingMobile.Services
 {
     public class EmployeeService
     {
-        private const string BaseUrl = "http://localhost:5037/api/Employees";
+        private const string BaseUrl = "http://192.168.114.225:5215/api/Employee";
         private readonly HttpClient _client = new HttpClient();
 
         public async Task<List<Employee>> GetAllEmployees()

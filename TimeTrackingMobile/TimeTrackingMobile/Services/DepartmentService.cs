@@ -8,7 +8,7 @@ namespace TimeTrackingMobile.Services
 {
     public class DepartmentService
     {
-        private const string BaseUrl = "http://localhost:5037/api/Departments";
+        private const string BaseUrl = "http://192.168.114.225:5215/api/Department";
         private readonly HttpClient _client;
 
         public DepartmentService()
@@ -18,9 +18,23 @@ namespace TimeTrackingMobile.Services
 
         public async Task<List<Department>> GetAllDepartments()
         {
-            var result = await _client.GetFromJsonAsync<List<Department>>(BaseUrl);
-            return result ?? new List<Department>();
+            try
+            {
+                var result = await _client.GetFromJsonAsync<List<Department>>(BaseUrl);
+                return result ?? new List<Department>();
+            }
+            catch (HttpRequestException httpEx)
+            {
+                await App.Current.MainPage.DisplayAlert("Błąd HTTP", httpEx.Message, "OK");
+                return new List<Department>();
+            }
+            catch (System.Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Inny błąd", ex.Message, "OK");
+                return new List<Department>();
+            }
         }
+
 
         public async Task<Department> GetDepartment(int id)
         {

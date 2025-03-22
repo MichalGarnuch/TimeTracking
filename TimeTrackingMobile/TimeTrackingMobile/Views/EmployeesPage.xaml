@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage
+    x:Class="TimeTrackingMobile.Views.EmployeesPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Employees">
+
+    <StackLayout Padding="20">
+        <Label x:Name="HeaderLabel"
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />
+
+        <!-- LISTA PRACOWNIKÓW -->
+        <ListView x:Name="EmployeesList">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Name}" 
+                              Detail="{Binding Email}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- (opcjonalnie) Przycisk do dodania nowego pracownika -->
+        <Button Text="Add Employee"
+                Clicked="AddEmployeeClicked"
+                Margin="0,20,0,0" />
+    </StackLayout>
+</ContentPage>

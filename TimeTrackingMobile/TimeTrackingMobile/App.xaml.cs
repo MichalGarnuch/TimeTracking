@@ -11,11 +11,15 @@ namespace TimeTrackingMobile
 
         public App ()
         {
+            System.Net.ServicePointManager.ServerCertificateValidationCallback +=
+    (sender, cert, chain, sslPolicyErrors) => true;
+
             InitializeComponent();
 
             DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
         }
+
 
         protected override void OnStart ()
         {

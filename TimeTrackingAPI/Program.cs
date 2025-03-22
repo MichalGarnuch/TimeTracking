@@ -10,6 +10,9 @@ namespace TimeTrackingAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.WebHost.UseKestrel().UseUrls("http://0.0.0.0:5215");
+
+
             builder.Services.AddDbContext<TimeTrackingDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("TimeTrackingDBContext")));
 
@@ -32,7 +35,6 @@ namespace TimeTrackingAPI
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

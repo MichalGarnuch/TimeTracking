@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TimeTrackingMobile.Views.DepartmentsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Departments">
+
+    <StackLayout Padding="20">
+        <Label Text="Departments (Relacja 1->n z Employee)"
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />
+
+        <Button Text="Load Departments" 
+                Clicked="LoadDepartmentsClicked" />
+
+        <ListView x:Name="DepartmentsList"
+                  ItemSelected="DepartmentsList_ItemSelected">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding DepartmentName}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
