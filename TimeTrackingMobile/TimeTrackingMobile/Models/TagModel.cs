@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TimeTrackingMobile.Models
 {
-    public class Tag
+    public class TagModel
     {
         public int TagID { get; set; }
         public string TagName { get; set; }

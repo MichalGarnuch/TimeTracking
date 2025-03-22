@@ -2,6 +2,8 @@
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
 using System.Collections.Generic;
+using TaskModel = TimeTrackingMobile.Models.TaskModel;
+using System.Threading.Tasks;
 using System;
 
 namespace TimeTrackingMobile.Views
@@ -9,7 +11,7 @@ namespace TimeTrackingMobile.Views
     public partial class DepartmentsPage : ContentPage
     {
         private DepartmentService _deptService;
-        private List<Department> _departments;
+        private List<DepartmentModel> _departments;
 
         public DepartmentsPage()
         {
@@ -37,11 +39,39 @@ namespace TimeTrackingMobile.Views
         private async void DepartmentsList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             // Czy coś wybrano?
-            var dept = e.SelectedItem as Department;
+            var dept = e.SelectedItem as DepartmentModel;
             if (dept == null) return;
 
             // Przechodzimy do EmployeesPage, przekazując DepartmentID
             await Navigation.PushAsync(new EmployeesPage(dept.DepartmentID));
         }
+
+        private async void AddDepartmentClicked(object sender, EventArgs e)
+        {
+            DepartmentModel newDept = new DepartmentModel
+            {
+                DepartmentName = "NowyDział"
+            };
+
+            bool success = await _deptService.CreateDepartment(newDept);
+            if (success)
+            {
+                await DisplayAlert("OK", "Dodano department", "OK");
+                // ponownie pobierz listę:
+                await LoadDepartmentAgain();
+            }
+            else
+            {
+                await DisplayAlert("Błąd", "Nie udało się dodać", "OK");
+            }
+        }
+
+        private async Task LoadDepartmentAgain()
+        {
+            // to samo co w LoadDepartmentsClicked
+            _departments = await _deptService.GetAllDepartments();
+            DepartmentsList.ItemsSource = _departments;
+        }
+
     }
 }

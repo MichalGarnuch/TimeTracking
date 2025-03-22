@@ -2,11 +2,13 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TimeTrackingAPI.Models
 {
-    public partial class TimeRecord
+    public partial class TimeRecordEntity
     {
+        [Key]
         public int TimeRecordId { get; set; }
         public int EmployeeId { get; set; }
         public int TaskId { get; set; }
@@ -14,7 +16,7 @@ namespace TimeTrackingAPI.Models
         public DateTime EndTime { get; set; }
         public decimal HoursSpent { get; set; }
 
-        public virtual Employee Employee { get; set; }
-        public virtual Task Task { get; set; }
+        public virtual EmployeeEntity Employee { get; set; }
+        public virtual TaskEntity Task { get; set; }
     }
 }

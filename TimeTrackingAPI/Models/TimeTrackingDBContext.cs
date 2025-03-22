@@ -18,21 +18,21 @@ namespace TimeTrackingAPI.Models
         {
         }
 
-        public virtual DbSet<Department> Departments { get; set; }
-        public virtual DbSet<Employee> Employees { get; set; }
-        public virtual DbSet<Project> Projects { get; set; }
-        public virtual DbSet<ProjectType> ProjectTypes { get; set; }
-        public virtual DbSet<Tag> Tags { get; set; }
-        public virtual DbSet<Task> Tasks { get; set; }
-        public virtual DbSet<TimeRecord> TimeRecords { get; set; }
+        public virtual DbSet<DepartmentEntity> Departments { get; set; }
+        public virtual DbSet<EmployeeEntity> Employees { get; set; }
+        public virtual DbSet<ProjectEntity> Projects { get; set; }
+        public virtual DbSet<ProjectTypeEntity> ProjectTypes { get; set; }
+        public virtual DbSet<TagEntity> Tags { get; set; }
+        public virtual DbSet<TaskEntity> Tasks { get; set; }
+        public virtual DbSet<TimeRecordEntity> TimeRecords { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Department>(entity =>
+            modelBuilder.Entity<DepartmentEntity>(entity =>
             {
                 entity.ToTable("Department");
 
-                entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
+                entity.Property(e => e.DepartmentID).HasColumnName("DepartmentID");
 
                 entity.Property(e => e.DepartmentName)
                     .IsRequired()
@@ -40,13 +40,13 @@ namespace TimeTrackingAPI.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Employee>(entity =>
+            modelBuilder.Entity<EmployeeEntity>(entity =>
             {
                 entity.ToTable("Employee");
 
-                entity.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
+                entity.Property(e => e.EmployeeID).HasColumnName("EmployeeID");
 
-                entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
+                entity.Property(e => e.DepartmentID).HasColumnName("DepartmentID");
 
                 entity.Property(e => e.Email)
                     .IsRequired()
@@ -60,12 +60,12 @@ namespace TimeTrackingAPI.Models
 
                 entity.HasOne(d => d.Department)
                     .WithMany(p => p.Employees)
-                    .HasForeignKey(d => d.DepartmentId)
+                    .HasForeignKey(d => d.DepartmentID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Employee_Department");
             });
 
-            modelBuilder.Entity<Project>(entity =>
+            modelBuilder.Entity<ProjectEntity>(entity =>
             {
                 entity.ToTable("Project");
 
@@ -91,7 +91,7 @@ namespace TimeTrackingAPI.Models
                     .HasConstraintName("FK_Project_ProjectType");
             });
 
-            modelBuilder.Entity<ProjectType>(entity =>
+            modelBuilder.Entity<ProjectTypeEntity>(entity =>
             {
                 entity.ToTable("ProjectType");
 
@@ -103,7 +103,7 @@ namespace TimeTrackingAPI.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Tag>(entity =>
+            modelBuilder.Entity<TagEntity>(entity =>
             {
                 entity.ToTable("Tag");
 
@@ -115,7 +115,7 @@ namespace TimeTrackingAPI.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Task>(entity =>
+            modelBuilder.Entity<TaskEntity>(entity =>
             {
                 entity.ToTable("Task");
 
@@ -145,8 +145,8 @@ namespace TimeTrackingAPI.Models
                     .WithMany(p => p.Tasks)
                     .UsingEntity<Dictionary<string, object>>(
                         "TaskTag",
-                        l => l.HasOne<Tag>().WithMany().HasForeignKey("TagId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_TaskTag_Tag"),
-                        r => r.HasOne<Task>().WithMany().HasForeignKey("TaskId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_TaskTag_Task"),
+                        l => l.HasOne<TagEntity>().WithMany().HasForeignKey("TagId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_TaskTag_Tag"),
+                        r => r.HasOne<TaskEntity>().WithMany().HasForeignKey("TaskId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_TaskTag_Task"),
                         j =>
                         {
                             j.HasKey("TaskId", "TagId");
@@ -159,7 +159,7 @@ namespace TimeTrackingAPI.Models
                         });
             });
 
-            modelBuilder.Entity<TimeRecord>(entity =>
+            modelBuilder.Entity<TimeRecordEntity>(entity =>
             {
                 entity.ToTable("TimeRecord");
 

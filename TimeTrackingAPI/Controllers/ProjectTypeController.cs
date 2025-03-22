@@ -22,7 +22,7 @@ namespace TimeTrackingAPI.Controllers
 
         // GET: api/ProjectType
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProjectType>>> GetProjectTypes()
+        public async Task<ActionResult<IEnumerable<ProjectTypeEntity>>> GetProjectTypes()
         {
           if (_context.ProjectTypes == null)
           {
@@ -33,7 +33,7 @@ namespace TimeTrackingAPI.Controllers
 
         // GET: api/ProjectType/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ProjectType>> GetProjectType(int id)
+        public async Task<ActionResult<ProjectTypeEntity>> GetProjectType(int id)
         {
           if (_context.ProjectTypes == null)
           {
@@ -52,7 +52,7 @@ namespace TimeTrackingAPI.Controllers
         // PUT: api/ProjectType/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProjectType(int id, ProjectType projectType)
+        public async Task<IActionResult> PutProjectType(int id, ProjectTypeEntity projectType)
         {
             if (id != projectType.ProjectTypeId)
             {
@@ -83,7 +83,7 @@ namespace TimeTrackingAPI.Controllers
         // POST: api/ProjectType
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<ProjectType>> PostProjectType(ProjectType projectType)
+        public async Task<ActionResult<ProjectTypeEntity>> PostProjectType(ProjectTypeEntity projectType)
         {
           if (_context.ProjectTypes == null)
           {

@@ -22,7 +22,7 @@ namespace TimeTrackingAPI.Controllers
 
         // GET: api/Tag
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Tag>>> GetTags()
+        public async Task<ActionResult<IEnumerable<TagEntity>>> GetTags()
         {
           if (_context.Tags == null)
           {
@@ -33,7 +33,7 @@ namespace TimeTrackingAPI.Controllers
 
         // GET: api/Tag/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Tag>> GetTag(int id)
+        public async Task<ActionResult<TagEntity>> GetTag(int id)
         {
           if (_context.Tags == null)
           {
@@ -52,7 +52,7 @@ namespace TimeTrackingAPI.Controllers
         // PUT: api/Tag/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTag(int id, Tag tag)
+        public async Task<IActionResult> PutTag(int id, TagEntity tag)
         {
             if (id != tag.TagId)
             {
@@ -83,7 +83,7 @@ namespace TimeTrackingAPI.Controllers
         // POST: api/Tag
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Tag>> PostTag(Tag tag)
+        public async Task<ActionResult<TagEntity>> PostTag(TagEntity tag)
         {
           if (_context.Tags == null)
           {

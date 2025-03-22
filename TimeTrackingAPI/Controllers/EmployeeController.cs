@@ -22,7 +22,7 @@ namespace TimeTrackingAPI.Controllers
 
         // GET: api/Employee
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
+        public async Task<ActionResult<IEnumerable<EmployeeEntity>>> GetEmployees()
         {
           if (_context.Employees == null)
           {
@@ -33,7 +33,7 @@ namespace TimeTrackingAPI.Controllers
 
         // GET: api/Employee/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Employee>> GetEmployee(int id)
+        public async Task<ActionResult<EmployeeEntity>> GetEmployee(int id)
         {
           if (_context.Employees == null)
           {
@@ -52,9 +52,9 @@ namespace TimeTrackingAPI.Controllers
         // PUT: api/Employee/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee(int id, Employee employee)
+        public async Task<IActionResult> PutEmployee(int id, EmployeeEntity employee)
         {
-            if (id != employee.EmployeeId)
+            if (id != employee.EmployeeID)
             {
                 return BadRequest();
             }
@@ -83,7 +83,7 @@ namespace TimeTrackingAPI.Controllers
         // POST: api/Employee
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
+        public async Task<ActionResult<EmployeeEntity>> PostEmployee(EmployeeEntity employee)
         {
           if (_context.Employees == null)
           {
@@ -92,7 +92,7 @@ namespace TimeTrackingAPI.Controllers
             _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEmployee", new { id = employee.EmployeeId }, employee);
+            return CreatedAtAction("GetEmployee", new { id = employee.EmployeeID }, employee);
         }
 
         // DELETE: api/Employee/5
@@ -117,7 +117,7 @@ namespace TimeTrackingAPI.Controllers
 
         private bool EmployeeExists(int id)
         {
-            return (_context.Employees?.Any(e => e.EmployeeId == id)).GetValueOrDefault();
+            return (_context.Employees?.Any(e => e.EmployeeID == id)).GetValueOrDefault();
         }
     }
 }

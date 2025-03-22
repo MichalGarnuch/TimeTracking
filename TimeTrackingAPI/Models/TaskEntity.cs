@@ -2,17 +2,18 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TimeTrackingAPI.Models
 {
-    public partial class Task
+    public partial class TaskEntity
     {
-        public Task()
+        public TaskEntity()
         {
-            TimeRecords = new HashSet<TimeRecord>();
-            Tags = new HashSet<Tag>();
+            TimeRecords = new HashSet<TimeRecordEntity>();
+            Tags = new HashSet<TagEntity>();
         }
-
+        [Key]
         public int TaskId { get; set; }
         public string TaskName { get; set; }
         public string Description { get; set; }
@@ -20,9 +21,9 @@ namespace TimeTrackingAPI.Models
         public string Status { get; set; }
         public int Priority { get; set; }
 
-        public virtual Project Project { get; set; }
-        public virtual ICollection<TimeRecord> TimeRecords { get; set; }
+        public virtual ProjectEntity Project { get; set; }
+        public virtual ICollection<TimeRecordEntity> TimeRecords { get; set; }
 
-        public virtual ICollection<Tag> Tags { get; set; }
+        public virtual ICollection<TagEntity> Tags { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TimeTrackingMobile.Models
 {
-    public class TimeRecord
+    public class TimeRecordModel
     {
         public int TimeRecordID { get; set; }
         public int EmployeeID { get; set; }

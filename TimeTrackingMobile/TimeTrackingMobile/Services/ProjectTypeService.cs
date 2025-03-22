@@ -11,26 +11,26 @@ namespace TimeTrackingMobile.Services
         private const string BaseUrl = "http://192.168.114.225:5215/api/ProjectType";
         private readonly HttpClient _client = new HttpClient();
 
-        public async Task<List<ProjectType>> GetAllProjectTypes()
+        public async Task<List<ProjectTypeModel>> GetAllProjectTypes()
         {
-            var result = await _client.GetFromJsonAsync<List<ProjectType>>(BaseUrl);
-            return result ?? new List<ProjectType>();
+            var result = await _client.GetFromJsonAsync<List<ProjectTypeModel>>(BaseUrl);
+            return result ?? new List<ProjectTypeModel>();
         }
 
-        public async Task<ProjectType> GetProjectType(int id)
+        public async Task<ProjectTypeModel> GetProjectType(int id)
         {
             var response = await _client.GetAsync($"{BaseUrl}/{id}");
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<ProjectType>();
+            return await response.Content.ReadFromJsonAsync<ProjectTypeModel>();
         }
 
-        public async Task<bool> CreateProjectType(ProjectType pt)
+        public async Task<bool> CreateProjectType(ProjectTypeModel pt)
         {
             var response = await _client.PostAsJsonAsync(BaseUrl, pt);
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> UpdateProjectType(int id, ProjectType pt)
+        public async Task<bool> UpdateProjectType(int id, ProjectTypeModel pt)
         {
             var response = await _client.PutAsJsonAsync($"{BaseUrl}/{id}", pt);
             return response.IsSuccessStatusCode;

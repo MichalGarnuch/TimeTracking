@@ -11,26 +11,26 @@ namespace TimeTrackingMobile.Services
         private const string BaseUrl = "http://192.168.114.225:5215/api/Tag";
         private readonly HttpClient _client = new HttpClient();
 
-        public async Task<List<Tag>> GetAllTags()
+        public async Task<List<TagModel>> GetAllTags()
         {
-            var result = await _client.GetFromJsonAsync<List<Tag>>(BaseUrl);
-            return result ?? new List<Tag>();
+            var result = await _client.GetFromJsonAsync<List<TagModel>>(BaseUrl);
+            return result ?? new List<TagModel>();
         }
 
-        public async Task<Tag> GetTag(int id)
+        public async Task<TagModel> GetTag(int id)
         {
             var response = await _client.GetAsync($"{BaseUrl}/{id}");
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<Tag>();
+            return await response.Content.ReadFromJsonAsync<TagModel>();
         }
 
-        public async Task<bool> CreateTag(Tag tag)
+        public async Task<bool> CreateTag(TagModel tag)
         {
             var response = await _client.PostAsJsonAsync(BaseUrl, tag);
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> UpdateTag(int id, Tag tag)
+        public async Task<bool> UpdateTag(int id, TagModel tag)
         {
             var response = await _client.PutAsJsonAsync($"{BaseUrl}/{id}", tag);
             return response.IsSuccessStatusCode;

@@ -26,7 +26,7 @@ namespace TimeTrackingMobile.Views
             base.OnAppearing();
 
             // POBIERZ WSZYSTKICH PRACOWNIKÓW
-            List<Employee> allEmployees = await _empService.GetAllEmployees();
+            List<EmployeeModel> allEmployees = await _empService.GetAllEmployees();
 
             // ODFILTRUJ wg DepartmentID
             var filtered = allEmployees.Where(e => e.DepartmentID == _deptId).ToList();
@@ -38,7 +38,7 @@ namespace TimeTrackingMobile.Views
         private async void AddEmployeeClicked(object sender, EventArgs e)
         {
             // Tworzysz przykładowego nowego pracownika
-            Employee newEmp = new Employee
+            EmployeeModel newEmp = new EmployeeModel
             {
                 Name = "Nowy Pracownik",
                 Email = "nowy@example.com",

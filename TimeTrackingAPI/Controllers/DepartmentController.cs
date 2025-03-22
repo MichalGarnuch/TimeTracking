@@ -22,7 +22,7 @@ namespace TimeTrackingAPI.Controllers
 
         // GET: api/Department
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Department>>> GetDepartments()
+        public async Task<ActionResult<IEnumerable<DepartmentEntity>>> GetDepartments()
         {
           if (_context.Departments == null)
           {
@@ -33,7 +33,7 @@ namespace TimeTrackingAPI.Controllers
 
         // GET: api/Department/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Department>> GetDepartment(int id)
+        public async Task<ActionResult<DepartmentEntity>> GetDepartment(int id)
         {
           if (_context.Departments == null)
           {
@@ -52,9 +52,9 @@ namespace TimeTrackingAPI.Controllers
         // PUT: api/Department/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDepartment(int id, Department department)
+        public async Task<IActionResult> PutDepartment(int id, DepartmentEntity department)
         {
-            if (id != department.DepartmentId)
+            if (id != department.DepartmentID)
             {
                 return BadRequest();
             }
@@ -83,17 +83,27 @@ namespace TimeTrackingAPI.Controllers
         // POST: api/Department
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Department>> PostDepartment(Department department)
+        public async Task<ActionResult<DepartmentEntity>> PostDepartment(DepartmentEntity department)
         {
-          if (_context.Departments == null)
-          {
-              return Problem("Entity set 'TimeTrackingDBContext.Departments'  is null.");
-          }
-            _context.Departments.Add(department);
-            await _context.SaveChangesAsync();
+            try
+            {
+                if (_context.Departments == null)
+                {
+                    return Problem("Entity set 'TimeTrackingDBContext.Departments' is null.");
+                }
 
-            return CreatedAtAction("GetDepartment", new { id = department.DepartmentId }, department);
+                _context.Departments.Add(department);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("GetDepartment", new { id = department.DepartmentID }, department);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Błąd serwera: " + ex.ToString());
+            }
         }
+
+
 
         // DELETE: api/Department/5
         [HttpDelete("{id}")]
@@ -117,7 +127,7 @@ namespace TimeTrackingAPI.Controllers
 
         private bool DepartmentExists(int id)
         {
-            return (_context.Departments?.Any(e => e.DepartmentId == id)).GetValueOrDefault();
+            return (_context.Departments?.Any(e => e.DepartmentID == id)).GetValueOrDefault();
         }
     }
 }

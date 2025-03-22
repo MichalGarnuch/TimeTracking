@@ -11,26 +11,26 @@ namespace TimeTrackingMobile.Services
         private const string BaseUrl = "http://192.168.114.225:5215/api/Employee";
         private readonly HttpClient _client = new HttpClient();
 
-        public async Task<List<Employee>> GetAllEmployees()
+        public async Task<List<EmployeeModel>> GetAllEmployees()
         {
-            var result = await _client.GetFromJsonAsync<List<Employee>>(BaseUrl);
-            return result ?? new List<Employee>();
+            var result = await _client.GetFromJsonAsync<List<EmployeeModel>>(BaseUrl);
+            return result ?? new List<EmployeeModel>();
         }
 
-        public async Task<Employee> GetEmployee(int id)
+        public async Task<EmployeeModel> GetEmployee(int id)
         {
             var response = await _client.GetAsync($"{BaseUrl}/{id}");
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<Employee>();
+            return await response.Content.ReadFromJsonAsync<EmployeeModel>();
         }
 
-        public async Task<bool> CreateEmployee(Employee emp)
+        public async Task<bool> CreateEmployee(EmployeeModel emp)
         {
             var response = await _client.PostAsJsonAsync(BaseUrl, emp);
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> UpdateEmployee(int id, Employee emp)
+        public async Task<bool> UpdateEmployee(int id, EmployeeModel emp)
         {
             var response = await _client.PutAsJsonAsync($"{BaseUrl}/{id}", emp);
             return response.IsSuccessStatusCode;

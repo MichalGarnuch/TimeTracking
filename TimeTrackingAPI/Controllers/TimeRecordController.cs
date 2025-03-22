@@ -22,7 +22,7 @@ namespace TimeTrackingAPI.Controllers
 
         // GET: api/TimeRecord
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TimeRecord>>> GetTimeRecords()
+        public async Task<ActionResult<IEnumerable<TimeRecordEntity>>> GetTimeRecords()
         {
           if (_context.TimeRecords == null)
           {
@@ -33,7 +33,7 @@ namespace TimeTrackingAPI.Controllers
 
         // GET: api/TimeRecord/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TimeRecord>> GetTimeRecord(int id)
+        public async Task<ActionResult<TimeRecordEntity>> GetTimeRecord(int id)
         {
           if (_context.TimeRecords == null)
           {
@@ -52,7 +52,7 @@ namespace TimeTrackingAPI.Controllers
         // PUT: api/TimeRecord/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTimeRecord(int id, TimeRecord timeRecord)
+        public async Task<IActionResult> PutTimeRecord(int id, TimeRecordEntity timeRecord)
         {
             if (id != timeRecord.TimeRecordId)
             {
@@ -83,7 +83,7 @@ namespace TimeTrackingAPI.Controllers
         // POST: api/TimeRecord
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TimeRecord>> PostTimeRecord(TimeRecord timeRecord)
+        public async Task<ActionResult<TimeRecordEntity>> PostTimeRecord(TimeRecordEntity timeRecord)
         {
           if (_context.TimeRecords == null)
           {

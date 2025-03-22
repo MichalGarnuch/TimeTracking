@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Task = TimeTrackingAPI.Models.Task;
+using TaskEntity = TimeTrackingAPI.Models.TaskEntity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +23,7 @@ namespace TimeTrackingAPI.Controllers
 
         // GET: api/Task
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Models.Task>>> GetTasks()
+        public async Task<ActionResult<IEnumerable<Models.TaskEntity>>> GetTasks()
         {
           if (_context.Tasks == null)
           {
@@ -34,7 +34,7 @@ namespace TimeTrackingAPI.Controllers
 
         // GET: api/Task/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Models.Task>> GetTask(int id)
+        public async Task<ActionResult<Models.TaskEntity>> GetTask(int id)
         {
           if (_context.Tasks == null)
           {
@@ -53,7 +53,7 @@ namespace TimeTrackingAPI.Controllers
         // PUT: api/Task/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTask(int id, Task task)
+        public async Task<IActionResult> PutTask(int id, TaskEntity task)
         {
             if (id != task.TaskId)
             {
@@ -84,7 +84,7 @@ namespace TimeTrackingAPI.Controllers
         // POST: api/Task
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Models.Task>> PostTask(Task task)
+        public async Task<ActionResult<Models.TaskEntity>> PostTask(TaskEntity task)
         {
           if (_context.Tasks == null)
           {

@@ -4,9 +4,11 @@ using System.Text;
 
 namespace TimeTrackingMobile.Models
 {
-    public class Department
+    public class EmployeeModel
     {
+        public int EmployeeID { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
         public int DepartmentID { get; set; }
-        public string DepartmentName { get; set; }
     }
 }

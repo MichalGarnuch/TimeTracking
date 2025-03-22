@@ -11,26 +11,26 @@ namespace TimeTrackingMobile.Services
         private const string BaseUrl = "http://192.168.114.225:5215/api/TimeRecord";
         private readonly HttpClient _client = new HttpClient();
 
-        public async Task<List<TimeRecord>> GetAllTimeRecords()
+        public async Task<List<TimeRecordModel>> GetAllTimeRecords()
         {
-            var result = await _client.GetFromJsonAsync<List<TimeRecord>>(BaseUrl);
-            return result ?? new List<TimeRecord>();
+            var result = await _client.GetFromJsonAsync<List<TimeRecordModel>>(BaseUrl);
+            return result ?? new List<TimeRecordModel>();
         }
 
-        public async Task<TimeRecord> GetTimeRecord(int id)
+        public async Task<TimeRecordModel> GetTimeRecord(int id)
         {
             var response = await _client.GetAsync($"{BaseUrl}/{id}");
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<TimeRecord>();
+            return await response.Content.ReadFromJsonAsync<TimeRecordModel>();
         }
 
-        public async Task<bool> CreateTimeRecord(TimeRecord record)
+        public async Task<bool> CreateTimeRecord(TimeRecordModel record)
         {
             var response = await _client.PostAsJsonAsync(BaseUrl, record);
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> UpdateTimeRecord(int id, TimeRecord record)
+        public async Task<bool> UpdateTimeRecord(int id, TimeRecordModel record)
         {
             var response = await _client.PutAsJsonAsync($"{BaseUrl}/{id}", record);
             return response.IsSuccessStatusCode;
