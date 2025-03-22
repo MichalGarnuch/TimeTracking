@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using Task = System.Threading.Tasks.Task;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
-
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Views;
 
@@ -16,7 +15,7 @@ namespace TimeTrackingMobile.ViewModels
 
         public ObservableCollection<Item> Items { get; }
         public Command LoadItemsCommand { get; }
-        public Command AddItemCommand { get;  }
+        public Command AddItemCommand { get; }
         public Command<Item> ItemTapped { get; }
 
         public ItemsViewModel()
