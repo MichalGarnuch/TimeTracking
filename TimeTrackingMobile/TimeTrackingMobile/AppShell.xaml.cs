@@ -12,6 +12,11 @@ namespace TimeTrackingMobile
         {
             InitializeComponent();
             // Inne Routing.RegisterRoute(...) które już masz:
+
+            Routing.RegisterRoute(nameof(DepartmentsPage), typeof(DepartmentsPage));
+            Routing.RegisterRoute(nameof(DepartmentAddPage), typeof(DepartmentAddPage));
+            Routing.RegisterRoute(nameof(DepartmentEditPage), typeof(DepartmentEditPage));
+
             Routing.RegisterRoute(nameof(EmployeesPage), typeof(EmployeesPage));
             Routing.RegisterRoute(nameof(EmployeeAddPage), typeof(EmployeeAddPage));
             Routing.RegisterRoute(nameof(EmployeeEditPage), typeof(EmployeeEditPage));

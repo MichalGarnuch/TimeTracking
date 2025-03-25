@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ContentPage
     x:Class="TimeTrackingMobile.Views.DepartmentsPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
@@ -6,24 +6,30 @@
     Title="Departments">
 
     <StackLayout Padding="20">
-        <Label Text="Departments (Relacja 1->n z Employee)"
+        <Label x:Name="HeaderLabel"
                FontAttributes="Bold"
-               HorizontalOptions="Center" />
+               HorizontalOptions="Center"
+               Margin="0,0,0,10" />
 
+        <!-- Przycisk do odświeżenia listy -->
         <Button Text="Load Departments" 
                 Clicked="LoadDepartmentsClicked" />
 
+        <!-- Lista działów -->
         <ListView x:Name="DepartmentsList"
+                  Margin="0,10,0,0"
                   ItemSelected="DepartmentsList_ItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding DepartmentName}" />
+                    <TextCell Text="{Binding DepartmentName}" 
+                              Detail="{Binding DepartmentID}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <Button Text="Add Department" 
-                Clicked="AddDepartmentClicked" />
-        
+        <!-- Przycisk do przejścia na stronę tworzenia nowego działu -->
+        <Button Text="Add Department"
+                Clicked="AddDepartmentClicked"
+                Margin="0,20,0,0" />
     </StackLayout>
 </ContentPage>

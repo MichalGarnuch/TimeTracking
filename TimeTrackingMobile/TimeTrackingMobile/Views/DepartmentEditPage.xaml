@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage
+    x:Class="TimeTrackingMobile.Views.DepartmentEditPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Edit Department"
+    Shell.PresentationMode="ModalAnimated"
+    >
+
+    <StackLayout Padding="20" Spacing="10">
+        <Label Text="Edit Department"
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />
+
+        <Label Text="Department Name" />
+        <Entry x:Name="DepartmentNameEntry" />
+
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="20" Margin="0,20,0,0">
+            <Button Text="Save" Clicked="SaveButtonClicked" />
+            <Button Text="Delete" Clicked="DeleteButtonClicked" />
+            <Button Text="Cancel" Clicked="CancelButtonClicked" />
+        </StackLayout>
+    </StackLayout>
+</ContentPage>
