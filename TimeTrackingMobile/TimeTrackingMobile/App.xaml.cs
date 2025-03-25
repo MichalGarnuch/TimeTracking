@@ -16,7 +16,6 @@ namespace TimeTrackingMobile
 
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
         }
 
