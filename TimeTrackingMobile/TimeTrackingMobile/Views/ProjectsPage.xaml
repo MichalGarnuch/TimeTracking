@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage
+    x:Class="TimeTrackingMobile.Views.ProjectsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Projects">
+
+    <StackLayout Padding="20">
+        <Label Text="Projects"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               Margin="0,0,0,10" />
+
+        <Button Text="Load Projects"
+                Clicked="LoadProjectsClicked" />
+
+        <ListView x:Name="ProjectsList"
+                  Margin="0,10,0,0"
+                  ItemSelected="ProjectsList_ItemSelected">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding ProjectName}"
+                              Detail="{Binding Budget}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button Text="Add Project"
+                Margin="0,20,0,0"
+                Clicked="AddProjectClicked" />
+    </StackLayout>
+</ContentPage>
