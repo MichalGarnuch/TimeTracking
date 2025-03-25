@@ -33,6 +33,11 @@ namespace TimeTrackingMobile
             Routing.RegisterRoute(nameof(TagAddPage), typeof(TagAddPage));
             Routing.RegisterRoute(nameof(TagEditPage), typeof(TagEditPage));
 
+            Routing.RegisterRoute(nameof(TasksPage), typeof(TasksPage));
+            Routing.RegisterRoute(nameof(TaskAddPage), typeof(TaskAddPage));
+            Routing.RegisterRoute(nameof(TaskEditPage), typeof(TaskEditPage));
+
+
 
             // analogicznie rejestruj kolejne strony dla innych encji
             // Routing.RegisterRoute(nameof(DepartmentAddPage), typeof(DepartmentAddPage)); itp.
