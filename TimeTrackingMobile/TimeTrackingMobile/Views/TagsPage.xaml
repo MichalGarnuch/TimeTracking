@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage
+    x:Class="TimeTrackingMobile.Views.TagsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Tags">
+
+    <StackLayout Padding="20">
+        <Label Text="Tags"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               Margin="0,0,0,10"/>
+
+        <Button Text="Load Tags"
+                Clicked="LoadTagsClicked" />
+
+        <ListView x:Name="TagsList"
+                  Margin="0,10,0,0"
+                  ItemSelected="TagsList_ItemSelected">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding TagName}"
+                              Detail="{Binding TagID}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button Text="Add Tag"
+                Margin="0,20,0,0"
+                Clicked="AddTagClicked" />
+    </StackLayout>
+</ContentPage>
