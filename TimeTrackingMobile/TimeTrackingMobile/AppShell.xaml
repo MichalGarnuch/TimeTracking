@@ -107,6 +107,10 @@
         <ShellContent Route="TimeRecordsPage"
                   ContentTemplate="{DataTemplate local:TimeRecordsPage}" />
     </FlyoutItem>
+    <FlyoutItem Title="TaskTag">
+        <ShellContent Route="TaskTagsPage"
+                  ContentTemplate="{DataTemplate local:TaskTagsPage}" />
+    </FlyoutItem>
 
 
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->

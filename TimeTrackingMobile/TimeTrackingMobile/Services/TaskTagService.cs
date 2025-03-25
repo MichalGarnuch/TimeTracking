@@ -23,7 +23,11 @@ namespace TimeTrackingMobile.Services
             return response.IsSuccessStatusCode;
         }
 
-        // GET /api/TaskTag/{taskID}/{tagID}, PUT, DELETE itp. – zależnie, jakie endpointy masz w WebAPI
-        // ...
+        public async Task<bool> DeleteTaskTag(int taskId, int tagId)
+        {
+            var url = $"{BaseUrl}/{taskId}/{tagId}";
+            var response = await _client.DeleteAsync(url);
+            return response.IsSuccessStatusCode;
+        }
     }
 }

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage 
+    x:Class="TimeTrackingMobile.Views.TaskTagAddPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Add TaskTag"
+    Shell.PresentationMode="ModalAnimated">
+
+    <StackLayout Padding="20" Spacing="10">
+        <Label Text="Create new Task-Tag link"
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />
+
+        <Label Text="Task ID" />
+        <Entry x:Name="TaskIdEntry" Keyboard="Numeric" />
+
+        <Label Text="Tag ID" />
+        <Entry x:Name="TagIdEntry" Keyboard="Numeric" />
+
+        <StackLayout Orientation="Horizontal"
+                     HorizontalOptions="Center"
+                     Spacing="20"
+                     Margin="0,20,0,0">
+            <Button Text="Save" Clicked="SaveButtonClicked" />
+            <Button Text="Cancel" Clicked="CancelButtonClicked" />
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

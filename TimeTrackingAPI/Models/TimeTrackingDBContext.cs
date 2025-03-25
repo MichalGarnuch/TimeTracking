@@ -25,6 +25,8 @@ namespace TimeTrackingAPI.Models
         public virtual DbSet<TagEntity> Tags { get; set; }
         public virtual DbSet<TaskEntity> Tasks { get; set; }
         public virtual DbSet<TimeRecordEntity> TimeRecords { get; set; }
+        public DbSet<TaskTagEntity> TaskTags { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -141,23 +143,31 @@ namespace TimeTrackingAPI.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Task_Project");
 
-                entity.HasMany(d => d.Tags)
-                    .WithMany(p => p.Tasks)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "TaskTag",
-                        l => l.HasOne<TagEntity>().WithMany().HasForeignKey("TagId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_TaskTag_Tag"),
-                        r => r.HasOne<TaskEntity>().WithMany().HasForeignKey("TaskId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_TaskTag_Task"),
-                        j =>
-                        {
-                            j.HasKey("TaskId", "TagId");
-
-                            j.ToTable("TaskTag");
-
-                            j.IndexerProperty<int>("TaskId").HasColumnName("TaskID");
-
-                            j.IndexerProperty<int>("TagId").HasColumnName("TagID");
-                        });
+                
             });
+
+            modelBuilder.Entity<TaskTagEntity>(entity =>
+            {
+                entity.HasKey(e => new { e.TaskID, e.TagID });
+
+                entity.ToTable("TaskTag");
+
+                entity.Property(e => e.TaskID).HasColumnName("TaskID");
+                entity.Property(e => e.TagID).HasColumnName("TagID");
+
+                entity.HasOne(e => e.Task)
+                    .WithMany(t => t.TaskTags)
+                    .HasForeignKey(e => e.TaskID)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TaskTag_Task");
+
+                entity.HasOne(e => e.Tag)
+                    .WithMany(t => t.TaskTags)
+                    .HasForeignKey(e => e.TagID)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TaskTag_Tag");
+            });
+
 
             modelBuilder.Entity<TimeRecordEntity>(entity =>
             {
@@ -190,6 +200,7 @@ namespace TimeTrackingAPI.Models
 
             OnModelCreatingPartial(modelBuilder);
         }
+
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }

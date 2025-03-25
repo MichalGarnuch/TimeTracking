@@ -25,5 +25,7 @@ namespace TimeTrackingAPI.Models
         public virtual ICollection<TimeRecordEntity> TimeRecords { get; set; }
 
         public virtual ICollection<TagEntity> Tags { get; set; }
+        public ICollection<TaskTagEntity> TaskTags { get; set; }
+
     }
 }
