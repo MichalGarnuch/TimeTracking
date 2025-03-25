@@ -11,6 +11,13 @@ namespace TimeTrackingMobile
         public AppShell()
         {
             InitializeComponent();
+            // Inne Routing.RegisterRoute(...) które już masz:
+            Routing.RegisterRoute(nameof(EmployeesPage), typeof(EmployeesPage));
+            Routing.RegisterRoute(nameof(EmployeeAddPage), typeof(EmployeeAddPage));
+            Routing.RegisterRoute(nameof(EmployeeEditPage), typeof(EmployeeEditPage));
+
+            // analogicznie rejestruj kolejne strony dla innych encji
+            // Routing.RegisterRoute(nameof(DepartmentAddPage), typeof(DepartmentAddPage)); itp.
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)

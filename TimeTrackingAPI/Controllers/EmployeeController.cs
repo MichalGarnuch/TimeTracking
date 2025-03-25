@@ -24,10 +24,10 @@ namespace TimeTrackingAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EmployeeEntity>>> GetEmployees()
         {
-          if (_context.Employees == null)
-          {
-              return NotFound();
-          }
+            if (_context.Employees == null)
+            {
+                return NotFound();
+            }
             return await _context.Employees.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace TimeTrackingAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<EmployeeEntity>> GetEmployee(int id)
         {
-          if (_context.Employees == null)
-          {
-              return NotFound();
-          }
+            if (_context.Employees == null)
+            {
+                return NotFound();
+            }
             var employee = await _context.Employees.FindAsync(id);
 
             if (employee == null)
@@ -85,10 +85,10 @@ namespace TimeTrackingAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<EmployeeEntity>> PostEmployee(EmployeeEntity employee)
         {
-          if (_context.Employees == null)
-          {
-              return Problem("Entity set 'TimeTrackingDBContext.Employees'  is null.");
-          }
+            if (_context.Employees == null)
+            {
+                return Problem("Entity set 'TimeTrackingDBContext.Employees'  is null.");
+            }
             _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
 
@@ -119,5 +119,21 @@ namespace TimeTrackingAPI.Controllers
         {
             return (_context.Employees?.Any(e => e.EmployeeID == id)).GetValueOrDefault();
         }
+
+        // GET: api/Employee/by-department/5
+        [HttpGet("by-department/{departmentId}")]
+        public async Task<ActionResult<IEnumerable<EmployeeEntity>>> GetEmployeesByDepartment(int departmentId)
+        {
+            if (_context.Employees == null)
+            {
+                return NotFound();
+            }
+
+            var employees = await _context.Employees
+                                          .Where(e => e.DepartmentID == departmentId)
+                                          .ToListAsync();
+
+            return employees;
+        }
     }
-}
+    }

@@ -43,7 +43,8 @@ namespace TimeTrackingMobile.Views
             if (dept == null) return;
 
             // Przechodzimy do EmployeesPage, przekazując DepartmentID
-            await Navigation.PushAsync(new EmployeesPage(dept.DepartmentID));
+            await Shell.Current.GoToAsync($"{nameof(EmployeesPage)}?departmentId={dept.DepartmentID}");
+
         }
 
         private async void AddDepartmentClicked(object sender, EventArgs e)

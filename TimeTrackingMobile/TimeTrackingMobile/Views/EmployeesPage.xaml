@@ -10,17 +10,23 @@
                FontAttributes="Bold"
                HorizontalOptions="Center" />
 
-        <!-- LISTA PRACOWNIKÓW -->
-        <ListView x:Name="EmployeesList">
+        <!-- Przycisk do odświeżenia listy z API -->
+        <Button Text="Load Employees"
+                Clicked="LoadEmployeesClicked"
+                Margin="0,0,0,10" />
+
+        <!-- Lista pracowników -->
+        <ListView x:Name="EmployeesList"
+                  ItemSelected="EmployeesList_ItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding Name}" 
+                    <TextCell Text="{Binding Name}"
                               Detail="{Binding Email}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <!-- (opcjonalnie) Przycisk do dodania nowego pracownika -->
+        <!-- Przycisk do przejścia na stronę dodawania nowego pracownika -->
         <Button Text="Add Employee"
                 Clicked="AddEmployeeClicked"
                 Margin="0,20,0,0" />

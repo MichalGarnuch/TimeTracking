@@ -24,6 +24,13 @@ namespace TimeTrackingMobile.Services
             return await response.Content.ReadFromJsonAsync<EmployeeModel>();
         }
 
+        public async Task<List<EmployeeModel>> GetEmployeesByDepartment(int departmentId)
+        {
+            var url = $"{BaseUrl}/by-department/{departmentId}";
+            var result = await _client.GetFromJsonAsync<List<EmployeeModel>>(url);
+            return result ?? new List<EmployeeModel>();
+        }
+
         public async Task<bool> CreateEmployee(EmployeeModel emp)
         {
             var response = await _client.PostAsJsonAsync(BaseUrl, emp);

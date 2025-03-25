@@ -84,6 +84,11 @@
     <FlyoutItem Title="Departments">
         <ShellContent Route="DepartmentsPage" ContentTemplate="{DataTemplate local:DepartmentsPage}" />
     </FlyoutItem>
+    <FlyoutItem Title="Employees">
+        <ShellContent Route="EmployeesPage" 
+                  ContentTemplate="{DataTemplate local:EmployeesPage}" />
+    </FlyoutItem>
+
 
 
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->
