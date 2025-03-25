@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TimeTrackingMobile.Views.TimeRecordsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Time Records">
+
+    <StackLayout Padding="20">
+        <Label Text="Time Records"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               Margin="0,0,0,10" />
+
+        <Button Text="Load TimeRecords"
+                Clicked="LoadTimeRecordsClicked" />
+
+        <ListView x:Name="TimeRecordsList"
+                  Margin="0,10,0,0"
+                  ItemSelected="TimeRecordsList_ItemSelected">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding StartTime}"
+                              Detail="{Binding HoursSpent}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button Text="Add TimeRecord"
+                Margin="0,20,0,0"
+                Clicked="AddTimeRecordClicked" />
+    </StackLayout>
+</ContentPage>

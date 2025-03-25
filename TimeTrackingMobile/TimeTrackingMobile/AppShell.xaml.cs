@@ -37,6 +37,10 @@ namespace TimeTrackingMobile
             Routing.RegisterRoute(nameof(TaskAddPage), typeof(TaskAddPage));
             Routing.RegisterRoute(nameof(TaskEditPage), typeof(TaskEditPage));
 
+            Routing.RegisterRoute(nameof(TimeRecordsPage), typeof(TimeRecordsPage));
+            Routing.RegisterRoute(nameof(TimeRecordAddPage), typeof(TimeRecordAddPage));
+            Routing.RegisterRoute(nameof(TimeRecordEditPage), typeof(TimeRecordEditPage));
+
 
 
             // analogicznie rejestruj kolejne strony dla innych encji
