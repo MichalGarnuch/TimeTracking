@@ -13,87 +13,78 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Views\DepartmentAddPage.xaml">
+    <EmbeddedResource Update="Views\Departments\DepartmentAddPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\DepartmentEditPage.xaml">
+    <EmbeddedResource Update="Views\Departments\DepartmentEditPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\DepartmentsPage.xaml">
+    <EmbeddedResource Update="Views\Departments\DepartmentsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\EmployeeAddPage.xaml">
+    <EmbeddedResource Update="Views\Employees\EmployeeAddPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\EmployeeEditPage.xaml">
+    <EmbeddedResource Update="Views\Employees\EmployeeEditPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\EmployeesPage.xaml">
+    <EmbeddedResource Update="Views\Employees\EmployeesPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ProjectAddPage.xaml">
+    <EmbeddedResource Update="Views\Projects\ProjectAddPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ProjectEditPage.xaml">
+    <EmbeddedResource Update="Views\Projects\ProjectEditPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ProjectsPage.xaml">
+    <EmbeddedResource Update="Views\Projects\ProjectsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ProjectTypeAddPage.xaml">
+    <EmbeddedResource Update="Views\ProjectTypes\ProjectTypeAddPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ProjectTypeEditPage.xaml">
+    <EmbeddedResource Update="Views\ProjectTypes\ProjectTypeEditPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ProjectTypesPage.xaml">
+    <EmbeddedResource Update="Views\ProjectTypes\ProjectTypesPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\TagAddPage.xaml">
+    <EmbeddedResource Update="Views\Tags\TagAddPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\TagEditPage.xaml">
+    <EmbeddedResource Update="Views\Tags\TagEditPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\TagsPage.xaml">
+    <EmbeddedResource Update="Views\Tags\TagsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\TaskAddPage.xaml">
+    <EmbeddedResource Update="Views\Tasks\TaskAddPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\TaskEditPage.xaml">
+    <EmbeddedResource Update="Views\Tasks\TaskEditPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\TasksPage.xaml">
+    <EmbeddedResource Update="Views\Tasks\TasksPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\TaskTagAddPage.xaml">
+    <EmbeddedResource Update="Views\TaskTags\TaskTagAddPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\TaskTagsPage.xaml">
+    <EmbeddedResource Update="Views\TaskTags\TaskTagsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\TimeRecordAddPage.xaml">
+    <EmbeddedResource Update="Views\TimeRecords\TimeRecordAddPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\TimeRecordEditPage.xaml">
+    <EmbeddedResource Update="Views\TimeRecords\TimeRecordEditPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\TimeRecordsPage.xaml">
+    <EmbeddedResource Update="Views\TimeRecords\TimeRecordsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Departments\" />
-    <Folder Include="Views\Employees\" />
-    <Folder Include="Views\Login\" />
     <Folder Include="Views\Shared\" />
-    <Folder Include="Views\TaskTags\" />
-    <Folder Include="Views\TimeRecords\" />
-    <Folder Include="Views\Tasks\" />
-    <Folder Include="Views\Tags\" />
-    <Folder Include="Views\ProjectTypes\" />
-    <Folder Include="Views\Projects\" />
   </ItemGroup>
 </Project>
