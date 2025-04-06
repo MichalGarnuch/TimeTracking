@@ -2,58 +2,60 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TimeTrackingMobile.App">
-    <!--
-        Define global resources and styles here, that apply to all pages in your app.
-    -->
+
     <Application.Resources>
-        
         <ResourceDictionary>
+
+            <!-- 🔷 Kolory -->
             <Color x:Key="Primary">#007ACC</Color>
-            <!-- lub dowolny inny kolor -->
+            <!-- wymagany np. przez AppShell -->
+            <Color x:Key="PrimaryColor">#4F46E5</Color>
+            <!-- Indigo -->
+            <Color x:Key="AccentColor">#3B82F6</Color>
+            <!-- Blue -->
+            <Color x:Key="BackgroundColor">#F3F4F6</Color>
+            <!-- Jasne tło -->
+            <Color x:Key="PageBackgroundColor">#F3F4F6</Color>
+            <!-- Dla spójności -->
+            <Color x:Key="CardBackgroundColor">#FFFFFF</Color>
+            <Color x:Key="ShadowColor">#20000000</Color>
+            <Color x:Key="LightTextColor">#FFFFFF</Color>
+            <Color x:Key="TextDarkColor">#374151</Color>
+
+            <!-- 🌈 Gradient -->
+            <LinearGradientBrush x:Key="AccentGradient" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#3B82F6" Offset="0.0"/>
+                <GradientStop Color="#9333EA" Offset="1.0"/>
+            </LinearGradientBrush>
+
+            <!-- 🏷 Style -->
+            <Style x:Key="HeaderLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="{StaticResource PrimaryColor}" />
+            </Style>
+
+            <Style x:Key="BodyLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="TextColor" Value="{StaticResource TextDarkColor}" />
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="{StaticResource AccentGradient}" />
+                <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
+                <Setter Property="CornerRadius" Value="25" />
+                <Setter Property="Padding" Value="15,10" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="Margin" Value="0,10,0,10" />
+            </Style>
+
+            <Style TargetType="Frame">
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="Padding" Value="15" />
+                <Setter Property="BackgroundColor" Value="{StaticResource CardBackgroundColor}" />
+                <Setter Property="HasShadow" Value="True" />
+            </Style>
+
         </ResourceDictionary>
-
-        <!-- Kolory aplikacji -->
-        <Color x:Key="PrimaryColor">#1F2937</Color>
-        <!-- ciemnoszary -->
-        <Color x:Key="AccentColor">#00BCD4</Color>
-        <!-- turkusowy (material teal) -->
-        <Color x:Key="LightTextColor">#FFFFFF</Color>
-        <Color x:Key="PageBackgroundColor">#F1F5F9</Color>
-        <!-- jasnoszary tło -->
-        <!-- Kolor cienia do ramek (delikatny szary) -->
-        <Color x:Key="ShadowColor">#80000000</Color>
-
-        <!-- Gradient do banerów (opcjonalnie) -->
-        <LinearGradientBrush x:Key="AccentGradient" EndPoint="0,1">
-            <GradientStop Color="#00BCD4" Offset="0" />
-            <GradientStop Color="#008BA2" Offset="1" />
-        </LinearGradientBrush>
-
-        <!-- Styl dla nagłówków (większy, pogrubiony) -->
-        <Style x:Key="HeaderLabelStyle" TargetType="Label">
-            <Setter Property="FontSize" Value="Medium" />
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="TextColor" Value="{StaticResource PrimaryColor}" />
-        </Style>
-
-        <!-- Styl dla podstawowych etykiet -->
-        <Style x:Key="BodyLabelStyle" TargetType="Label">
-            <Setter Property="FontSize" Value="Small" />
-            <Setter Property="TextColor" Value="#333333" />
-        </Style>
-
-        <!-- Styl dla przycisków (zaokrąglone, w kolorze Accent) -->
-        <Style TargetType="Button">
-            <Setter Property="BackgroundColor" Value="{StaticResource AccentColor}" />
-            <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
-            <Setter Property="CornerRadius" Value="20" />
-            <Setter Property="HeightRequest" Value="45" />
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="Margin" Value="0,10,0,0" />
-        </Style>
-
-        <!-- Styl CollectionView / ListView itemów można dodać podobnie -->
-        <!-- ... -->
-
     </Application.Resources>
 </Application>

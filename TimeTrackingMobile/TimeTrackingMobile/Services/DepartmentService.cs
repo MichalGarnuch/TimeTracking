@@ -8,7 +8,7 @@ namespace TimeTrackingMobile.Services
 {
     public class DepartmentService
     {
-        private const string BaseUrl = "http://192.168.114.225:5215/api/Department";
+        private const string BaseUrl = "http://192.168.8.225:5215/api/Department";
         private readonly HttpClient _client;
 
         public DepartmentService()
