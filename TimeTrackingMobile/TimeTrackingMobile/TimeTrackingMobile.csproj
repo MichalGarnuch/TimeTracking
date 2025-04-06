@@ -83,4 +83,17 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Departments\" />
+    <Folder Include="Views\Employees\" />
+    <Folder Include="Views\Login\" />
+    <Folder Include="Views\Shared\" />
+    <Folder Include="Views\TaskTags\" />
+    <Folder Include="Views\TimeRecords\" />
+    <Folder Include="Views\Tasks\" />
+    <Folder Include="Views\Tags\" />
+    <Folder Include="Views\ProjectTypes\" />
+    <Folder Include="Views\Projects\" />
+  </ItemGroup>
 </Project>
