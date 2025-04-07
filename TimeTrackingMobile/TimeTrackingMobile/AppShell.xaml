@@ -5,6 +5,17 @@
        Title="TimeTrackingMobile"
        x:Class="TimeTrackingMobile.AppShell">
 
+    <Shell.ToolbarItems>
+        <ToolbarItem IconImageSource="sync.png"
+                 Priority="0"
+                 Order="Primary"
+                 Clicked="OnGlobalSyncClicked"/>
+        <ToolbarItem IconImageSource="power.png"
+                 Priority="1"
+                 Order="Primary"
+                 Clicked="OnGlobalLogoutClicked"/>
+    </Shell.ToolbarItems>
+
     <!--
         The overall app visual hierarchy is defined here, along with navigation.
     

@@ -4,6 +4,20 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Departments">
+    
+    <ContentPage.ToolbarItems>
+        <!-- Ikona synchronizacji -->
+        <ToolbarItem IconImageSource="sync.png"
+                     Order="Primary"
+                     Priority="0"
+                     Clicked="OnSyncClicked" />
+
+        <!-- Ikona wylogowania -->
+        <ToolbarItem IconImageSource="power.png"
+                     Order="Primary"
+                     Priority="1"
+                     Clicked="OnLogoutClicked" />
+    </ContentPage.ToolbarItems>
 
     <StackLayout Padding="20">
 
