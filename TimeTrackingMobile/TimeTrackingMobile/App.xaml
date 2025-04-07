@@ -47,7 +47,11 @@
                 <Setter Property="Padding" Value="15,10" />
                 <Setter Property="FontAttributes" Value="Bold" />
                 <Setter Property="Margin" Value="0,10,0,10" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="WidthRequest" Value="200" />
+                <!-- ok. pół szerokości -->
             </Style>
+
 
             <Style TargetType="Frame">
                 <Setter Property="CornerRadius" Value="15" />

@@ -101,5 +101,16 @@ namespace TimeTrackingMobile.Views
                 DepartmentsList.SelectedItem = null;
             }
         }
+        private async void OnLogoutClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("//LoginPage");
+        }
+
+        private async void OnSyncClicked(object sender, EventArgs e)
+        {
+            await LoadDepartments(); // ✔️ to działa, bo LoadDepartments() zwraca Task
+        }
+
+
     }
 }
