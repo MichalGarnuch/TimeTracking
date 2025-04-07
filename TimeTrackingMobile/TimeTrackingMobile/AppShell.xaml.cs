@@ -56,12 +56,10 @@ namespace TimeTrackingMobile
         {
             await Shell.Current.GoToAsync("//LoginPage");
         }
-
         private async void OnGlobalSyncClicked(object sender, EventArgs e)
         {
             // Tutaj możesz odpalić globalną synchronizację – np. pobranie danych dla wielu widoków
             await Application.Current.MainPage.DisplayAlert("Sync", "Dane zostały zsynchronizowane.", "OK");
         }
-
     }
 }
