@@ -62,5 +62,17 @@ namespace TimeTrackingMobile.Views
                 EmployeesList.SelectedItem = null;
             }
         }
+
+        // 🔁 Synchronizacja
+        private async void OnSyncClicked(object sender, EventArgs e)
+        {
+            await LoadEmployees();
+        }
+
+        // 🔌 Wylogowanie
+        private async void OnLogoutClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("//LoginPage");
+        }
     }
 }
