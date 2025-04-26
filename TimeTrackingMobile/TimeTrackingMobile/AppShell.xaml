@@ -6,16 +6,13 @@
     Title="TimeTrackingMobile"
     x:Class="TimeTrackingMobile.AppShell">
 
-    <!-- 🎨 Globalne zasoby kolorów i gradientów -->
     <Shell.Resources>
         <ResourceDictionary>
             <Color x:Key="Primary">#F59E0B</Color>
             <Color x:Key="AccentColor">#8B5CF6</Color>
             <Color x:Key="TextDarkColor">#374151</Color>
             <Color x:Key="PageBackgroundColor">#F3F4F6</Color>
-            <!-- AccentGradient masz już w App.xaml -->
 
-            <!-- Styl dla Shell (TabBar + FlyoutItem) -->
             <Style x:Key="BaseStyle" TargetType="Element">
                 <Setter Property="Shell.BackgroundColor" Value="{StaticResource Primary}" />
                 <Setter Property="Shell.ForegroundColor" Value="White" />
@@ -36,7 +33,8 @@
     <TabBar>
 
         <Tab Title="Home" Icon="icon_about.png">
-            <ShellContent ContentTemplate="{DataTemplate local:AboutPage}" />
+            <ShellContent Route="AboutPage"
+                ContentTemplate="{DataTemplate local:AboutPage}" />
         </Tab>
 
         <Tab Title="Departments" Icon="icon_departments.png">

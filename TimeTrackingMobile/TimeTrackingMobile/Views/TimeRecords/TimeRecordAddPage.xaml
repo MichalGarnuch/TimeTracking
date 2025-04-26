@@ -13,31 +13,41 @@
                 <StaticResource Key="AccentGradient"/>
             </Frame.Background>
             <Label Text="Add TimeRecord"
-             FontSize="Large" FontAttributes="Bold"
+             FontSize="Large"
+             FontAttributes="Bold"
              TextColor="White"
-             VerticalOptions="Center" HorizontalOptions="Center"/>
+             VerticalOptions="Center"
+             HorizontalOptions="Center"/>
         </Frame>
 
         <ScrollView Grid.Row="1" Padding="20">
             <StackLayout Spacing="15">
-                <Label Text="Employee ID"/>
-                <Entry x:Name="EmpEntry" Keyboard="Numeric"/>
-                <Label Text="Task ID"/>
-                <Entry x:Name="TaskEntry" Keyboard="Numeric"/>
-                <Label Text="Start Time"/>
-                <DatePicker x:Name="StartDatePicker"/>
-                <Label Text="End Time"/>
-                <DatePicker x:Name="EndDatePicker"/>
-                <Label Text="Hours Spent"/>
-                <Entry x:Name="HoursEntry" Keyboard="Numeric"/>
+
+                <Label Text="Employee ID" />
+                <Entry x:Name="EmpEntry" Keyboard="Numeric" />
+
+                <Label Text="Task ID" />
+                <Entry x:Name="TaskEntry" Keyboard="Numeric" />
+
+                <Label Text="Start Time" />
+                <DatePicker x:Name="StartDatePicker"
+                    Format="dd/MM/yyyy" />
+
+                <Label Text="End Time" />
+                <DatePicker x:Name="EndDatePicker"
+                    Format="dd/MM/yyyy" />
+
+                <Label Text="Hours Spent" />
+                <Entry x:Name="HoursEntry" Keyboard="Numeric" />
 
                 <StackLayout Orientation="Horizontal"
                      HorizontalOptions="Center"
                      Spacing="20"
                      Margin="0,20">
-                    <Button Text="Save" Clicked="OnSaveClicked"/>
-                    <Button Text="Cancel" Clicked="OnCancelClicked"/>
+                    <Button Text="Save" Clicked="OnSaveClicked" />
+                    <Button Text="Cancel" Clicked="OnCancelClicked" />
                 </StackLayout>
+
             </StackLayout>
         </ScrollView>
     </Grid>

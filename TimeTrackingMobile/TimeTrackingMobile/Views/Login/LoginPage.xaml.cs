@@ -13,8 +13,8 @@ namespace TimeTrackingMobile.Views
 
         private async void OnLoginClicked(object sender, System.EventArgs e)
         {
-            // Prosta symulacja: bez walidacji, od razu w Home
-            await Shell.Current.GoToAsync("//Home");
+            // Po kliknięciu idziemy na stronę AboutPage (Home)
+            await Shell.Current.GoToAsync("//AboutPage");
         }
     }
 }

@@ -8,11 +8,7 @@
     Shell.PresentationMode="ModalAnimated">
 
     <Grid RowDefinitions="120, *">
-        <!-- Banner -->
-        <Frame Grid.Row="0"
-           Padding="20"
-           HasShadow="False"
-           CornerRadius="0">
+        <Frame Grid.Row="0" Padding="20" HasShadow="False" CornerRadius="0">
             <Frame.Background>
                 <StaticResource Key="AccentGradient"/>
             </Frame.Background>
@@ -24,32 +20,33 @@
              HorizontalOptions="Center"/>
         </Frame>
 
-        <!-- Formularz -->
         <ScrollView Grid.Row="1" Padding="20">
             <StackLayout Spacing="15">
 
-                <Label Text="Project Name"/>
-                <Entry x:Name="NameEntry"/>
+                <Label Text="Project Name" />
+                <Entry x:Name="NameEntry" />
 
-                <Label Text="Project Type ID"/>
-                <Entry x:Name="TypeIdEntry" Keyboard="Numeric"/>
+                <Label Text="Project Type ID" />
+                <Entry x:Name="TypeIdEntry" Keyboard="Numeric" />
 
-                <Label Text="Start Date"/>
-                <DatePicker x:Name="StartPicker"/>
+                <Label Text="Start Date" />
+                <DatePicker x:Name="StartPicker"
+                    Format="dd/MM/yyyy" />
 
-                <Label Text="End Date"/>
-                <DatePicker x:Name="EndPicker"/>
+                <Label Text="End Date" />
+                <DatePicker x:Name="EndPicker"
+                    Format="dd/MM/yyyy" />
 
-                <Label Text="Budget"/>
-                <Entry x:Name="BudgetEntry" Keyboard="Numeric"/>
+                <Label Text="Budget" />
+                <Entry x:Name="BudgetEntry" Keyboard="Numeric" />
 
                 <StackLayout Orientation="Horizontal"
                      HorizontalOptions="Center"
                      Spacing="10"
                      Margin="0,20,0,0">
-                    <Button Text="Save" Clicked="OnSaveClicked"/>
-                    <Button Text="Delete" Clicked="OnDeleteClicked"/>
-                    <Button Text="Cancel" Clicked="OnCancelClicked"/>
+                    <Button Text="Save" Clicked="OnSaveClicked" />
+                    <Button Text="Delete" Clicked="OnDeleteClicked" />
+                    <Button Text="Cancel" Clicked="OnCancelClicked" />
                 </StackLayout>
 
             </StackLayout>
