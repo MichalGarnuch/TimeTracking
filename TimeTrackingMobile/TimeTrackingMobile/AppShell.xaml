@@ -1,101 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Shell xmlns="http://xamarin.com/schemas/2014/forms" 
-       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       xmlns:local="clr-namespace:TimeTrackingMobile.Views"
-       Title="TimeTrackingMobile"
-       x:Class="TimeTrackingMobile.AppShell">
-
-    <!-- 🎯 Toolbar z emoji (działa wszędzie) -->
-    <Shell.ToolbarItems>
-        <ToolbarItem Text="🔁"
-                     Priority="0"
-                     Order="Primary"
-                     Clicked="OnGlobalSyncClicked"/>
-        <ToolbarItem Text="🔌"
-                     Priority="1"
-                     Order="Primary"
-                     Clicked="OnGlobalLogoutClicked"/>
-    </Shell.ToolbarItems>
+<Shell
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:TimeTrackingMobile.Views"
+    Title="TimeTrackingMobile"
+    x:Class="TimeTrackingMobile.AppShell">
 
     <!-- 🎨 Kolory i style -->
     <Shell.Resources>
         <ResourceDictionary>
-            <!-- Główna kolorystyka -->
             <Color x:Key="Primary">#F59E0B</Color>
-            <!-- Amber / Orange -->
             <Color x:Key="AccentColor">#8B5CF6</Color>
-            <!-- Fiolet -->
-            <Color x:Key="GradientTop">#F59E0B</Color>
-            <Color x:Key="GradientBottom">#FDE68A</Color>
-            <Color x:Key="MenuText">#4B0082</Color>
-
-            <!-- Gradient dla tła -->
-            <LinearGradientBrush x:Key="FlyoutBackground" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="{StaticResource GradientTop}" Offset="0.0" />
-                <GradientStop Color="{StaticResource GradientBottom}" Offset="1.0" />
-            </LinearGradientBrush>
+            <Color x:Key="TextDarkColor">#374151</Color>
+            <Color x:Key="PageBackgroundColor">#F3F4F6</Color>
+            <!-- gradient AccentGradient masz już w App.xaml -->
 
             <!-- Styl całej aplikacji -->
             <Style x:Key="BaseStyle" TargetType="Element">
                 <Setter Property="Shell.BackgroundColor" Value="{StaticResource Primary}" />
-                <Setter Property="Shell.ForegroundColor" Value="White" />
-                <Setter Property="Shell.TitleColor" Value="White" />
-                <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
-                <Setter Property="Shell.UnselectedColor" Value="#FFE4B5" />
+                <Setter Property="Shell.ForegroundColor"    Value="White" />
+                <Setter Property="Shell.TitleColor"         Value="White" />
+                <Setter Property="Shell.DisabledColor"      Value="#B4FFFFFF" />
+                <Setter Property="Shell.UnselectedColor"    Value="#FFE4B5" />
                 <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Primary}" />
-                <Setter Property="Shell.TabBarForegroundColor" Value="White"/>
-                <Setter Property="Shell.TabBarUnselectedColor" Value="#FFDAB9"/>
-                <Setter Property="Shell.TabBarTitleColor" Value="White"/>
+                <Setter Property="Shell.TabBarForegroundColor" Value="White" />
+                <Setter Property="Shell.TabBarUnselectedColor" Value="#FFDAB9" />
+                <Setter Property="Shell.TabBarTitleColor"      Value="White" />
             </Style>
-
             <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
             <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
-
-            <Style Class="FlyoutItemLabelStyle" TargetType="Label">
-                <Setter Property="TextColor" Value="{StaticResource MenuText}" />
-                <Setter Property="FontAttributes" Value="Bold" />
-            </Style>
-
-            <Style Class="FlyoutItemLayoutStyle" TargetType="Layout" ApplyToDerivedTypes="True">
-                <Setter Property="BackgroundColor" Value="{StaticResource GradientBottom}" />
-            </Style>
         </ResourceDictionary>
     </Shell.Resources>
 
-    <!-- 📁 Nawigacja -->
-    <FlyoutItem Title="About" Icon="icon_about.png">
-        <ShellContent Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Departments">
-        <ShellContent Route="DepartmentsPage" ContentTemplate="{DataTemplate local:DepartmentsPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Employees">
-        <ShellContent Route="EmployeesPage" ContentTemplate="{DataTemplate local:EmployeesPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Projects">
-        <ShellContent Route="ProjectsPage" ContentTemplate="{DataTemplate local:ProjectsPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Project Types">
-        <ShellContent Route="ProjectTypesPage" ContentTemplate="{DataTemplate local:ProjectTypesPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Tag">
-        <ShellContent Route="TagsPage" ContentTemplate="{DataTemplate local:TagsPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Task">
-        <ShellContent Route="TasksPage" ContentTemplate="{DataTemplate local:TasksPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="TimeRecord">
-        <ShellContent Route="TimeRecordsPage" ContentTemplate="{DataTemplate local:TimeRecordsPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="TaskTag">
-        <ShellContent Route="TaskTagsPage" ContentTemplate="{DataTemplate local:TaskTagsPage}" />
-    </FlyoutItem>
+    <!-- 🔖 Dolny TabBar (bez atrybutów Background/Foreground) -->
+    <TabBar>
+        <Tab Title="Home" Icon="icon_about.png">
+            <ShellContent ContentTemplate="{DataTemplate local:AboutPage}" />
+        </Tab>
+        <Tab Title="Departments" Icon="icon_departments.png">
+            <ShellContent ContentTemplate="{DataTemplate local:DepartmentsPage}" />
+        </Tab>
+        <!-- w przyszłości kolejne Tab’y… -->
+    </TabBar>
 
-    <!-- 🔒 Menu logout -->
+    <!-- 🔒 Menu logout (Flyout) -->
     <MenuItem Text="Wyloguj" Clicked="OnGlobalLogoutClicked" />
 
-    <!-- 🧭 Logowanie jako tab -->
-    <TabBar>
-        <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
-    </TabBar>
 </Shell>
