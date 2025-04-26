@@ -4,32 +4,53 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Edit Task"
-    Shell.PresentationMode="ModalAnimated"
-    >
+    BackgroundColor="{StaticResource PageBackgroundColor}"
+    Shell.PresentationMode="ModalAnimated">
 
-    <StackLayout Padding="20" Spacing="10">
-        <Label Text="Edit Task"
-               FontAttributes="Bold"
-               HorizontalOptions="Center" />
+    <Grid RowDefinitions="120, *">
+        <Frame Grid.Row="0"
+           Padding="20"
+           HasShadow="False"
+           CornerRadius="0">
+            <Frame.Background>
+                <StaticResource Key="AccentGradient"/>
+            </Frame.Background>
+            <Label Text="Edit Task"
+             FontSize="Large"
+             FontAttributes="Bold"
+             TextColor="White"
+             VerticalOptions="Center"
+             HorizontalOptions="Center"/>
+        </Frame>
 
-        <Label Text="Task Name" />
-        <Entry x:Name="TaskNameEntry" />
+        <ScrollView Grid.Row="1" Padding="20">
+            <StackLayout Spacing="15">
 
-        <Label Text="Description" />
-        <Editor x:Name="DescriptionEditor" AutoSize="TextChanges"/>
+                <Label Text="Task Name"/>
+                <Entry x:Name="NameEntry"/>
 
-        <Label Text="Project ID" />
-        <Entry x:Name="ProjectIdEntry" Keyboard="Numeric" />
+                <Label Text="Description"/>
+                <Editor x:Name="DescEditor" AutoSize="TextChanges"/>
 
-        <Label Text="Status" />
-        <Entry x:Name="StatusEntry" />
+                <Label Text="Project ID"/>
+                <Entry x:Name="ProjectIdEntry" Keyboard="Numeric"/>
 
-        <Label Text="Priority" />
-        <Entry x:Name="PriorityEntry" Keyboard="Numeric" />
+                <Label Text="Status"/>
+                <Entry x:Name="StatusEntry"/>
 
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="20" Margin="0,20,0,0">
-            <Button Text="Save" Clicked="SaveButtonClicked" />
-            <Button Text="Cancel" Clicked="CancelButtonClicked" />
-        </StackLayout>
-    </StackLayout>
+                <Label Text="Priority"/>
+                <Entry x:Name="PriorityEntry" Keyboard="Numeric"/>
+
+                <StackLayout Orientation="Horizontal"
+                     HorizontalOptions="Center"
+                     Spacing="10"
+                     Margin="0,20">
+                    <Button Text="Save" Clicked="OnSaveClicked"/>
+                    <Button Text="Delete" Clicked="OnDeleteClicked"/>
+                    <Button Text="Cancel" Clicked="OnCancelClicked"/>
+                </StackLayout>
+
+            </StackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

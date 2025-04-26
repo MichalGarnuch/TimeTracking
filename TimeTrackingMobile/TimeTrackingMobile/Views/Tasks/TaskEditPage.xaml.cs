@@ -1,6 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
 
@@ -10,43 +10,32 @@ namespace TimeTrackingMobile.Views
     [QueryProperty(nameof(TaskId), "taskId")]
     public partial class TaskEditPage : ContentPage
     {
-        private readonly TaskService _taskService;
-        private TaskModel currentTask;
+        private readonly TaskService _service = new TaskService();
+        private TaskModel _current;
 
-        private int _taskId;
         public int TaskId
         {
-            get => _taskId;
-            set
-            {
-                _taskId = value;
-                _ = LoadTask();
-            }
+            get => _id;
+            set { _id = value; LoadTask(value); }
         }
+        private int _id;
 
         public TaskEditPage()
         {
             InitializeComponent();
-            _taskService = new TaskService();
         }
 
-        private async System.Threading.Tasks.Task LoadTask()
+        private async void LoadTask(int id)
         {
             try
             {
-                currentTask = await _taskService.GetTask(_taskId);
-                if (currentTask == null)
-                {
-                    await DisplayAlert("Error", "Task not found", "OK");
-                    await Shell.Current.GoToAsync("..");
-                    return;
-                }
-
-                TaskNameEntry.Text = currentTask.TaskName;
-                DescriptionEditor.Text = currentTask.Description;
-                ProjectIdEntry.Text = currentTask.ProjectID.ToString();
-                StatusEntry.Text = currentTask.Status;
-                PriorityEntry.Text = currentTask.Priority.ToString();
+                _current = await _service.GetTask(id);
+                if (_current == null) throw new Exception("Not found");
+                NameEntry.Text = _current.TaskName;
+                DescEditor.Text = _current.Description;
+                ProjectIdEntry.Text = _current.ProjectID.ToString();
+                StatusEntry.Text = _current.Status;
+                PriorityEntry.Text = _current.Priority.ToString();
             }
             catch (Exception ex)
             {
@@ -55,27 +44,34 @@ namespace TimeTrackingMobile.Views
             }
         }
 
-        private async void SaveButtonClicked(object sender, EventArgs e)
+        private async void OnSaveClicked(object sender, EventArgs e)
         {
-            if (currentTask == null) return;
-
-            currentTask.TaskName = TaskNameEntry.Text;
-            currentTask.Description = DescriptionEditor.Text;
-
-            int projectId = 0;
-            int.TryParse(ProjectIdEntry.Text, out projectId);
-            currentTask.ProjectID = projectId;
-
-            currentTask.Status = StatusEntry.Text;
-
-            int priority = 0;
-            int.TryParse(PriorityEntry.Text, out priority);
-            currentTask.Priority = priority;
-
-            bool updated = await _taskService.UpdateTask(_taskId, currentTask);
-            if (updated)
+            if (string.IsNullOrWhiteSpace(NameEntry.Text))
             {
-                await DisplayAlert("Success", "Task updated", "OK");
+                await DisplayAlert("Validation", "Name required.", "OK");
+                return;
+            }
+            if (!int.TryParse(ProjectIdEntry.Text, out int projId))
+            {
+                await DisplayAlert("Validation", "Invalid Project ID.", "OK");
+                return;
+            }
+            if (!int.TryParse(PriorityEntry.Text, out int pr))
+            {
+                await DisplayAlert("Validation", "Invalid priority.", "OK");
+                return;
+            }
+
+            _current.TaskName = NameEntry.Text.Trim();
+            _current.Description = DescEditor.Text?.Trim();
+            _current.ProjectID = projId;
+            _current.Status = StatusEntry.Text?.Trim();
+            _current.Priority = pr;
+
+            bool ok = await _service.UpdateTask(_current.TaskID, _current);
+            if (ok)
+            {
+                await DisplayAlert("Success", "Saved", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
@@ -84,9 +80,24 @@ namespace TimeTrackingMobile.Views
             }
         }
 
-        private async void CancelButtonClicked(object sender, EventArgs e)
+        private async void OnDeleteClicked(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync("..");
+            bool confirm = await DisplayAlert("Confirm", "Delete this task?", "Yes", "No");
+            if (!confirm) return;
+
+            bool ok = await _service.DeleteTask(_current.TaskID);
+            if (ok)
+            {
+                await DisplayAlert("Success", "Deleted", "OK");
+                await Shell.Current.GoToAsync("..");
+            }
+            else
+            {
+                await DisplayAlert("Error", "Delete failed", "OK");
+            }
         }
+
+        private async void OnCancelClicked(object sender, EventArgs e)
+            => await Shell.Current.GoToAsync("..");
     }
 }

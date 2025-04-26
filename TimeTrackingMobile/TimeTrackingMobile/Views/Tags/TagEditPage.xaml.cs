@@ -1,6 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
 
@@ -10,38 +10,28 @@ namespace TimeTrackingMobile.Views
     [QueryProperty(nameof(TagId), "tagId")]
     public partial class TagEditPage : ContentPage
     {
-        private readonly TagService _tagService;
-        private TagModel currentTag;
+        private readonly TagService _service = new TagService();
+        private TagModel _current;
 
-        private int _tagId;
         public int TagId
         {
-            get => _tagId;
-            set
-            {
-                _tagId = value;
-                _ = LoadTag();
-            }
+            get => _id;
+            set { _id = value; LoadTag(value); }
         }
+        private int _id;
 
         public TagEditPage()
         {
             InitializeComponent();
-            _tagService = new TagService();
         }
 
-        private async System.Threading.Tasks.Task LoadTag()
+        private async void LoadTag(int id)
         {
             try
             {
-                currentTag = await _tagService.GetTag(_tagId);
-                if (currentTag == null)
-                {
-                    await DisplayAlert("Error", "Not found", "OK");
-                    await Shell.Current.GoToAsync("..");
-                    return;
-                }
-                TagNameEntry.Text = currentTag.TagName;
+                _current = await _service.GetTag(id);
+                if (_current == null) throw new Exception("Not found");
+                NameEntry.Text = _current.TagName;
             }
             catch (Exception ex)
             {
@@ -50,20 +40,20 @@ namespace TimeTrackingMobile.Views
             }
         }
 
-        private async void SaveButtonClicked(object sender, EventArgs e)
+        private async void OnSaveClicked(object sender, EventArgs e)
         {
-            if (currentTag == null) return;
-            var newName = TagNameEntry.Text;
-            if (string.IsNullOrWhiteSpace(newName))
+            var name = NameEntry.Text?.Trim();
+            if (string.IsNullOrEmpty(name))
             {
-                await DisplayAlert("Validation", "Tag name cannot be empty", "OK");
+                await DisplayAlert("Validation", "Name required.", "OK");
                 return;
             }
-            currentTag.TagName = newName;
-            bool updated = await _tagService.UpdateTag(_tagId, currentTag);
-            if (updated)
+
+            _current.TagName = name;
+            bool ok = await _service.UpdateTag(_current.TagID, _current);
+            if (ok)
             {
-                await DisplayAlert("Success", "Tag updated", "OK");
+                await DisplayAlert("Success", "Saved", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
@@ -72,9 +62,24 @@ namespace TimeTrackingMobile.Views
             }
         }
 
-        private async void CancelButtonClicked(object sender, EventArgs e)
+        private async void OnDeleteClicked(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync("..");
+            bool confirm = await DisplayAlert("Confirm", "Delete this tag?", "Yes", "No");
+            if (!confirm) return;
+
+            bool ok = await _service.DeleteTag(_current.TagID);
+            if (ok)
+            {
+                await DisplayAlert("Success", "Deleted", "OK");
+                await Shell.Current.GoToAsync("..");
+            }
+            else
+            {
+                await DisplayAlert("Error", "Delete failed", "OK");
+            }
         }
+
+        private async void OnCancelClicked(object sender, EventArgs e)
+            => await Shell.Current.GoToAsync("..");
     }
 }

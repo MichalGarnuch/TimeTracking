@@ -3,30 +3,64 @@
     x:Class="TimeTrackingMobile.Views.TagsPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Tags">
+    Title="Tags"
+    BackgroundColor="{StaticResource PageBackgroundColor}">
 
-    <StackLayout Padding="20">
-        <Label Text="Tags"
-               FontAttributes="Bold"
-               HorizontalOptions="Center"
-               Margin="0,0,0,10"/>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="sync.png"
+                 Text="Refresh"
+                 Order="Primary"
+                 Priority="0"
+                 Clicked="OnRefreshClicked" />
+        <ToolbarItem IconImageSource="add.png"
+                 Text="Add"
+                 Order="Primary"
+                 Priority="1"
+                 Clicked="OnAddClicked" />
+    </ContentPage.ToolbarItems>
 
-        <Button Text="Load Tags"
-                Clicked="LoadTagsClicked" />
+    <Grid RowDefinitions="120, *">
+        <!-- Banner -->
+        <Frame Grid.Row="0"
+           Padding="20"
+           HasShadow="False"
+           CornerRadius="0">
+            <Frame.Background>
+                <StaticResource Key="AccentGradient"/>
+            </Frame.Background>
+            <Label Text="Tags"
+             FontSize="Large"
+             FontAttributes="Bold"
+             TextColor="White"
+             VerticalOptions="Center"
+             HorizontalOptions="Center"/>
+        </Frame>
 
-        <ListView x:Name="TagsList"
-                  Margin="0,10,0,0"
-                  ItemSelected="TagsList_ItemSelected">
-            <ListView.ItemTemplate>
+        <!-- Lista tagów -->
+        <CollectionView Grid.Row="1"
+                    ItemsSource="{Binding Tags}"
+                    SelectionMode="Single"
+                    SelectionChanged="OnSelectionChanged"
+                    Margin="20">
+            <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding TagName}"
-                              Detail="{Binding TagID}" />
+                    <Frame Padding="10"
+                 Margin="0,0,0,10"
+                 CornerRadius="8"
+                 HasShadow="True"
+                 BackgroundColor="White">
+                        <StackLayout>
+                            <Label Text="{Binding TagName}"
+                     FontSize="Medium"
+                     TextColor="{StaticResource TextDarkColor}"/>
+                            <Label Text="ID: {Binding TagID}"
+                     FontSize="Small"
+                     TextColor="{StaticResource TextDarkColor}"
+                     Opacity="0.7"/>
+                        </StackLayout>
+                    </Frame>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-
-        <Button Text="Add Tag"
-                Margin="0,20,0,0"
-                Clicked="AddTagClicked" />
-    </StackLayout>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>

@@ -1,40 +1,48 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System;
 
 namespace TimeTrackingMobile.Views
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TagsPage : ContentPage
     {
-        private readonly TagService _tagService;
-        private List<TagModel> _tags;
+        private readonly TagService _service = new TagService();
+
+        public ObservableCollection<TagModel> Tags { get; }
+            = new ObservableCollection<TagModel>();
 
         public TagsPage()
         {
             InitializeComponent();
-            _tagService = new TagService();
+            BindingContext = this;
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            await LoadTags();
+            if (Tags.Count == 0)
+                await LoadTagsAsync();
         }
 
-        private async void LoadTagsClicked(object sender, EventArgs e)
-        {
-            await LoadTags();
-        }
+        private async void OnRefreshClicked(object sender, EventArgs e)
+            => await LoadTagsAsync();
 
-        private async Task LoadTags()
+        private async void OnAddClicked(object sender, EventArgs e)
+            => await Shell.Current.GoToAsync(nameof(TagAddPage));
+
+        private async Task LoadTagsAsync()
         {
+            Tags.Clear();
             try
             {
-                _tags = await _tagService.GetAllTags();
-                TagsList.ItemsSource = _tags;
+                var list = await _service.GetAllTags();
+                foreach (var t in list)
+                    Tags.Add(t);
             }
             catch (Exception ex)
             {
@@ -42,44 +50,41 @@ namespace TimeTrackingMobile.Views
             }
         }
 
-        private async void AddTagClicked(object sender, EventArgs e)
+        private async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(TagAddPage));
-        }
+            if (e.CurrentSelection.Count == 0) return;
+            var tag = e.CurrentSelection[0] as TagModel;
+            ((CollectionView)sender).SelectedItem = null;
+            if (tag == null) return;
 
-        private async void TagsList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            if (e.SelectedItem is TagModel tag)
+            string action = await DisplayActionSheet(
+                tag.TagName,
+                "Cancel", null,
+                "Edit", "Delete");
+
+            switch (action)
             {
-                var action = await DisplayActionSheet(
-                    $"Selected: {tag.TagName}",
-                    "Cancel",
-                    null,
-                    "Edit",
-                    "Delete");
-
-                if (action == "Edit")
-                {
-                    await Shell.Current.GoToAsync($"{nameof(TagEditPage)}?tagId={tag.TagID}");
-                }
-                else if (action == "Delete")
-                {
-                    bool confirm = await DisplayAlert("Confirm", $"Delete '{tag.TagName}'?", "Yes", "No");
+                case "Edit":
+                    await Shell.Current.GoToAsync(
+                        $"{nameof(TagEditPage)}?tagId={tag.TagID}");
+                    break;
+                case "Delete":
+                    bool confirm = await DisplayAlert(
+                        "Confirm", $"Delete '{tag.TagName}'?", "Yes", "No");
                     if (confirm)
                     {
-                        bool deleted = await _tagService.DeleteTag(tag.TagID);
-                        if (deleted)
+                        bool ok = await _service.DeleteTag(tag.TagID);
+                        if (ok)
                         {
-                            await DisplayAlert("OK", "Tag deleted", "OK");
-                            await LoadTags();
+                            await DisplayAlert("OK", "Deleted", "OK");
+                            await LoadTagsAsync();
                         }
                         else
                         {
                             await DisplayAlert("Error", "Delete failed", "OK");
                         }
                     }
-                }
-                TagsList.SelectedItem = null;
+                    break;
             }
         }
     }

@@ -1,40 +1,48 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System;
 
 namespace TimeTrackingMobile.Views
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TasksPage : ContentPage
     {
-        private readonly TaskService _taskService;
-        private List<TaskModel> _tasks;
+        private readonly TaskService _service = new TaskService();
+
+        public ObservableCollection<TaskModel> Tasks { get; }
+            = new ObservableCollection<TaskModel>();
 
         public TasksPage()
         {
             InitializeComponent();
-            _taskService = new TaskService();
+            BindingContext = this;
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            await LoadTasks();
+            if (Tasks.Count == 0)
+                await LoadTasksAsync();
         }
 
-        private async void LoadTasksClicked(object sender, EventArgs e)
-        {
-            await LoadTasks();
-        }
+        private async void OnRefreshClicked(object sender, EventArgs e)
+            => await LoadTasksAsync();
 
-        private async Task LoadTasks()
+        private async void OnAddClicked(object sender, EventArgs e)
+            => await Shell.Current.GoToAsync(nameof(TaskAddPage));
+
+        private async Task LoadTasksAsync()
         {
+            Tasks.Clear();
             try
             {
-                _tasks = await _taskService.GetAllTasks();
-                TasksList.ItemsSource = _tasks;
+                var list = await _service.GetAllTasks();
+                foreach (var t in list)
+                    Tasks.Add(t);
             }
             catch (Exception ex)
             {
@@ -42,43 +50,41 @@ namespace TimeTrackingMobile.Views
             }
         }
 
-        private async void AddTaskClicked(object sender, EventArgs e)
+        private async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(TaskAddPage));
-        }
+            if (e.CurrentSelection.Count == 0) return;
+            var task = e.CurrentSelection[0] as TaskModel;
+            ((CollectionView)sender).SelectedItem = null;
+            if (task == null) return;
 
-        private async void TasksList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            if (e.SelectedItem is TaskModel tm)
+            string action = await DisplayActionSheet(
+                task.TaskName,
+                "Cancel", null,
+                "Edit", "Delete");
+
+            switch (action)
             {
-                var action = await DisplayActionSheet(
-                    $"Selected Task: {tm.TaskName}",
-                    "Cancel",
-                    null,
-                    "Edit",
-                    "Delete");
-                if (action == "Edit")
-                {
-                    await Shell.Current.GoToAsync($"{nameof(TaskEditPage)}?taskId={tm.TaskID}");
-                }
-                else if (action == "Delete")
-                {
-                    bool confirm = await DisplayAlert("Confirm", $"Delete '{tm.TaskName}'?", "Yes", "No");
+                case "Edit":
+                    await Shell.Current.GoToAsync(
+                        $"{nameof(TaskEditPage)}?taskId={task.TaskID}");
+                    break;
+                case "Delete":
+                    bool confirm = await DisplayAlert(
+                        "Confirm", $"Delete '{task.TaskName}'?", "Yes", "No");
                     if (confirm)
                     {
-                        bool deleted = await _taskService.DeleteTask(tm.TaskID);
-                        if (deleted)
+                        bool ok = await _service.DeleteTask(task.TaskID);
+                        if (ok)
                         {
-                            await DisplayAlert("OK", "Task deleted", "OK");
-                            await LoadTasks();
+                            await DisplayAlert("OK", "Deleted", "OK");
+                            await LoadTasksAsync();
                         }
                         else
                         {
                             await DisplayAlert("Error", "Delete failed", "OK");
                         }
                     }
-                }
-                TasksList.SelectedItem = null;
+                    break;
             }
         }
     }
