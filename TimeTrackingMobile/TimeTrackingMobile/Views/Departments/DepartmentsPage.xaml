@@ -1,18 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TimeTrackingMobile.Views.DepartmentsPage"
-             Title="Departments"
-             BackgroundColor="{StaticResource PageBackgroundColor}">
+<ContentPage
+    x:Class="TimeTrackingMobile.Views.DepartmentsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Departments"
+    BackgroundColor="{StaticResource PageBackgroundColor}">
 
-    <Grid RowDefinitions="Auto,Auto,*">
+    <!-- Toolbar: odśwież i dodaj -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+      IconImageSource="sync.png"
+      Text="Refresh"
+      Order="Primary"
+      Priority="0"
+      Clicked="OnRefreshClicked" />
+        <ToolbarItem
+      IconImageSource="add.png"
+      Text="Add"
+      Order="Primary"
+      Priority="1"
+      Clicked="OnAddClicked" />
+    </ContentPage.ToolbarItems>
 
-        <!-- 1) Gradientowy banner + tytuł -->
+    <Grid RowDefinitions="120, *">
+        <!-- Gradientowy banner -->
         <Frame Grid.Row="0"
            Padding="20"
            HasShadow="False"
            CornerRadius="0"
-           HeightRequest="120">
+           BackgroundColor="{StaticResource Primary}">
             <Frame.Background>
                 <StaticResource Key="AccentGradient"/>
             </Frame.Background>
@@ -24,15 +40,11 @@
              HorizontalOptions="Center"/>
         </Frame>
 
-        <!-- 2) Przycisk odświeżania -->
-        <Button Grid.Row="1"
-            Text="Load Departments"
-            Command="{Binding LoadDepartmentsCommand}"
-            Margin="20,10"/>
-
-        <!-- 3) Lista w formie kart -->
-        <CollectionView Grid.Row="2"
+        <!-- Lista działów -->
+        <CollectionView Grid.Row="1"
                     ItemsSource="{Binding Departments}"
+                    SelectionMode="Single"
+                    SelectionChanged="OnSelectionChanged"
                     Margin="20">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -41,13 +53,18 @@
                  CornerRadius="8"
                  HasShadow="True"
                  BackgroundColor="White">
-                        <Label Text="{Binding DepartmentName}"
-                   FontSize="Medium"
-                   TextColor="{StaticResource TextDarkColor}"/>
+                        <StackLayout>
+                            <Label Text="{Binding DepartmentName}"
+                     FontSize="Medium"
+                     TextColor="{StaticResource TextDarkColor}"/>
+                            <Label Text="ID: {Binding DepartmentID}"
+                     FontSize="Small"
+                     TextColor="{StaticResource TextDarkColor}"
+                     Opacity="0.6"/>
+                        </StackLayout>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
     </Grid>
 </ContentPage>

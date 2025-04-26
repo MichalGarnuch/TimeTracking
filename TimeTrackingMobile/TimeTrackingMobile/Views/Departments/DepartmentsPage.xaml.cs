@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
 using System.Collections.ObjectModel;
@@ -6,23 +8,18 @@ using System.Threading.Tasks;
 
 namespace TimeTrackingMobile.Views
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DepartmentsPage : ContentPage
     {
         private readonly DepartmentService _deptService;
 
-        // ✚ zastępujemy "new()" explicite: 
         public ObservableCollection<DepartmentModel> Departments { get; }
             = new ObservableCollection<DepartmentModel>();
-
-        public Command LoadDepartmentsCommand { get; }
 
         public DepartmentsPage()
         {
             InitializeComponent();
             _deptService = new DepartmentService();
-
-            LoadDepartmentsCommand = new Command(async () => await ExecuteLoadDepartments());
-
             BindingContext = this;
         }
 
@@ -30,15 +27,88 @@ namespace TimeTrackingMobile.Views
         {
             base.OnAppearing();
             if (Departments.Count == 0)
-                await ExecuteLoadDepartments();
+                await LoadDepartmentsAsync();
         }
 
-        private async Task ExecuteLoadDepartments()
+        // Toolbar "Refresh"
+        private async void OnRefreshClicked(object sender, EventArgs e)
+        {
+            await LoadDepartmentsAsync();
+        }
+
+        // Toolbar "Add"
+        private async void OnAddClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(DepartmentAddPage));
+        }
+
+        // Wczytanie listy z serwisu
+        private async Task LoadDepartmentsAsync()
         {
             Departments.Clear();
-            var list = await _deptService.GetAllDepartments();
-            foreach (var d in list)
-                Departments.Add(d);
+            try
+            {
+                var list = await _deptService.GetAllDepartments();
+                foreach (var d in list)
+                    Departments.Add(d);
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Błąd", ex.Message, "OK");
+            }
+        }
+
+        // Tapnięcie na element – pokazujemy akcje
+        private async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.CurrentSelection.Count == 0)
+                return;
+
+            // Weź wybrany
+            var dept = e.CurrentSelection[0] as DepartmentModel;
+            ((CollectionView)sender).SelectedItem = null; // odznaczamy w UI
+
+            if (dept == null)
+                return;
+
+            string action = await DisplayActionSheet(
+                $"Dział: {dept.DepartmentName}",
+                "Anuluj",
+                null,
+                "Pokaż pracowników",
+                "Edytuj dział",
+                "Usuń dział");
+
+            switch (action)
+            {
+                case "Pokaż pracowników":
+                    await Shell.Current.GoToAsync($"{nameof(EmployeesPage)}?departmentId={dept.DepartmentID}");
+                    break;
+
+                case "Edytuj dział":
+                    await Shell.Current.GoToAsync($"{nameof(DepartmentEditPage)}?departmentId={dept.DepartmentID}");
+                    break;
+
+                case "Usuń dział":
+                    bool confirm = await DisplayAlert(
+                        "Potwierdź",
+                        $"Usunąć dział '{dept.DepartmentName}'?",
+                        "Tak", "Nie");
+                    if (confirm)
+                    {
+                        bool ok = await _deptService.DeleteDepartment(dept.DepartmentID);
+                        if (ok)
+                        {
+                            await DisplayAlert("OK", "Dział usunięty", "OK");
+                            await LoadDepartmentsAsync();
+                        }
+                        else
+                        {
+                            await DisplayAlert("Błąd", "Nie udało się usunąć działu", "OK");
+                        }
+                    }
+                    break;
+            }
         }
     }
 }

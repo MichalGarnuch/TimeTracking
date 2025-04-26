@@ -6,44 +6,78 @@
     Title="TimeTrackingMobile"
     x:Class="TimeTrackingMobile.AppShell">
 
-    <!-- 🎨 Kolory i style -->
+    <!-- 🎨 Globalne zasoby kolorów i gradientów -->
     <Shell.Resources>
         <ResourceDictionary>
             <Color x:Key="Primary">#F59E0B</Color>
             <Color x:Key="AccentColor">#8B5CF6</Color>
             <Color x:Key="TextDarkColor">#374151</Color>
             <Color x:Key="PageBackgroundColor">#F3F4F6</Color>
-            <!-- gradient AccentGradient masz już w App.xaml -->
+            <!-- AccentGradient masz już w App.xaml -->
 
-            <!-- Styl całej aplikacji -->
+            <!-- Styl dla Shell (TabBar + FlyoutItem) -->
             <Style x:Key="BaseStyle" TargetType="Element">
                 <Setter Property="Shell.BackgroundColor" Value="{StaticResource Primary}" />
-                <Setter Property="Shell.ForegroundColor"    Value="White" />
-                <Setter Property="Shell.TitleColor"         Value="White" />
-                <Setter Property="Shell.DisabledColor"      Value="#B4FFFFFF" />
-                <Setter Property="Shell.UnselectedColor"    Value="#FFE4B5" />
+                <Setter Property="Shell.ForegroundColor" Value="White" />
+                <Setter Property="Shell.TitleColor" Value="White" />
+                <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
+                <Setter Property="Shell.UnselectedColor" Value="#FFE4B5" />
                 <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Primary}" />
                 <Setter Property="Shell.TabBarForegroundColor" Value="White" />
                 <Setter Property="Shell.TabBarUnselectedColor" Value="#FFDAB9" />
-                <Setter Property="Shell.TabBarTitleColor"      Value="White" />
+                <Setter Property="Shell.TabBarTitleColor" Value="White" />
             </Style>
             <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
             <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
         </ResourceDictionary>
     </Shell.Resources>
 
-    <!-- 🔖 Dolny TabBar (bez atrybutów Background/Foreground) -->
+    <!-- 🔖 Dolny pasek zakładek -->
     <TabBar>
+
         <Tab Title="Home" Icon="icon_about.png">
             <ShellContent ContentTemplate="{DataTemplate local:AboutPage}" />
         </Tab>
+
         <Tab Title="Departments" Icon="icon_departments.png">
             <ShellContent ContentTemplate="{DataTemplate local:DepartmentsPage}" />
         </Tab>
-        <!-- w przyszłości kolejne Tab’y… -->
+
+        <Tab Title="Employees" Icon="icon_employees.png">
+            <ShellContent ContentTemplate="{DataTemplate local:EmployeesPage}" />
+        </Tab>
+
+        <Tab Title="Projects" Icon="icon_projects.png">
+            <ShellContent ContentTemplate="{DataTemplate local:ProjectsPage}" />
+        </Tab>
+
+        <Tab Title="Project Types" Icon="icon_projecttypes.png">
+            <ShellContent ContentTemplate="{DataTemplate local:ProjectTypesPage}" />
+        </Tab>
+
+        <Tab Title="Tags" Icon="icon_tags.png">
+            <ShellContent ContentTemplate="{DataTemplate local:TagsPage}" />
+        </Tab>
+
+        <Tab Title="Tasks" Icon="icon_tasks.png">
+            <ShellContent ContentTemplate="{DataTemplate local:TasksPage}" />
+        </Tab>
+
+        <Tab Title="TimeRecords" Icon="icon_timerecords.png">
+            <ShellContent ContentTemplate="{DataTemplate local:TimeRecordsPage}" />
+        </Tab>
+
+        <Tab Title="TaskTags" Icon="icon_tasktags.png">
+            <ShellContent ContentTemplate="{DataTemplate local:TaskTagsPage}" />
+        </Tab>
+
+        <Tab Title="Login" Icon="icon_login.png">
+            <ShellContent ContentTemplate="{DataTemplate local:LoginPage}" />
+        </Tab>
+
     </TabBar>
 
-    <!-- 🔒 Menu logout (Flyout) -->
+    <!-- 🔒 Pozycja wylogowania w menu bocznym -->
     <MenuItem Text="Wyloguj" Clicked="OnGlobalLogoutClicked" />
 
 </Shell>
