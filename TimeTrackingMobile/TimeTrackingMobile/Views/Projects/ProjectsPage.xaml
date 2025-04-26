@@ -5,7 +5,43 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Projects">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="sync.png"
+                     Order="Primary"
+                     Priority="0"
+                     Clicked="OnSyncClicked" />
+        <ToolbarItem IconImageSource="power.png"
+                     Order="Primary"
+                     Priority="1"
+                     Clicked="OnLogoutClicked" />
+    </ContentPage.ToolbarItems>
+
     <StackLayout Padding="20">
+
+        <Grid ColumnSpacing="10"
+              Padding="0"
+              Margin="0,0,0,10"
+              HorizontalOptions="End"
+              HeightRequest="40">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <ImageButton Source="Assets/sync.png"
+                         BackgroundColor="Transparent"
+                         HeightRequest="58"
+                         WidthRequest="58"
+                         Clicked="OnSyncClicked"
+                         Grid.Column="0" />
+            <ImageButton Source="Assets/power.png"
+                         BackgroundColor="Transparent"
+                         HeightRequest="58"
+                         WidthRequest="58"
+                         Clicked="OnLogoutClicked"
+                         Grid.Column="1" />
+        </Grid>
+
         <Label Text="Projects"
                FontAttributes="Bold"
                HorizontalOptions="Center"

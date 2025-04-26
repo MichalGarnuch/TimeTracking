@@ -79,8 +79,19 @@ namespace TimeTrackingMobile.Views
                         }
                     }
                 }
+
                 ProjectTypesList.SelectedItem = null;
             }
+        }
+
+        private async void OnSyncClicked(object sender, EventArgs e)
+        {
+            await LoadProjectTypes();
+        }
+
+        private async void OnLogoutClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("//LoginPage");
         }
     }
 }

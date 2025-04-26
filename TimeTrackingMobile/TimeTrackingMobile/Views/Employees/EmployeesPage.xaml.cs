@@ -21,13 +21,19 @@ namespace TimeTrackingMobile.Views
             set
             {
                 _departmentId = value;
-                _ = LoadEmployees(); // wywołanie async w setterze
+                _ = LoadEmployees();
             }
         }
 
         public EmployeesPage()
         {
             InitializeComponent();
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await LoadEmployees();
         }
 
         private async Task LoadEmployees()
@@ -63,13 +69,11 @@ namespace TimeTrackingMobile.Views
             }
         }
 
-        // 🔁 Synchronizacja
         private async void OnSyncClicked(object sender, EventArgs e)
         {
             await LoadEmployees();
         }
 
-        // 🔌 Wylogowanie
         private async void OnLogoutClicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("//LoginPage");

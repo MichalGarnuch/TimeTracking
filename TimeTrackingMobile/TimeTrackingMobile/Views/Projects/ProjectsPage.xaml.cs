@@ -21,7 +21,6 @@ namespace TimeTrackingMobile.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            // Automatycznie wczytamy listę
             await LoadProjects();
         }
 
@@ -45,7 +44,6 @@ namespace TimeTrackingMobile.Views
 
         private async void AddProjectClicked(object sender, EventArgs e)
         {
-            // Przejście do strony dodawania nowego projektu
             await Shell.Current.GoToAsync(nameof(ProjectAddPage));
         }
 
@@ -53,7 +51,6 @@ namespace TimeTrackingMobile.Views
         {
             if (e.SelectedItem is ProjectModel project)
             {
-                // Po kliknięciu w element listy => ActionSheet
                 var action = await DisplayActionSheet(
                     $"Selected: {project.ProjectName}",
                     "Cancel",
@@ -63,7 +60,6 @@ namespace TimeTrackingMobile.Views
 
                 if (action == "Edit")
                 {
-                    // Nawigujemy do ProjectEditPage, przekazujemy ID w query param
                     await Shell.Current.GoToAsync($"{nameof(ProjectEditPage)}?projectId={project.ProjectID}");
                 }
                 else if (action == "Delete")
@@ -87,9 +83,18 @@ namespace TimeTrackingMobile.Views
                     }
                 }
 
-                // Odznaczenie
                 ProjectsList.SelectedItem = null;
             }
+        }
+
+        private async void OnSyncClicked(object sender, EventArgs e)
+        {
+            await LoadProjects();
+        }
+
+        private async void OnLogoutClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("//LoginPage");
         }
     }
 }

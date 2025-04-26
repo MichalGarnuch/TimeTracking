@@ -4,15 +4,12 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Departments">
-    
+
     <ContentPage.ToolbarItems>
-        <!-- Ikona synchronizacji -->
         <ToolbarItem IconImageSource="sync.png"
                      Order="Primary"
                      Priority="0"
                      Clicked="OnSyncClicked" />
-
-        <!-- Ikona wylogowania -->
         <ToolbarItem IconImageSource="power.png"
                      Order="Primary"
                      Priority="1"
@@ -21,7 +18,6 @@
 
     <StackLayout Padding="20">
 
-        <!-- 🔼 Pasek z ikonami -->
         <Grid ColumnSpacing="10"
               Padding="0"
               Margin="0,0,0,10"
@@ -32,26 +28,20 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Synchronizacja -->
             <ImageButton Source="Assets/sync.png"
                          BackgroundColor="Transparent"
                          HeightRequest="58"
                          WidthRequest="58"
                          Clicked="OnSyncClicked"
-                         Margin="0"
                          Grid.Column="0" />
-
-            <!-- Wyloguj -->
             <ImageButton Source="Assets/power.png"
                          BackgroundColor="Transparent"
                          HeightRequest="58"
                          WidthRequest="58"
                          Clicked="OnLogoutClicked"
-                         Margin="0"
                          Grid.Column="1" />
         </Grid>
 
-        <!-- 🔽 Reszta strony -->
         <Label x:Name="HeaderLabel"
                FontAttributes="Bold"
                HorizontalOptions="Center"

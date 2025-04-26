@@ -8,7 +8,7 @@ namespace TimeTrackingMobile.Services
 {
     public class TagService
     {
-        private const string BaseUrl = "http://192.168.157.225:5215/api/Tag";
+        private const string BaseUrl = "http://192.168.145.225:5215/api/Tag";
         private readonly HttpClient _client = new HttpClient();
 
         public async Task<List<TagModel>> GetAllTags()

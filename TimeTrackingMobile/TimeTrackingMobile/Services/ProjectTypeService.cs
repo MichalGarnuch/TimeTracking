@@ -8,7 +8,7 @@ namespace TimeTrackingMobile.Services
 {
     public class ProjectTypeService
     {
-        private const string BaseUrl = "http://192.168.157.225:5215/api/ProjectType";
+        private const string BaseUrl = "http://192.168.145.225:5215/api/ProjectType";
         private readonly HttpClient _client = new HttpClient();
 
         public async Task<List<ProjectTypeModel>> GetAllProjectTypes()
