@@ -9,12 +9,15 @@ using System.Threading.Tasks;
 namespace TimeTrackingMobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
+    [QueryProperty(nameof(DepartmentId), "departmentId")]
     public partial class EmployeesPage : ContentPage
     {
         private readonly EmployeeService _service = new EmployeeService();
 
         public ObservableCollection<EmployeeModel> Employees { get; }
             = new ObservableCollection<EmployeeModel>();
+
+        public int DepartmentId { get; set; }  // jeśli nie ustawione,=0
 
         public EmployeesPage()
         {
@@ -44,13 +47,16 @@ namespace TimeTrackingMobile.Views
             Employees.Clear();
             try
             {
-                var list = await _service.GetAllEmployees();
+                var list = DepartmentId > 0
+                    ? await _service.GetEmployeesByDepartment(DepartmentId)
+                    : await _service.GetAllEmployees();
+
                 foreach (var emp in list)
                     Employees.Add(emp);
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", ex.Message, "OK");
+                await DisplayAlert("Błąd", ex.Message, "OK");
             }
         }
 

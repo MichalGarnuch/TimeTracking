@@ -8,13 +8,10 @@
     Shell.PresentationMode="ModalAnimated">
 
     <Grid RowDefinitions="120, *">
-        <!-- Banner -->
-        <Frame Grid.Row="0"
-           Padding="20"
-           HasShadow="False"
-           CornerRadius="0">
+        <!-- banner… -->
+        <Frame Grid.Row="0" Padding="20" HasShadow="False" CornerRadius="0">
             <Frame.Background>
-                <StaticResource Key="AccentGradient" />
+                <StaticResource Key="AccentGradient"/>
             </Frame.Background>
             <Label Text="Add Employee"
              FontSize="Large"
@@ -24,16 +21,17 @@
              HorizontalOptions="Center"/>
         </Frame>
 
-        <!-- Formularz -->
         <StackLayout Grid.Row="1" Padding="20" Spacing="15">
             <Label Text="Name" />
             <Entry x:Name="NameEntry" Placeholder="Full name" />
 
             <Label Text="Email" />
-            <Entry x:Name="EmailEntry" Placeholder="user@example.com" Keyboard="Email" />
+            <Entry x:Name="EmailEntry" Placeholder="you@example.com" Keyboard="Email"/>
 
-            <Label Text="Department ID" />
-            <Entry x:Name="DeptIdEntry" Keyboard="Numeric" Placeholder="e.g. 1" />
+            <Label Text="Department" />
+            <Picker x:Name="DeptPicker"
+              Title="Select department"
+              ItemDisplayBinding="{Binding DepartmentName}" />
 
             <StackLayout Orientation="Horizontal"
                    HorizontalOptions="Center"

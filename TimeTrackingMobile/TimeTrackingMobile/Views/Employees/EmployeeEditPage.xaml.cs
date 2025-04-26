@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace TimeTrackingMobile.Views
 {
@@ -10,95 +13,88 @@ namespace TimeTrackingMobile.Views
     [QueryProperty(nameof(EmployeeId), "employeeId")]
     public partial class EmployeeEditPage : ContentPage
     {
-        private readonly EmployeeService _service = new EmployeeService();
+        private readonly EmployeeService _empSvc = new EmployeeService();
+        private readonly DepartmentService _deptSvc = new DepartmentService();
         private EmployeeModel _current;
+        private List<DepartmentModel> _departments;
 
-        public int EmployeeId
-        {
-            get => _empId;
-            set
-            {
-                _empId = value;
-                LoadEmployee(value);
-            }
-        }
-        private int _empId;
+        public int EmployeeId { get; set; }
 
         public EmployeeEditPage()
         {
             InitializeComponent();
+            LoadDepartments();
         }
 
-        private async void LoadEmployee(int id)
+        private async void LoadDepartments()
         {
-            try
+            _departments = await _deptSvc.GetAllDepartments();
+            DeptPicker.ItemsSource = _departments;
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await LoadEmployeeAsync();
+        }
+
+        private async Task LoadEmployeeAsync()
+        {
+            _current = await _empSvc.GetEmployee(EmployeeId);
+            if (_current == null)
             {
-                _current = await _service.GetEmployee(id);
-                if (_current == null) throw new Exception("Not found");
-                NameEntry.Text = _current.Name;
-                EmailEntry.Text = _current.Email;
-                DeptIdEntry.Text = _current.DepartmentID.ToString();
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Error", ex.Message, "OK");
+                await DisplayAlert("Error", "Nie znaleziono pracownika", "OK");
                 await Shell.Current.GoToAsync("..");
+                return;
             }
+            NameEntry.Text = _current.Name;
+            EmailEntry.Text = _current.Email;
+            DeptPicker.SelectedItem = _departments.FirstOrDefault(d => d.DepartmentID == _current.DepartmentID);
         }
 
         private async void OnSaveClicked(object sender, EventArgs e)
         {
             var name = NameEntry.Text?.Trim();
             var email = EmailEntry.Text?.Trim();
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email))
+            var dept = DeptPicker.SelectedItem as DepartmentModel;
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email) || dept == null)
             {
-                await DisplayAlert("Validation", "Name and Email are required.", "OK");
-                return;
-            }
-
-            if (!int.TryParse(DeptIdEntry.Text, out int deptId))
-            {
-                await DisplayAlert("Validation", "Invalid Department ID.", "OK");
+                await DisplayAlert("Validation", "Wszystkie pola muszą być wypełnione.", "OK");
                 return;
             }
 
             _current.Name = name;
             _current.Email = email;
-            _current.DepartmentID = deptId;
+            _current.DepartmentID = dept.DepartmentID;
 
-            bool ok = await _service.UpdateEmployee(_current.EmployeeID, _current);
-            if (ok)
+            if (await _empSvc.UpdateEmployee(_current.EmployeeID, _current))
             {
-                await DisplayAlert("Success", "Updated", "OK");
+                await DisplayAlert("OK", "Zaktualizowano", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
             {
-                await DisplayAlert("Error", "Update failed", "OK");
+                await DisplayAlert("Error", "Nie udało się zaktualizować", "OK");
             }
         }
 
         private async void OnDeleteClicked(object sender, EventArgs e)
         {
-            bool confirm = await DisplayAlert(
-                "Confirm", "Delete this employee?", "Yes", "No");
-            if (!confirm) return;
+            bool c = await DisplayAlert("Confirm", $"Usuń {_current.Name}?", "Tak", "Nie");
+            if (!c) return;
 
-            bool ok = await _service.DeleteEmployee(_current.EmployeeID);
-            if (ok)
+            if (await _empSvc.DeleteEmployee(_current.EmployeeID))
             {
-                await DisplayAlert("Success", "Deleted", "OK");
+                await DisplayAlert("OK", "Usunięto", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
             {
-                await DisplayAlert("Error", "Delete failed", "OK");
+                await DisplayAlert("Error", "Nie udało się usunąć", "OK");
             }
         }
 
         private async void OnCancelClicked(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("..");
-        }
+            => await Shell.Current.GoToAsync("..");
     }
 }

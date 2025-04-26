@@ -1,34 +1,41 @@
 ﻿using System;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
+using System.Collections.Generic;
 
 namespace TimeTrackingMobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class EmployeeAddPage : ContentPage
     {
-        private readonly EmployeeService _service = new EmployeeService();
+        private readonly EmployeeService _empSvc = new EmployeeService();
+        private readonly DepartmentService _deptSvc = new DepartmentService();
+        private List<DepartmentModel> _departments;
 
         public EmployeeAddPage()
         {
             InitializeComponent();
+            LoadDepartments();
+        }
+
+        private async void LoadDepartments()
+        {
+            _departments = await _deptSvc.GetAllDepartments();
+            DeptPicker.ItemsSource = _departments;
         }
 
         private async void OnSaveClicked(object sender, EventArgs e)
         {
             var name = NameEntry.Text?.Trim();
             var email = EmailEntry.Text?.Trim();
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email))
-            {
-                await DisplayAlert("Validation", "Name and Email are required.", "OK");
-                return;
-            }
+            var selectedDept = DeptPicker.SelectedItem as DepartmentModel;
 
-            if (!int.TryParse(DeptIdEntry.Text, out int deptId))
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email) || selectedDept == null)
             {
-                await DisplayAlert("Validation", "Invalid Department ID.", "OK");
+                await DisplayAlert("Validation", "Wszystkie pola muszą być wypełnione.", "OK");
                 return;
             }
 
@@ -36,24 +43,21 @@ namespace TimeTrackingMobile.Views
             {
                 Name = name,
                 Email = email,
-                DepartmentID = deptId
+                DepartmentID = selectedDept.DepartmentID
             };
 
-            bool ok = await _service.CreateEmployee(emp);
-            if (ok)
+            if (await _empSvc.CreateEmployee(emp))
             {
-                await DisplayAlert("Success", "Employee added", "OK");
+                await DisplayAlert("OK", "Dodano pracownika", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
             {
-                await DisplayAlert("Error", "Add failed", "OK");
+                await DisplayAlert("Error", "Nie udało się dodać", "OK");
             }
         }
 
         private async void OnCancelClicked(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("..");
-        }
+            => await Shell.Current.GoToAsync("..");
     }
 }
