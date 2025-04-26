@@ -1,40 +1,48 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System;
 
 namespace TimeTrackingMobile.Views
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProjectsPage : ContentPage
     {
-        private readonly ProjectService _projectService;
-        private List<ProjectModel> _projects;
+        private readonly ProjectService _service = new ProjectService();
+
+        public ObservableCollection<ProjectModel> Projects { get; }
+            = new ObservableCollection<ProjectModel>();
 
         public ProjectsPage()
         {
             InitializeComponent();
-            _projectService = new ProjectService();
+            BindingContext = this;
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            await LoadProjects();
+            if (Projects.Count == 0)
+                await LoadProjectsAsync();
         }
 
-        private async void LoadProjectsClicked(object sender, EventArgs e)
-        {
-            await LoadProjects();
-        }
+        private async void OnRefreshClicked(object sender, EventArgs e)
+            => await LoadProjectsAsync();
 
-        private async Task LoadProjects()
+        private async void OnAddClicked(object sender, EventArgs e)
+            => await Shell.Current.GoToAsync(nameof(ProjectAddPage));
+
+        private async Task LoadProjectsAsync()
         {
+            Projects.Clear();
             try
             {
-                _projects = await _projectService.GetAllProjects();
-                ProjectsList.ItemsSource = _projects;
+                var list = await _service.GetAllProjects();
+                foreach (var p in list)
+                    Projects.Add(p);
             }
             catch (Exception ex)
             {
@@ -42,59 +50,45 @@ namespace TimeTrackingMobile.Views
             }
         }
 
-        private async void AddProjectClicked(object sender, EventArgs e)
+        private async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(ProjectAddPage));
-        }
+            if (e.CurrentSelection.Count == 0) return;
+            var p = e.CurrentSelection[0] as ProjectModel;
+            ((CollectionView)sender).SelectedItem = null;
 
-        private async void ProjectsList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            if (e.SelectedItem is ProjectModel project)
+            if (p == null) return;
+
+            string action = await DisplayActionSheet(
+                p.ProjectName,
+                "Cancel", null,
+                "Edit", "Delete");
+
+            switch (action)
             {
-                var action = await DisplayActionSheet(
-                    $"Selected: {project.ProjectName}",
-                    "Cancel",
-                    null,
-                    "Edit",
-                    "Delete");
-
-                if (action == "Edit")
-                {
-                    await Shell.Current.GoToAsync($"{nameof(ProjectEditPage)}?projectId={project.ProjectID}");
-                }
-                else if (action == "Delete")
-                {
+                case "Edit":
+                    await Shell.Current.GoToAsync(
+                        $"{nameof(ProjectEditPage)}?projectId={p.ProjectID}");
+                    break;
+                case "Delete":
                     bool confirm = await DisplayAlert(
                         "Confirm",
-                        $"Delete project '{project.ProjectName}'?",
+                        $"Delete '{p.ProjectName}'?",
                         "Yes", "No");
                     if (confirm)
                     {
-                        bool deleted = await _projectService.DeleteProject(project.ProjectID);
-                        if (deleted)
+                        bool ok = await _service.DeleteProject(p.ProjectID);
+                        if (ok)
                         {
-                            await DisplayAlert("OK", "Project deleted", "OK");
-                            await LoadProjects();
+                            await DisplayAlert("OK", "Deleted", "OK");
+                            await LoadProjectsAsync();
                         }
                         else
                         {
                             await DisplayAlert("Error", "Delete failed", "OK");
                         }
                     }
-                }
-
-                ProjectsList.SelectedItem = null;
+                    break;
             }
-        }
-
-        private async void OnSyncClicked(object sender, EventArgs e)
-        {
-            await LoadProjects();
-        }
-
-        private async void OnLogoutClicked(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("//LoginPage");
         }
     }
 }

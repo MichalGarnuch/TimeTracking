@@ -44,7 +44,8 @@
         </Tab>
 
         <Tab Title="Employees" Icon="icon_employees.png">
-            <ShellContent ContentTemplate="{DataTemplate local:EmployeesPage}" />
+            <ShellContent Route="EmployeesPage"
+                ContentTemplate="{DataTemplate local:EmployeesPage}" />
         </Tab>
 
         <Tab Title="Projects" Icon="icon_projects.png">

@@ -1,48 +1,37 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
 
 namespace TimeTrackingMobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    [QueryProperty(nameof(ProjectTypeId), "projectTypeId")]
+    [QueryProperty(nameof(TypeId), "typeId")]
     public partial class ProjectTypeEditPage : ContentPage
     {
-        private readonly ProjectTypeService _service;
-        private ProjectTypeModel currentPT;
+        private readonly ProjectTypeService _service = new ProjectTypeService();
+        private ProjectTypeModel _current;
 
-        private int _projectTypeId;
-        public int ProjectTypeId
+        public int TypeId
         {
-            get => _projectTypeId;
-            set
-            {
-                _projectTypeId = value;
-                _ = LoadData();
-            }
+            get => _id;
+            set { _id = value; LoadType(value); }
         }
+        private int _id;
 
         public ProjectTypeEditPage()
         {
             InitializeComponent();
-            _service = new ProjectTypeService();
         }
 
-        private async System.Threading.Tasks.Task LoadData()
+        private async void LoadType(int id)
         {
             try
             {
-                currentPT = await _service.GetProjectType(_projectTypeId);
-                if (currentPT == null)
-                {
-                    await DisplayAlert("Error", "Not found", "OK");
-                    await Shell.Current.GoToAsync("..");
-                    return;
-                }
-
-                TypeNameEntry.Text = currentPT.TypeName;
+                _current = await _service.GetProjectType(id);
+                if (_current == null) throw new Exception("Not found");
+                TypeNameEntry.Text = _current.TypeName;
             }
             catch (Exception ex)
             {
@@ -51,22 +40,20 @@ namespace TimeTrackingMobile.Views
             }
         }
 
-        private async void SaveButtonClicked(object sender, EventArgs e)
+        private async void OnSaveClicked(object sender, EventArgs e)
         {
-            if (currentPT == null) return;
-
-            var newName = TypeNameEntry.Text;
-            if (string.IsNullOrWhiteSpace(newName))
+            var name = TypeNameEntry.Text?.Trim();
+            if (string.IsNullOrEmpty(name))
             {
-                await DisplayAlert("Validation", "Type Name cannot be empty", "OK");
+                await DisplayAlert("Validation", "Name required", "OK");
                 return;
             }
 
-            currentPT.TypeName = newName;
-            bool success = await _service.UpdateProjectType(_projectTypeId, currentPT);
-            if (success)
+            _current.TypeName = name;
+            bool ok = await _service.UpdateProjectType(_current.ProjectTypeID, _current);
+            if (ok)
             {
-                await DisplayAlert("Success", "Updated", "OK");
+                await DisplayAlert("Success", "Saved", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
@@ -75,9 +62,24 @@ namespace TimeTrackingMobile.Views
             }
         }
 
-        private async void CancelButtonClicked(object sender, EventArgs e)
+        private async void OnDeleteClicked(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync("..");
+            bool confirm = await DisplayAlert("Confirm", "Delete this type?", "Yes", "No");
+            if (!confirm) return;
+
+            bool ok = await _service.DeleteProjectType(_current.ProjectTypeID);
+            if (ok)
+            {
+                await DisplayAlert("Success", "Deleted", "OK");
+                await Shell.Current.GoToAsync("..");
+            }
+            else
+            {
+                await DisplayAlert("Error", "Delete failed", "OK");
+            }
         }
+
+        private async void OnCancelClicked(object sender, EventArgs e)
+            => await Shell.Current.GoToAsync("..");
     }
 }

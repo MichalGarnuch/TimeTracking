@@ -1,6 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
 
@@ -9,58 +9,53 @@ namespace TimeTrackingMobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProjectAddPage : ContentPage
     {
-        private readonly ProjectService _projectService;
+        private readonly ProjectService _service = new ProjectService();
 
         public ProjectAddPage()
         {
             InitializeComponent();
-            _projectService = new ProjectService();
-
-            // Domyślne wartości, jeśli chcesz
-            StartDatePicker.Date = DateTime.Now;
-            EndDatePicker.Date = DateTime.Now.AddDays(7);
         }
 
-        private async void SaveButtonClicked(object sender, EventArgs e)
+        private async void OnSaveClicked(object sender, EventArgs e)
         {
-            string name = ProjectNameEntry.Text;
-            if (string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(NameEntry.Text))
             {
-                await DisplayAlert("Validation", "Project Name cannot be empty.", "OK");
+                await DisplayAlert("Validation", "Name required.", "OK");
+                return;
+            }
+            if (!int.TryParse(TypeIdEntry.Text, out int typeId))
+            {
+                await DisplayAlert("Validation", "Invalid Type ID.", "OK");
+                return;
+            }
+            if (!decimal.TryParse(BudgetEntry.Text, out decimal budget))
+            {
+                await DisplayAlert("Validation", "Invalid budget.", "OK");
                 return;
             }
 
-            // Parsowanie ProjectTypeID i Budget
-            int projTypeId = 0;
-            int.TryParse(ProjectTypeIdEntry.Text, out projTypeId);
-
-            decimal budget = 0m;
-            decimal.TryParse(BudgetEntry.Text, out budget);
-
-            var newProject = new ProjectModel
+            var proj = new ProjectModel
             {
-                ProjectName = name,
-                ProjectTypeID = projTypeId,
-                StartDate = StartDatePicker.Date,
-                EndDate = EndDatePicker.Date,
+                ProjectName = NameEntry.Text.Trim(),
+                ProjectTypeID = typeId,
+                StartDate = StartPicker.Date,
+                EndDate = EndPicker.Date,
                 Budget = budget
             };
 
-            bool success = await _projectService.CreateProject(newProject);
-            if (success)
+            bool ok = await _service.CreateProject(proj);
+            if (ok)
             {
-                await DisplayAlert("Success", "Project created", "OK");
-                await Shell.Current.GoToAsync(".."); // powrót
+                await DisplayAlert("Success", "Created.", "OK");
+                await Shell.Current.GoToAsync("..");
             }
             else
             {
-                await DisplayAlert("Error", "Failed to create project", "OK");
+                await DisplayAlert("Error", "Create failed.", "OK");
             }
         }
 
-        private async void CancelButtonClicked(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("..");
-        }
+        private async void OnCancelClicked(object sender, EventArgs e)
+            => await Shell.Current.GoToAsync("..");
     }
 }

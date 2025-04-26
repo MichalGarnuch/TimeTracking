@@ -1,6 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
 
@@ -9,43 +9,36 @@ namespace TimeTrackingMobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProjectTypeAddPage : ContentPage
     {
-        private readonly ProjectTypeService _service;
+        private readonly ProjectTypeService _service = new ProjectTypeService();
 
         public ProjectTypeAddPage()
         {
             InitializeComponent();
-            _service = new ProjectTypeService();
         }
 
-        private async void SaveButtonClicked(object sender, EventArgs e)
+        private async void OnSaveClicked(object sender, EventArgs e)
         {
-            var name = TypeNameEntry.Text;
-            if (string.IsNullOrWhiteSpace(name))
+            var name = TypeNameEntry.Text?.Trim();
+            if (string.IsNullOrEmpty(name))
             {
-                await DisplayAlert("Validation", "Type Name is required", "OK");
+                await DisplayAlert("Validation", "Name required.", "OK");
                 return;
             }
 
-            var newPT = new ProjectTypeModel
+            var type = new ProjectTypeModel { TypeName = name };
+            bool ok = await _service.CreateProjectType(type);
+            if (ok)
             {
-                TypeName = name
-            };
-
-            bool success = await _service.CreateProjectType(newPT);
-            if (success)
-            {
-                await DisplayAlert("Success", "ProjectType created", "OK");
+                await DisplayAlert("Success", "Created", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
             {
-                await DisplayAlert("Error", "Failed to create", "OK");
+                await DisplayAlert("Error", "Create failed", "OK");
             }
         }
 
-        private async void CancelButtonClicked(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("..");
-        }
+        private async void OnCancelClicked(object sender, EventArgs e)
+            => await Shell.Current.GoToAsync("..");
     }
 }

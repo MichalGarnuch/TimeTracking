@@ -4,32 +4,54 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Add Project"
-    Shell.PresentationMode="ModalAnimated"
-    >
+    BackgroundColor="{StaticResource PageBackgroundColor}"
+    Shell.PresentationMode="ModalAnimated">
 
-    <StackLayout Padding="20" Spacing="10">
-        <Label Text="Create new Project"
-               FontAttributes="Bold"
-               HorizontalOptions="Center" />
+    <Grid RowDefinitions="120, *">
+        <!-- Banner -->
+        <Frame Grid.Row="0"
+           Padding="20"
+           HasShadow="False"
+           CornerRadius="0">
+            <Frame.Background>
+                <StaticResource Key="AccentGradient"/>
+            </Frame.Background>
+            <Label Text="Add Project"
+             FontSize="Large"
+             FontAttributes="Bold"
+             TextColor="White"
+             VerticalOptions="Center"
+             HorizontalOptions="Center"/>
+        </Frame>
 
-        <Label Text="Project Name" />
-        <Entry x:Name="ProjectNameEntry" />
+        <!-- Formularz -->
+        <ScrollView Grid.Row="1" Padding="20">
+            <StackLayout Spacing="15">
 
-        <Label Text="ProjectType ID" />
-        <Entry x:Name="ProjectTypeIdEntry" Keyboard="Numeric" />
+                <Label Text="Project Name"/>
+                <Entry x:Name="NameEntry" Placeholder="Name"/>
 
-        <Label Text="Start Date" />
-        <DatePicker x:Name="StartDatePicker" />
+                <Label Text="Project Type ID"/>
+                <Entry x:Name="TypeIdEntry" Keyboard="Numeric"/>
 
-        <Label Text="End Date" />
-        <DatePicker x:Name="EndDatePicker" />
+                <Label Text="Start Date"/>
+                <DatePicker x:Name="StartPicker"/>
 
-        <Label Text="Budget" />
-        <Entry x:Name="BudgetEntry" Keyboard="Numeric" />
+                <Label Text="End Date"/>
+                <DatePicker x:Name="EndPicker"/>
 
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="20" Margin="0,20,0,0">
-            <Button Text="Save" Clicked="SaveButtonClicked" />
-            <Button Text="Cancel" Clicked="CancelButtonClicked" />
-        </StackLayout>
-    </StackLayout>
+                <Label Text="Budget"/>
+                <Entry x:Name="BudgetEntry" Keyboard="Numeric"/>
+
+                <StackLayout Orientation="Horizontal"
+                     HorizontalOptions="Center"
+                     Spacing="20"
+                     Margin="0,20,0,0">
+                    <Button Text="Save" Clicked="OnSaveClicked"/>
+                    <Button Text="Cancel" Clicked="OnCancelClicked"/>
+                </StackLayout>
+
+            </StackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

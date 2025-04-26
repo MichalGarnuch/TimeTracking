@@ -30,19 +30,15 @@ namespace TimeTrackingMobile.Views
                 await LoadDepartmentsAsync();
         }
 
-        // Toolbar "Refresh"
+        // Odświeżanie
         private async void OnRefreshClicked(object sender, EventArgs e)
-        {
-            await LoadDepartmentsAsync();
-        }
+            => await LoadDepartmentsAsync();
 
-        // Toolbar "Add"
+        // Dodawanie
         private async void OnAddClicked(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync(nameof(DepartmentAddPage));
-        }
+            => await Shell.Current.GoToAsync(nameof(DepartmentAddPage));
 
-        // Wczytanie listy z serwisu
+        // Wczytaj listę
         private async Task LoadDepartmentsAsync()
         {
             Departments.Clear();
@@ -58,18 +54,14 @@ namespace TimeTrackingMobile.Views
             }
         }
 
-        // Tapnięcie na element – pokazujemy akcje
+        // Tapnięcie na kartę – ActionSheet
         private async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.CurrentSelection.Count == 0)
-                return;
-
-            // Weź wybrany
+            if (e.CurrentSelection.Count == 0) return;
             var dept = e.CurrentSelection[0] as DepartmentModel;
-            ((CollectionView)sender).SelectedItem = null; // odznaczamy w UI
+            ((CollectionView)sender).SelectedItem = null;
 
-            if (dept == null)
-                return;
+            if (dept == null) return;
 
             string action = await DisplayActionSheet(
                 $"Dział: {dept.DepartmentName}",
@@ -82,19 +74,21 @@ namespace TimeTrackingMobile.Views
             switch (action)
             {
                 case "Pokaż pracowników":
-                    await Shell.Current.GoToAsync($"{nameof(EmployeesPage)}?departmentId={dept.DepartmentID}");
+                    // absolutna nawigacja do zakładki Employees
+                    await Shell.Current.GoToAsync($"//EmployeesPage?departmentId={dept.DepartmentID}");
                     break;
 
                 case "Edytuj dział":
-                    await Shell.Current.GoToAsync($"{nameof(DepartmentEditPage)}?departmentId={dept.DepartmentID}");
+                    await Shell.Current.GoToAsync(
+                        $"{nameof(DepartmentEditPage)}?departmentId={dept.DepartmentID}");
                     break;
 
                 case "Usuń dział":
-                    bool confirm = await DisplayAlert(
+                    bool confirmed = await DisplayAlert(
                         "Potwierdź",
                         $"Usunąć dział '{dept.DepartmentName}'?",
                         "Tak", "Nie");
-                    if (confirm)
+                    if (confirmed)
                     {
                         bool ok = await _deptService.DeleteDepartment(dept.DepartmentID);
                         if (ok)
