@@ -1,6 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
 
@@ -9,41 +9,36 @@ namespace TimeTrackingMobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TimeRecordAddPage : ContentPage
     {
-        private readonly TimeRecordService _service;
+        private readonly TimeRecordService _service = new TimeRecordService();
 
         public TimeRecordAddPage()
         {
             InitializeComponent();
-            _service = new TimeRecordService();
-
-            StartDatePicker.Date = DateTime.Now;
-            EndDatePicker.Date = DateTime.Now.AddHours(1);
         }
 
-        private async void SaveButtonClicked(object sender, EventArgs e)
+        private async void OnSaveClicked(object sender, EventArgs e)
         {
-            int empId = 0;
-            int.TryParse(EmployeeIdEntry.Text, out empId);
+            if (!int.TryParse(EmpEntry.Text, out int empId)
+             || !int.TryParse(TaskEntry.Text, out int taskId)
+             || !decimal.TryParse(HoursEntry.Text, out decimal hrs))
+            {
+                await DisplayAlert("Validation", "Invalid numeric fields.", "OK");
+                return;
+            }
 
-            int taskId = 0;
-            int.TryParse(TaskIdEntry.Text, out taskId);
-
-            decimal hours = 0;
-            decimal.TryParse(HoursSpentEntry.Text, out hours);
-
-            var newRec = new TimeRecordModel
+            var record = new TimeRecordModel
             {
                 EmployeeID = empId,
                 TaskID = taskId,
                 StartTime = StartDatePicker.Date,
                 EndTime = EndDatePicker.Date,
-                HoursSpent = hours
+                HoursSpent = hrs
             };
 
-            bool success = await _service.CreateTimeRecord(newRec);
-            if (success)
+            bool ok = await _service.CreateTimeRecord(record);
+            if (ok)
             {
-                await DisplayAlert("OK", "TimeRecord created", "OK");
+                await DisplayAlert("Success", "Created", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
@@ -52,9 +47,7 @@ namespace TimeTrackingMobile.Views
             }
         }
 
-        private async void CancelButtonClicked(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("..");
-        }
+        private async void OnCancelClicked(object sender, EventArgs e)
+            => await Shell.Current.GoToAsync("..");
     }
 }

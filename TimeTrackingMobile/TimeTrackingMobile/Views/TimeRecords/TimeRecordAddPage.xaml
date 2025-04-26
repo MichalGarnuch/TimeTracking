@@ -1,34 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ContentPage 
+<ContentPage
     x:Class="TimeTrackingMobile.Views.TimeRecordAddPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Add TimeRecord"
+    BackgroundColor="{StaticResource PageBackgroundColor}"
     Shell.PresentationMode="ModalAnimated">
 
-    <StackLayout Padding="20" Spacing="10">
-        <Label Text="Create new TimeRecord"
-               FontAttributes="Bold"
-               HorizontalOptions="Center" />
+    <Grid RowDefinitions="120, *">
+        <Frame Grid.Row="0" Padding="20" HasShadow="False" CornerRadius="0">
+            <Frame.Background>
+                <StaticResource Key="AccentGradient"/>
+            </Frame.Background>
+            <Label Text="Add TimeRecord"
+             FontSize="Large" FontAttributes="Bold"
+             TextColor="White"
+             VerticalOptions="Center" HorizontalOptions="Center"/>
+        </Frame>
 
-        <Label Text="Employee ID" />
-        <Entry x:Name="EmployeeIdEntry" Keyboard="Numeric" />
+        <ScrollView Grid.Row="1" Padding="20">
+            <StackLayout Spacing="15">
+                <Label Text="Employee ID"/>
+                <Entry x:Name="EmpEntry" Keyboard="Numeric"/>
+                <Label Text="Task ID"/>
+                <Entry x:Name="TaskEntry" Keyboard="Numeric"/>
+                <Label Text="Start Time"/>
+                <DatePicker x:Name="StartDatePicker"/>
+                <Label Text="End Time"/>
+                <DatePicker x:Name="EndDatePicker"/>
+                <Label Text="Hours Spent"/>
+                <Entry x:Name="HoursEntry" Keyboard="Numeric"/>
 
-        <Label Text="Task ID" />
-        <Entry x:Name="TaskIdEntry" Keyboard="Numeric" />
-
-        <Label Text="Start Time" />
-        <DatePicker x:Name="StartDatePicker" />
-
-        <Label Text="End Time" />
-        <DatePicker x:Name="EndDatePicker" />
-
-        <Label Text="Hours Spent" />
-        <Entry x:Name="HoursSpentEntry" Keyboard="Numeric" />
-
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="20" Margin="0,20,0,0">
-            <Button Text="Save" Clicked="SaveButtonClicked" />
-            <Button Text="Cancel" Clicked="CancelButtonClicked" />
-        </StackLayout>
-    </StackLayout>
+                <StackLayout Orientation="Horizontal"
+                     HorizontalOptions="Center"
+                     Spacing="20"
+                     Margin="0,20">
+                    <Button Text="Save" Clicked="OnSaveClicked"/>
+                    <Button Text="Cancel" Clicked="OnCancelClicked"/>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

@@ -1,40 +1,48 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System;
 
 namespace TimeTrackingMobile.Views
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TaskTagsPage : ContentPage
     {
-        private readonly TaskTagService _service;
-        private List<TaskTagModel> _list;
+        private readonly TaskTagService _service = new TaskTagService();
+
+        public ObservableCollection<TaskTagModel> TaskTags { get; }
+            = new ObservableCollection<TaskTagModel>();
 
         public TaskTagsPage()
         {
             InitializeComponent();
-            _service = new TaskTagService();
+            BindingContext = this;
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            await LoadTaskTags();
+            if (TaskTags.Count == 0)
+                await LoadAsync();
         }
 
-        private async void LoadTaskTagsClicked(object sender, EventArgs e)
-        {
-            await LoadTaskTags();
-        }
+        private async void OnRefreshClicked(object sender, EventArgs e)
+            => await LoadAsync();
 
-        private async Task LoadTaskTags()
+        private async void OnAddClicked(object sender, EventArgs e)
+            => await Shell.Current.GoToAsync(nameof(TaskTagAddPage));
+
+        private async Task LoadAsync()
         {
+            TaskTags.Clear();
             try
             {
-                _list = await _service.GetAllTaskTags();
-                TaskTagsList.ItemsSource = _list;
+                var list = await _service.GetAllTaskTags();
+                foreach (var tt in list)
+                    TaskTags.Add(tt);
             }
             catch (Exception ex)
             {
@@ -42,43 +50,28 @@ namespace TimeTrackingMobile.Views
             }
         }
 
-        private async void AddTaskTagClicked(object sender, EventArgs e)
+        private async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(TaskTagAddPage));
-        }
+            if (e.CurrentSelection.Count == 0) return;
+            var model = e.CurrentSelection[0] as TaskTagModel;
+            ((CollectionView)sender).SelectedItem = null;
+            if (model == null) return;
 
-        private async void TaskTagsList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            if (e.SelectedItem is TaskTagModel tt)
+            bool confirm = await DisplayAlert(
+                "Confirm",
+                $"Delete link Task {model.TaskID} ↔ Tag {model.TagID}?",
+                "Yes", "No");
+            if (!confirm) return;
+
+            bool ok = await _service.DeleteTaskTag(model.TaskID, model.TagID);
+            if (ok)
             {
-                // ActionSheet do ewentualnego Edit / Delete
-                var action = await DisplayActionSheet(
-                    $"Task={tt.TaskID}, Tag={tt.TagID}",
-                    "Cancel",
-                    null,
-                    "Delete");
-                if (action == "Delete")
-                {
-                    bool confirm = await DisplayAlert(
-                        "Confirm",
-                        $"Delete link (TaskID={tt.TaskID}, TagID={tt.TagID})?",
-                        "Yes", "No");
-                    if (confirm)
-                    {
-                        bool deleted = await _service.DeleteTaskTag(tt.TaskID, tt.TagID);
-                        if (deleted)
-                        {
-                            await DisplayAlert("OK", "Deleted", "OK");
-                            await LoadTaskTags();
-                        }
-                        else
-                        {
-                            await DisplayAlert("Error", "Delete failed", "OK");
-                        }
-                    }
-                }
-                // ewentualnie "Edit" => Shell.Current.GoToAsync($"{nameof(TaskTagEditPage)}?taskId={tt.TaskID}&tagId={tt.TagID}");
-                TaskTagsList.SelectedItem = null;
+                await DisplayAlert("OK", "Deleted", "OK");
+                await LoadAsync();
+            }
+            else
+            {
+                await DisplayAlert("Error", "Delete failed", "OK");
             }
         }
     }

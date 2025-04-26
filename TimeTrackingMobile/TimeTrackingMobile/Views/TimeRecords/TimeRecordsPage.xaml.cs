@@ -1,40 +1,48 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System;
 
 namespace TimeTrackingMobile.Views
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TimeRecordsPage : ContentPage
     {
-        private readonly TimeRecordService _service;
-        private List<TimeRecordModel> _records;
+        private readonly TimeRecordService _service = new TimeRecordService();
+
+        public ObservableCollection<TimeRecordModel> TimeRecords { get; }
+            = new ObservableCollection<TimeRecordModel>();
 
         public TimeRecordsPage()
         {
             InitializeComponent();
-            _service = new TimeRecordService();
+            BindingContext = this;
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            await LoadTimeRecords();
+            if (TimeRecords.Count == 0)
+                await LoadAsync();
         }
 
-        private async void LoadTimeRecordsClicked(object sender, EventArgs e)
-        {
-            await LoadTimeRecords();
-        }
+        private async void OnRefreshClicked(object sender, EventArgs e)
+            => await LoadAsync();
 
-        private async Task LoadTimeRecords()
+        private async void OnAddClicked(object sender, EventArgs e)
+            => await Shell.Current.GoToAsync(nameof(TimeRecordAddPage));
+
+        private async Task LoadAsync()
         {
+            TimeRecords.Clear();
             try
             {
-                _records = await _service.GetAllTimeRecords();
-                TimeRecordsList.ItemsSource = _records;
+                var list = await _service.GetAllTimeRecords();
+                foreach (var tr in list)
+                    TimeRecords.Add(tr);
             }
             catch (Exception ex)
             {
@@ -42,44 +50,43 @@ namespace TimeTrackingMobile.Views
             }
         }
 
-        private async void AddTimeRecordClicked(object sender, EventArgs e)
+        private async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(TimeRecordAddPage));
-        }
+            if (e.CurrentSelection.Count == 0) return;
+            var tr = e.CurrentSelection[0] as TimeRecordModel;
+            ((CollectionView)sender).SelectedItem = null;
+            if (tr == null) return;
 
-        private async void TimeRecordsList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            if (e.SelectedItem is TimeRecordModel rec)
+            string action = await DisplayActionSheet(
+                $"TimeRecord {tr.TimeRecordID}",
+                "Cancel", null,
+                "Edit", "Delete");
+
+            switch (action)
             {
-                var action = await DisplayActionSheet(
-                    $"Selected ID: {rec.TimeRecordID}",
-                    "Cancel",
-                    null,
-                    "Edit",
-                    "Delete");
-
-                if (action == "Edit")
-                {
-                    await Shell.Current.GoToAsync($"{nameof(TimeRecordEditPage)}?timeRecordId={rec.TimeRecordID}");
-                }
-                else if (action == "Delete")
-                {
-                    bool confirm = await DisplayAlert("Confirm", $"Delete TimeRecord {rec.TimeRecordID}?", "Yes", "No");
-                    if (confirm)
+                case "Edit":
+                    await Shell.Current.GoToAsync(
+                        $"{nameof(TimeRecordEditPage)}?recordId={tr.TimeRecordID}");
+                    break;
+                case "Delete":
+                    bool c = await DisplayAlert(
+                        "Confirm",
+                        $"Delete record {tr.TimeRecordID}?",
+                        "Yes", "No");
+                    if (c)
                     {
-                        bool deleted = await _service.DeleteTimeRecord(rec.TimeRecordID);
-                        if (deleted)
+                        bool ok = await _service.DeleteTimeRecord(tr.TimeRecordID);
+                        if (ok)
                         {
                             await DisplayAlert("OK", "Deleted", "OK");
-                            await LoadTimeRecords();
+                            await LoadAsync();
                         }
                         else
                         {
                             await DisplayAlert("Error", "Delete failed", "OK");
                         }
                     }
-                }
-                TimeRecordsList.SelectedItem = null;
+                    break;
             }
         }
     }

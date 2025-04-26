@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TimeTrackingMobile.ViewModels;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace TimeTrackingMobile.Views
@@ -15,7 +9,12 @@ namespace TimeTrackingMobile.Views
         public LoginPage()
         {
             InitializeComponent();
-            this.BindingContext = new LoginViewModel();
+        }
+
+        private async void OnLoginClicked(object sender, System.EventArgs e)
+        {
+            // Prosta symulacja: bez walidacji, od razu w Home
+            await Shell.Current.GoToAsync("//Home");
         }
     }
 }

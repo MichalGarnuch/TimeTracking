@@ -1,6 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
 
@@ -9,38 +9,27 @@ namespace TimeTrackingMobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TaskTagAddPage : ContentPage
     {
-        private readonly TaskTagService _service;
+        private readonly TaskTagService _service = new TaskTagService();
 
         public TaskTagAddPage()
         {
             InitializeComponent();
-            _service = new TaskTagService();
         }
 
-        private async void SaveButtonClicked(object sender, EventArgs e)
+        private async void OnSaveClicked(object sender, EventArgs e)
         {
-            int taskId = 0;
-            int.TryParse(TaskIdEntry.Text, out taskId);
-
-            int tagId = 0;
-            int.TryParse(TagIdEntry.Text, out tagId);
-
-            if (taskId <= 0 || tagId <= 0)
+            if (!int.TryParse(TaskIdEntry.Text, out int taskId)
+             || !int.TryParse(TagIdEntry.Text, out int tagId))
             {
-                await DisplayAlert("Validation", "TaskID and TagID must be > 0", "OK");
+                await DisplayAlert("Validation", "Invalid IDs.", "OK");
                 return;
             }
 
-            var newLink = new TaskTagModel
+            var model = new TaskTagModel { TaskID = taskId, TagID = tagId };
+            bool ok = await _service.CreateTaskTag(model);
+            if (ok)
             {
-                TaskID = taskId,
-                TagID = tagId
-            };
-
-            bool success = await _service.CreateTaskTag(newLink);
-            if (success)
-            {
-                await DisplayAlert("OK", "Link created", "OK");
+                await DisplayAlert("Success", "Link created", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
@@ -49,9 +38,7 @@ namespace TimeTrackingMobile.Views
             }
         }
 
-        private async void CancelButtonClicked(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("..");
-        }
+        private async void OnCancelClicked(object sender, EventArgs e)
+            => await Shell.Current.GoToAsync("..");
     }
 }

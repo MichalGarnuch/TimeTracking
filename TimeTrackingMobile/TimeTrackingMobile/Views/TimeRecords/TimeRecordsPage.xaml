@@ -1,32 +1,53 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ContentPage
     x:Class="TimeTrackingMobile.Views.TimeRecordsPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Time Records">
+    Title="Time Records"
+    BackgroundColor="{StaticResource PageBackgroundColor}">
 
-    <StackLayout Padding="20">
-        <Label Text="Time Records"
-               FontAttributes="Bold"
-               HorizontalOptions="Center"
-               Margin="0,0,0,10" />
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="sync.png"
+                 Text="Refresh"
+                 Order="Primary"
+                 Priority="0"
+                 Clicked="OnRefreshClicked" />
+        <ToolbarItem IconImageSource="add.png"
+                 Text="Add"
+                 Order="Primary"
+                 Priority="1"
+                 Clicked="OnAddClicked" />
+    </ContentPage.ToolbarItems>
 
-        <Button Text="Load TimeRecords"
-                Clicked="LoadTimeRecordsClicked" />
+    <Grid RowDefinitions="120, *">
+        <Frame Grid.Row="0" Padding="20" HasShadow="False" CornerRadius="0">
+            <Frame.Background>
+                <StaticResource Key="AccentGradient"/>
+            </Frame.Background>
+            <Label Text="Time Records"
+             FontSize="Large" FontAttributes="Bold"
+             TextColor="White"
+             VerticalOptions="Center" HorizontalOptions="Center"/>
+        </Frame>
 
-        <ListView x:Name="TimeRecordsList"
-                  Margin="0,10,0,0"
-                  ItemSelected="TimeRecordsList_ItemSelected">
-            <ListView.ItemTemplate>
+        <CollectionView Grid.Row="1"
+                    ItemsSource="{Binding TimeRecords}"
+                    SelectionMode="Single"
+                    SelectionChanged="OnSelectionChanged"
+                    Margin="20">
+            <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding StartTime}"
-                              Detail="{Binding HoursSpent}" />
+                    <Frame Padding="10" Margin="0,0,0,10" CornerRadius="8" HasShadow="True" BackgroundColor="White">
+                        <StackLayout>
+                            <Label Text="{Binding EmployeeID, StringFormat='Emp: {0}'}" />
+                            <Label Text="{Binding TaskID, StringFormat='Task: {0}'}" />
+                            <Label Text="{Binding StartTime, StringFormat='Start: {0:MM/dd/yyyy HH:mm}'}" FontSize="Small"/>
+                            <Label Text="{Binding EndTime, StringFormat='End: {0:MM/dd/yyyy HH:mm}'}" FontSize="Small"/>
+                            <Label Text="{Binding HoursSpent, StringFormat='Hours: {0}'}" FontSize="Small"/>
+                        </StackLayout>
+                    </Frame>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-
-        <Button Text="Add TimeRecord"
-                Margin="0,20,0,0"
-                Clicked="AddTimeRecordClicked" />
-    </StackLayout>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>

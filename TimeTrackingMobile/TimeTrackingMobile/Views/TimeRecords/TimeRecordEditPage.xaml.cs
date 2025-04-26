@@ -1,52 +1,41 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
 
 namespace TimeTrackingMobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    [QueryProperty(nameof(TimeRecordId), "timeRecordId")]
+    [QueryProperty(nameof(RecordId), "recordId")]
     public partial class TimeRecordEditPage : ContentPage
     {
-        private readonly TimeRecordService _service;
-        private TimeRecordModel currentRecord;
+        private readonly TimeRecordService _service = new TimeRecordService();
+        private TimeRecordModel _current;
 
-        private int _timeRecordId;
-        public int TimeRecordId
+        public int RecordId
         {
-            get => _timeRecordId;
-            set
-            {
-                _timeRecordId = value;
-                _ = LoadRecord();
-            }
+            get => _id;
+            set { _id = value; LoadRecord(value); }
         }
+        private int _id;
 
         public TimeRecordEditPage()
         {
             InitializeComponent();
-            _service = new TimeRecordService();
         }
 
-        private async System.Threading.Tasks.Task LoadRecord()
+        private async void LoadRecord(int id)
         {
             try
             {
-                currentRecord = await _service.GetTimeRecord(_timeRecordId);
-                if (currentRecord == null)
-                {
-                    await DisplayAlert("Error", "Not found", "OK");
-                    await Shell.Current.GoToAsync("..");
-                    return;
-                }
-
-                EmployeeIdEntry.Text = currentRecord.EmployeeID.ToString();
-                TaskIdEntry.Text = currentRecord.TaskID.ToString();
-                StartDatePicker.Date = currentRecord.StartTime;
-                EndDatePicker.Date = currentRecord.EndTime;
-                HoursSpentEntry.Text = currentRecord.HoursSpent.ToString();
+                _current = await _service.GetTimeRecord(id);
+                if (_current == null) throw new Exception("Not found");
+                EmpEntry.Text = _current.EmployeeID.ToString();
+                TaskEntry.Text = _current.TaskID.ToString();
+                StartDatePicker.Date = _current.StartTime;
+                EndDatePicker.Date = _current.EndTime;
+                HoursEntry.Text = _current.HoursSpent.ToString();
             }
             catch (Exception ex)
             {
@@ -55,29 +44,26 @@ namespace TimeTrackingMobile.Views
             }
         }
 
-        private async void SaveButtonClicked(object sender, EventArgs e)
+        private async void OnSaveClicked(object sender, EventArgs e)
         {
-            if (currentRecord == null) return;
-
-            int empId = 0;
-            int.TryParse(EmployeeIdEntry.Text, out empId);
-            currentRecord.EmployeeID = empId;
-
-            int taskId = 0;
-            int.TryParse(TaskIdEntry.Text, out taskId);
-            currentRecord.TaskID = taskId;
-
-            currentRecord.StartTime = StartDatePicker.Date;
-            currentRecord.EndTime = EndDatePicker.Date;
-
-            decimal hours = 0;
-            decimal.TryParse(HoursSpentEntry.Text, out hours);
-            currentRecord.HoursSpent = hours;
-
-            bool updated = await _service.UpdateTimeRecord(_timeRecordId, currentRecord);
-            if (updated)
+            if (!int.TryParse(EmpEntry.Text, out int empId)
+             || !int.TryParse(TaskEntry.Text, out int taskId)
+             || !decimal.TryParse(HoursEntry.Text, out decimal hrs))
             {
-                await DisplayAlert("Success", "Updated", "OK");
+                await DisplayAlert("Validation", "Invalid numeric fields.", "OK");
+                return;
+            }
+
+            _current.EmployeeID = empId;
+            _current.TaskID = taskId;
+            _current.StartTime = StartDatePicker.Date;
+            _current.EndTime = EndDatePicker.Date;
+            _current.HoursSpent = hrs;
+
+            bool ok = await _service.UpdateTimeRecord(_current.TimeRecordID, _current);
+            if (ok)
+            {
+                await DisplayAlert("Success", "Saved", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
@@ -86,9 +72,24 @@ namespace TimeTrackingMobile.Views
             }
         }
 
-        private async void CancelButtonClicked(object sender, EventArgs e)
+        private async void OnDeleteClicked(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync("..");
+            bool confirm = await DisplayAlert("Confirm", "Delete this record?", "Yes", "No");
+            if (!confirm) return;
+
+            bool ok = await _service.DeleteTimeRecord(_current.TimeRecordID);
+            if (ok)
+            {
+                await DisplayAlert("Success", "Deleted", "OK");
+                await Shell.Current.GoToAsync("..");
+            }
+            else
+            {
+                await DisplayAlert("Error", "Delete failed", "OK");
+            }
         }
+
+        private async void OnCancelClicked(object sender, EventArgs e)
+            => await Shell.Current.GoToAsync("..");
     }
 }

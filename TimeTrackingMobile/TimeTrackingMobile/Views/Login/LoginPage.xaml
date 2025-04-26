@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ContentPage
     x:Class="TimeTrackingMobile.Views.LoginPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
@@ -6,41 +6,32 @@
     Shell.NavBarIsVisible="False"
     BackgroundColor="{StaticResource PageBackgroundColor}">
 
-    <StackLayout VerticalOptions="FillAndExpand"
-                 HorizontalOptions="CenterAndExpand"
-                 Spacing="0">
-
-        <!-- Górny baner: Frame z gradientem -->
-        <Frame HasShadow="False"
-               CornerRadius="0"
-               Padding="0"
-               HeightRequest="200">
+    <Grid RowDefinitions="200, *">
+        <!-- Banner -->
+        <Frame Grid.Row="0" HasShadow="False" CornerRadius="0">
             <Frame.Background>
                 <StaticResource Key="AccentGradient"/>
             </Frame.Background>
-            <StackLayout HorizontalOptions="Center"
-                         VerticalOptions="Center">
+            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
                 <Label Text="TimeTracking Login"
-                       FontSize="Large"
-                       TextColor="White"
-                       FontAttributes="Bold"/>
+               FontSize="Large"
+               FontAttributes="Bold"
+               TextColor="White" />
             </StackLayout>
         </Frame>
 
-        <!-- Reszta strony -->
-        <StackLayout Padding="20" Spacing="20" VerticalOptions="CenterAndExpand">
-            <Label Text="Please sign in"
-                   Style="{StaticResource HeaderLabelStyle}"
-                   HorizontalOptions="Center" />
-
-            <!-- ewentualnie Entry na login i hasło -->
-            <Entry Placeholder="Username..." />
-            <Entry Placeholder="Password..." IsPassword="True" />
-
+        <!-- Formularz logowania -->
+        <StackLayout Grid.Row="1" Padding="20" Spacing="20" VerticalOptions="Center">
+            <Entry x:Name="UsernameEntry"
+             Placeholder="Username"
+             Keyboard="Default" />
+            <Entry x:Name="PasswordEntry"
+             Placeholder="Password"
+             IsPassword="True" />
             <Button Text="Login"
-                    Command="{Binding LoginCommand}"
-                    WidthRequest="180"
-                    HorizontalOptions="Center" />
+              Clicked="OnLoginClicked"
+              HorizontalOptions="Center"
+              WidthRequest="200"/>
         </StackLayout>
-    </StackLayout>
+    </Grid>
 </ContentPage>
