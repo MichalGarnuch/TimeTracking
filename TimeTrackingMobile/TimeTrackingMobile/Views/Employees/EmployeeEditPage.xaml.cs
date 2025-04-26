@@ -6,68 +6,98 @@ using TimeTrackingMobile.Services;
 
 namespace TimeTrackingMobile.Views
 {
-    [QueryProperty(nameof(EmployeeId), "employeeId")]
     [XamlCompilation(XamlCompilationOptions.Compile)]
+    [QueryProperty(nameof(EmployeeId), "employeeId")]
     public partial class EmployeeEditPage : ContentPage
     {
-        private readonly EmployeeService _employeeService;
+        private readonly EmployeeService _service = new EmployeeService();
+        private EmployeeModel _current;
 
-        // Properta, przez którą Shell przekazuje param "employeeId"
-        public int EmployeeId { get; set; }
-
-        private EmployeeModel currentEmployee;
+        public int EmployeeId
+        {
+            get => _empId;
+            set
+            {
+                _empId = value;
+                LoadEmployee(value);
+            }
+        }
+        private int _empId;
 
         public EmployeeEditPage()
         {
             InitializeComponent();
-            _employeeService = new EmployeeService();
         }
 
-        protected override async void OnAppearing()
+        private async void LoadEmployee(int id)
         {
-            base.OnAppearing();
-
-            // Wczytujemy pracownika
-            currentEmployee = await _employeeService.GetEmployee(EmployeeId);
-            if (currentEmployee == null)
+            try
             {
-                await DisplayAlert("Error", "Employee not found", "OK");
+                _current = await _service.GetEmployee(id);
+                if (_current == null) throw new Exception("Not found");
+                NameEntry.Text = _current.Name;
+                EmailEntry.Text = _current.Email;
+                DeptIdEntry.Text = _current.DepartmentID.ToString();
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "OK");
                 await Shell.Current.GoToAsync("..");
+            }
+        }
+
+        private async void OnSaveClicked(object sender, EventArgs e)
+        {
+            var name = NameEntry.Text?.Trim();
+            var email = EmailEntry.Text?.Trim();
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email))
+            {
+                await DisplayAlert("Validation", "Name and Email are required.", "OK");
                 return;
             }
 
-            // Wypełniamy pola
-            NameEntry.Text = currentEmployee.Name;
-            EmailEntry.Text = currentEmployee.Email;
-            DepartmentIdEntry.Text = currentEmployee.DepartmentID.ToString();
-        }
-
-        private async void SaveButtonClicked(object sender, EventArgs e)
-        {
-            // Aktualizujemy dane w obiekcie
-            currentEmployee.Name = NameEntry.Text;
-            currentEmployee.Email = EmailEntry.Text;
-
-            int deptId;
-            int.TryParse(DepartmentIdEntry.Text, out deptId);
-            currentEmployee.DepartmentID = deptId;
-
-            // Wywołanie metody update w serwisie
-            bool success = await _employeeService.UpdateEmployee(currentEmployee.EmployeeID, currentEmployee);
-            if (success)
+            if (!int.TryParse(DeptIdEntry.Text, out int deptId))
             {
-                await DisplayAlert("Success", "Employee updated", "OK");
+                await DisplayAlert("Validation", "Invalid Department ID.", "OK");
+                return;
+            }
+
+            _current.Name = name;
+            _current.Email = email;
+            _current.DepartmentID = deptId;
+
+            bool ok = await _service.UpdateEmployee(_current.EmployeeID, _current);
+            if (ok)
+            {
+                await DisplayAlert("Success", "Updated", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
             {
-                await DisplayAlert("Error", "Failed to update", "OK");
+                await DisplayAlert("Error", "Update failed", "OK");
             }
         }
 
-        private async void CancelButtonClicked(object sender, EventArgs e)
+        private async void OnDeleteClicked(object sender, EventArgs e)
         {
-            // cofamy się
+            bool confirm = await DisplayAlert(
+                "Confirm", "Delete this employee?", "Yes", "No");
+            if (!confirm) return;
+
+            bool ok = await _service.DeleteEmployee(_current.EmployeeID);
+            if (ok)
+            {
+                await DisplayAlert("Success", "Deleted", "OK");
+                await Shell.Current.GoToAsync("..");
+            }
+            else
+            {
+                await DisplayAlert("Error", "Delete failed", "OK");
+            }
+        }
+
+        private async void OnCancelClicked(object sender, EventArgs e)
+        {
             await Shell.Current.GoToAsync("..");
         }
     }

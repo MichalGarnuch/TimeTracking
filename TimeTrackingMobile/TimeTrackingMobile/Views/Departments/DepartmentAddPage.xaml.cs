@@ -1,6 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
 
@@ -9,42 +9,36 @@ namespace TimeTrackingMobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DepartmentAddPage : ContentPage
     {
-        private readonly DepartmentService _departmentService;
+        private readonly DepartmentService _service = new DepartmentService();
 
         public DepartmentAddPage()
         {
             InitializeComponent();
-            _departmentService = new DepartmentService();
         }
 
-        private async void SaveButtonClicked(object sender, EventArgs e)
+        private async void OnSaveClicked(object sender, EventArgs e)
         {
-            var name = DepartmentNameEntry.Text;
-            if (string.IsNullOrWhiteSpace(name))
+            var name = DepartmentNameEntry.Text?.Trim();
+            if (string.IsNullOrEmpty(name))
             {
-                await DisplayAlert("Validation", "Department Name cannot be empty.", "OK");
+                await DisplayAlert("Validation", "Name cannot be empty.", "OK");
                 return;
             }
 
-            var newDept = new DepartmentModel
-            {
-                DepartmentName = name
-            };
-
-            bool success = await _departmentService.CreateDepartment(newDept);
+            var dept = new DepartmentModel { DepartmentName = name };
+            bool success = await _service.CreateDepartment(dept);
             if (success)
             {
-                await DisplayAlert("Success", "Department created!", "OK");
-                // wracamy do poprzedniej strony (DepartmentsPage)
+                await DisplayAlert("Success", "Department added.", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
             {
-                await DisplayAlert("Error", "Failed to create department", "OK");
+                await DisplayAlert("Error", "Could not add department.", "OK");
             }
         }
 
-        private async void CancelButtonClicked(object sender, EventArgs e)
+        private async void OnCancelClicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("..");
         }

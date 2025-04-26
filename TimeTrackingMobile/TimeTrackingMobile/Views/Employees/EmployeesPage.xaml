@@ -3,66 +3,64 @@
     x:Class="TimeTrackingMobile.Views.EmployeesPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Employees">
+    Title="Employees"
+    BackgroundColor="{StaticResource PageBackgroundColor}">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="sync.png"
-                     Order="Primary"
-                     Priority="0"
-                     Clicked="OnSyncClicked" />
-        <ToolbarItem IconImageSource="power.png"
-                     Order="Primary"
-                     Priority="1"
-                     Clicked="OnLogoutClicked" />
+                 Text="Refresh"
+                 Order="Primary"
+                 Priority="0"
+                 Clicked="OnRefreshClicked" />
+        <ToolbarItem IconImageSource="add.png"
+                 Text="Add"
+                 Order="Primary"
+                 Priority="1"
+                 Clicked="OnAddClicked" />
     </ContentPage.ToolbarItems>
 
-    <StackLayout Padding="20">
+    <Grid RowDefinitions="120, *">
+        <!-- Banner -->
+        <Frame Grid.Row="0"
+           Padding="20"
+           HasShadow="False"
+           CornerRadius="0">
+            <Frame.Background>
+                <StaticResource Key="AccentGradient" />
+            </Frame.Background>
+            <Label Text="Employees"
+             FontSize="Large"
+             FontAttributes="Bold"
+             TextColor="White"
+             VerticalOptions="Center"
+             HorizontalOptions="Center"/>
+        </Frame>
 
-        <Grid ColumnSpacing="10"
-              Padding="0"
-              Margin="0,0,0,10"
-              HorizontalOptions="End"
-              HeightRequest="40">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <ImageButton Source="Assets/sync.png"
-                         BackgroundColor="Transparent"
-                         HeightRequest="58"
-                         WidthRequest="58"
-                         Clicked="OnSyncClicked"
-                         Grid.Column="0" />
-            <ImageButton Source="Assets/power.png"
-                         BackgroundColor="Transparent"
-                         HeightRequest="58"
-                         WidthRequest="58"
-                         Clicked="OnLogoutClicked"
-                         Grid.Column="1" />
-        </Grid>
-
-        <Label x:Name="HeaderLabel"
-               FontAttributes="Bold"
-               HorizontalOptions="Center"
-               Margin="0,0,0,10" />
-
-        <Button Text="Load Employees"
-                Clicked="LoadEmployeesClicked"
-                Margin="0,0,0,10" />
-
-        <ListView x:Name="EmployeesList"
-                  ItemSelected="EmployeesList_ItemSelected">
-            <ListView.ItemTemplate>
+        <!-- Kolekcja pracowników -->
+        <CollectionView Grid.Row="1"
+                    ItemsSource="{Binding Employees}"
+                    SelectionMode="Single"
+                    SelectionChanged="OnSelectionChanged"
+                    Margin="20">
+            <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding Name}"
-                              Detail="{Binding Email}" />
+                    <Frame Padding="10"
+                 Margin="0,0,0,10"
+                 CornerRadius="8"
+                 HasShadow="True"
+                 BackgroundColor="White">
+                        <StackLayout>
+                            <Label Text="{Binding Name}"
+                     FontSize="Medium"
+                     TextColor="{StaticResource TextDarkColor}"/>
+                            <Label Text="{Binding Email}"
+                     FontSize="Small"
+                     TextColor="{StaticResource TextDarkColor}"
+                     Opacity="0.7"/>
+                        </StackLayout>
+                    </Frame>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-
-        <Button Text="Add Employee"
-                Clicked="AddEmployeeClicked"
-                Margin="0,20,0,0" />
-    </StackLayout>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>

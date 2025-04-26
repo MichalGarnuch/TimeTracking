@@ -1,51 +1,41 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
 
 namespace TimeTrackingMobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    // Deklarujemy, że strona przyjmie query param "departmentId"
     [QueryProperty(nameof(DepartmentId), "departmentId")]
     public partial class DepartmentEditPage : ContentPage
     {
-        private readonly DepartmentService _departmentService;
-        private DepartmentModel currentDepartment;
+        private readonly DepartmentService _service = new DepartmentService();
+        private DepartmentModel _current;
 
-        // To jest ID, które przyjdzie w URL np. "?departmentId=5"
-        private int _departmentId;
         public int DepartmentId
         {
-            get => _departmentId;
+            get => _deptId;
             set
             {
-                _departmentId = value;
-                // Po ustawieniu parametru wczytajmy dane (async)
-                _ = LoadDepartment();
+                _deptId = value;
+                LoadDepartment(value);
             }
         }
+        private int _deptId;
 
         public DepartmentEditPage()
         {
             InitializeComponent();
-            _departmentService = new DepartmentService();
         }
 
-        private async System.Threading.Tasks.Task LoadDepartment()
+        private async void LoadDepartment(int id)
         {
             try
             {
-                currentDepartment = await _departmentService.GetDepartment(_departmentId);
-                if (currentDepartment == null)
-                {
-                    await DisplayAlert("Error", "Department not found", "OK");
-                    await Shell.Current.GoToAsync("..");
-                    return;
-                }
-                // Wyświetlamy nazwę
-                DepartmentNameEntry.Text = currentDepartment.DepartmentName;
+                _current = await _service.GetDepartment(id);
+                if (_current == null) throw new Exception("Not found");
+                DepartmentNameEntry.Text = _current.DepartmentName;
             }
             catch (Exception ex)
             {
@@ -54,57 +44,50 @@ namespace TimeTrackingMobile.Views
             }
         }
 
-        private async void SaveButtonClicked(object sender, EventArgs e)
+        private async void OnSaveClicked(object sender, EventArgs e)
         {
-            if (currentDepartment == null) return;
-
-            // Odczyt nowej nazwy
-            var newName = DepartmentNameEntry.Text;
-            if (string.IsNullOrWhiteSpace(newName))
+            var newName = DepartmentNameEntry.Text?.Trim();
+            if (string.IsNullOrEmpty(newName))
             {
-                await DisplayAlert("Validation", "Department Name cannot be empty.", "OK");
+                await DisplayAlert("Validation", "Name cannot be empty.", "OK");
                 return;
             }
 
-            currentDepartment.DepartmentName = newName;
-            bool success = await _departmentService.UpdateDepartment(_departmentId, currentDepartment);
-            if (success)
+            _current.DepartmentName = newName;
+            bool ok = await _service.UpdateDepartment(_current.DepartmentID, _current);
+            if (ok)
             {
-                await DisplayAlert("OK", "Department updated", "OK");
+                await DisplayAlert("Success", "Updated.", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
             {
-                await DisplayAlert("Error", "Failed to update", "OK");
+                await DisplayAlert("Error", "Update failed.", "OK");
             }
         }
 
-        private async void DeleteButtonClicked(object sender, EventArgs e)
+        private async void OnDeleteClicked(object sender, EventArgs e)
         {
-            if (currentDepartment == null) return;
-
-            bool confirmed = await DisplayAlert(
+            bool confirm = await DisplayAlert(
                 "Confirm",
-                $"Are you sure to delete '{currentDepartment.DepartmentName}'?",
-                "Yes", "No");
+                $"Delete '{_current.DepartmentName}'?",
+                "Yes",
+                "No");
+            if (!confirm) return;
 
-            if (!confirmed)
-                return;
-
-            bool success = await _departmentService.DeleteDepartment(_departmentId);
-            if (success)
+            bool ok = await _service.DeleteDepartment(_current.DepartmentID);
+            if (ok)
             {
-                await DisplayAlert("OK", "Department deleted", "OK");
-                // wracamy do listy
+                await DisplayAlert("Success", "Deleted.", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
             {
-                await DisplayAlert("Error", "Delete failed", "OK");
+                await DisplayAlert("Error", "Delete failed.", "OK");
             }
         }
 
-        private async void CancelButtonClicked(object sender, EventArgs e)
+        private async void OnCancelClicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("..");
         }

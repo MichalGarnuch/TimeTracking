@@ -1,82 +1,98 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using TimeTrackingMobile.Services;
 using TimeTrackingMobile.Models;
+using TimeTrackingMobile.Services;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System;
-using System.Collections.Generic;
 
 namespace TimeTrackingMobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    [QueryProperty(nameof(DepartmentID), "departmentId")]
     public partial class EmployeesPage : ContentPage
     {
-        private readonly EmployeeService _employeeService = new EmployeeService();
-        private int _departmentId;
+        private readonly EmployeeService _service = new EmployeeService();
 
-        public int DepartmentID
-        {
-            get => _departmentId;
-            set
-            {
-                _departmentId = value;
-                _ = LoadEmployees();
-            }
-        }
+        public ObservableCollection<EmployeeModel> Employees { get; }
+            = new ObservableCollection<EmployeeModel>();
 
         public EmployeesPage()
         {
             InitializeComponent();
+            BindingContext = this;
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            await LoadEmployees();
+            if (Employees.Count == 0)
+                await LoadEmployeesAsync();
         }
 
-        private async Task LoadEmployees()
+        private async void OnRefreshClicked(object sender, EventArgs e)
         {
-            try
-            {
-                var employees = await _employeeService.GetEmployeesByDepartment(_departmentId);
-                EmployeesList.ItemsSource = employees;
-                HeaderLabel.Text = $"Dział {_departmentId} – pracownicy ({employees.Count})";
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Błąd", ex.Message, "OK");
-            }
+            await LoadEmployeesAsync();
         }
 
-        private async void LoadEmployeesClicked(object sender, EventArgs e)
-        {
-            await LoadEmployees();
-        }
-
-        private async void AddEmployeeClicked(object sender, EventArgs e)
+        private async void OnAddClicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync(nameof(EmployeeAddPage));
         }
 
-        private async void EmployeesList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private async Task LoadEmployeesAsync()
         {
-            if (e.SelectedItem is EmployeeModel selectedEmployee)
+            Employees.Clear();
+            try
             {
-                await Shell.Current.GoToAsync($"{nameof(EmployeeEditPage)}?employeeId={selectedEmployee.EmployeeID}");
-                EmployeesList.SelectedItem = null;
+                var list = await _service.GetAllEmployees();
+                foreach (var emp in list)
+                    Employees.Add(emp);
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "OK");
             }
         }
 
-        private async void OnSyncClicked(object sender, EventArgs e)
+        private async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            await LoadEmployees();
-        }
+            if (e.CurrentSelection.Count == 0) return;
+            var emp = e.CurrentSelection[0] as EmployeeModel;
+            ((CollectionView)sender).SelectedItem = null;
 
-        private async void OnLogoutClicked(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("//LoginPage");
+            if (emp == null) return;
+
+            string action = await DisplayActionSheet(
+                $"{emp.Name}",
+                "Cancel",
+                null,
+                "Edit",
+                "Delete");
+
+            switch (action)
+            {
+                case "Edit":
+                    await Shell.Current.GoToAsync($"{nameof(EmployeeEditPage)}?employeeId={emp.EmployeeID}");
+                    break;
+                case "Delete":
+                    bool confirm = await DisplayAlert("Confirm",
+                        $"Delete '{emp.Name}'?",
+                        "Yes", "No");
+                    if (confirm)
+                    {
+                        bool ok = await _service.DeleteEmployee(emp.EmployeeID);
+                        if (ok)
+                        {
+                            await DisplayAlert("OK", "Deleted", "OK");
+                            await LoadEmployeesAsync();
+                        }
+                        else
+                        {
+                            await DisplayAlert("Error", "Delete failed", "OK");
+                        }
+                    }
+                    break;
+            }
         }
     }
 }

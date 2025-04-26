@@ -1,29 +1,47 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ContentPage
     x:Class="TimeTrackingMobile.Views.EmployeeAddPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Add Employee"
-    Shell.PresentationMode="ModalAnimated"
-    >
+    BackgroundColor="{StaticResource PageBackgroundColor}"
+    Shell.PresentationMode="ModalAnimated">
 
-    <StackLayout Padding="20" Spacing="10">
-        <Label Text="Create new Employee"
-               FontAttributes="Bold"
-               HorizontalOptions="Center" />
+    <Grid RowDefinitions="120, *">
+        <!-- Banner -->
+        <Frame Grid.Row="0"
+           Padding="20"
+           HasShadow="False"
+           CornerRadius="0">
+            <Frame.Background>
+                <StaticResource Key="AccentGradient" />
+            </Frame.Background>
+            <Label Text="Add Employee"
+             FontSize="Large"
+             FontAttributes="Bold"
+             TextColor="White"
+             VerticalOptions="Center"
+             HorizontalOptions="Center"/>
+        </Frame>
 
-        <Label Text="Name" />
-        <Entry x:Name="NameEntry" />
+        <!-- Formularz -->
+        <StackLayout Grid.Row="1" Padding="20" Spacing="15">
+            <Label Text="Name" />
+            <Entry x:Name="NameEntry" Placeholder="Full name" />
 
-        <Label Text="Email" />
-        <Entry x:Name="EmailEntry" />
+            <Label Text="Email" />
+            <Entry x:Name="EmailEntry" Placeholder="user@example.com" Keyboard="Email" />
 
-        <Label Text="Department ID" />
-        <Entry x:Name="DepartmentIdEntry" Keyboard="Numeric" />
+            <Label Text="Department ID" />
+            <Entry x:Name="DeptIdEntry" Keyboard="Numeric" Placeholder="e.g. 1" />
 
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-            <Button Text="Save" Clicked="SaveButtonClicked" Margin="10,0" />
-            <Button Text="Cancel" Clicked="CancelButtonClicked" Margin="10,0" />
+            <StackLayout Orientation="Horizontal"
+                   HorizontalOptions="Center"
+                   Spacing="20"
+                   Margin="0,20,0,0">
+                <Button Text="Save" Clicked="OnSaveClicked" />
+                <Button Text="Cancel" Clicked="OnCancelClicked" />
+            </StackLayout>
         </StackLayout>
-    </StackLayout>
+    </Grid>
 </ContentPage>
