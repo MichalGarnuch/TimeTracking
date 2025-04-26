@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using TimeTrackingMobile.Models;
@@ -10,13 +12,15 @@ namespace TimeTrackingMobile.Views
     [QueryProperty(nameof(TaskId), "taskId")]
     public partial class TaskEditPage : ContentPage
     {
-        private readonly TaskService _service = new TaskService();
+        private readonly TaskService _taskSvc = new TaskService();
+        private readonly ProjectService _projSvc = new ProjectService();
         private TaskModel _current;
+        private List<ProjectModel> _projects;
 
         public int TaskId
         {
+            set { _id = value; }
             get => _id;
-            set { _id = value; LoadTask(value); }
         }
         private int _id;
 
@@ -25,75 +29,79 @@ namespace TimeTrackingMobile.Views
             InitializeComponent();
         }
 
-        private async void LoadTask(int id)
+        protected override async void OnAppearing()
         {
-            try
+            base.OnAppearing();
+            await LoadProjectsAsync();
+            await LoadTaskAsync();
+        }
+
+        private async System.Threading.Tasks.Task LoadProjectsAsync()
+        {
+            _projects = await _projSvc.GetAllProjects();
+            ProjPicker.ItemsSource = _projects;
+        }
+
+        private async System.Threading.Tasks.Task LoadTaskAsync()
+        {
+            _current = await _taskSvc.GetTask(_id);
+            if (_current == null)
             {
-                _current = await _service.GetTask(id);
-                if (_current == null) throw new Exception("Not found");
-                NameEntry.Text = _current.TaskName;
-                DescEditor.Text = _current.Description;
-                ProjectIdEntry.Text = _current.ProjectID.ToString();
-                StatusEntry.Text = _current.Status;
-                PriorityEntry.Text = _current.Priority.ToString();
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Error", ex.Message, "OK");
+                await DisplayAlert("Error", "Nie znaleziono zadania.", "OK");
                 await Shell.Current.GoToAsync("..");
+                return;
             }
+
+            NameEntry.Text = _current.TaskName;
+            DescEditor.Text = _current.Description;
+            StatusEntry.Text = _current.Status;
+            PriorityEntry.Text = _current.Priority.ToString();
+
+            ProjPicker.SelectedItem =
+              _projects.FirstOrDefault(p => p.ProjectID == _current.ProjectID);
         }
 
         private async void OnSaveClicked(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(NameEntry.Text))
+            if (string.IsNullOrWhiteSpace(NameEntry.Text)
+             || !(ProjPicker.SelectedItem is ProjectModel selProj)
+             || !int.TryParse(PriorityEntry.Text, out int pr))
             {
-                await DisplayAlert("Validation", "Name required.", "OK");
-                return;
-            }
-            if (!int.TryParse(ProjectIdEntry.Text, out int projId))
-            {
-                await DisplayAlert("Validation", "Invalid Project ID.", "OK");
-                return;
-            }
-            if (!int.TryParse(PriorityEntry.Text, out int pr))
-            {
-                await DisplayAlert("Validation", "Invalid priority.", "OK");
+                await DisplayAlert("Validation", "Wypełnij wszystkie pola poprawnie.", "OK");
                 return;
             }
 
             _current.TaskName = NameEntry.Text.Trim();
             _current.Description = DescEditor.Text?.Trim();
-            _current.ProjectID = projId;
+            _current.ProjectID = selProj.ProjectID;
             _current.Status = StatusEntry.Text?.Trim();
             _current.Priority = pr;
 
-            bool ok = await _service.UpdateTask(_current.TaskID, _current);
+            bool ok = await _taskSvc.UpdateTask(_current.TaskID, _current);
             if (ok)
             {
-                await DisplayAlert("Success", "Saved", "OK");
+                await DisplayAlert("Success", "Zapisano zmiany.", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
             {
-                await DisplayAlert("Error", "Update failed", "OK");
+                await DisplayAlert("Error", "Aktualizacja nie powiodła się.", "OK");
             }
         }
 
         private async void OnDeleteClicked(object sender, EventArgs e)
         {
-            bool confirm = await DisplayAlert("Confirm", "Delete this task?", "Yes", "No");
+            bool confirm = await DisplayAlert("Confirm", $"Usuń zadanie '{_current.TaskName}'?", "Tak", "Nie");
             if (!confirm) return;
 
-            bool ok = await _service.DeleteTask(_current.TaskID);
-            if (ok)
+            if (await _taskSvc.DeleteTask(_current.TaskID))
             {
-                await DisplayAlert("Success", "Deleted", "OK");
+                await DisplayAlert("Success", "Usunięto.", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
             {
-                await DisplayAlert("Error", "Delete failed", "OK");
+                await DisplayAlert("Error", "Usuwanie nie powiodło się.", "OK");
             }
         }
 

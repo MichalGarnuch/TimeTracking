@@ -8,6 +8,7 @@
     Shell.PresentationMode="ModalAnimated">
 
     <Grid RowDefinitions="120, *">
+        <!-- banner -->
         <Frame Grid.Row="0" Padding="20" HasShadow="False" CornerRadius="0">
             <Frame.Background>
                 <StaticResource Key="AccentGradient"/>
@@ -20,22 +21,23 @@
              HorizontalOptions="Center"/>
         </Frame>
 
+        <!-- formularz -->
         <ScrollView Grid.Row="1" Padding="20">
             <StackLayout Spacing="15">
 
                 <Label Text="Project Name" />
                 <Entry x:Name="NameEntry" />
 
-                <Label Text="Project Type ID" />
-                <Entry x:Name="TypeIdEntry" Keyboard="Numeric" />
+                <Label Text="Project Type" />
+                <Picker x:Name="TypePicker"
+                Title="Select project type"
+                ItemDisplayBinding="{Binding TypeName}" />
 
                 <Label Text="Start Date" />
-                <DatePicker x:Name="StartPicker"
-                    Format="dd/MM/yyyy" />
+                <DatePicker x:Name="StartPicker" Format="dd/MM/yyyy" />
 
                 <Label Text="End Date" />
-                <DatePicker x:Name="EndPicker"
-                    Format="dd/MM/yyyy" />
+                <DatePicker x:Name="EndPicker" Format="dd/MM/yyyy" />
 
                 <Label Text="Budget" />
                 <Entry x:Name="BudgetEntry" Keyboard="Numeric" />

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using TimeTrackingMobile.Models;
@@ -9,28 +11,29 @@ namespace TimeTrackingMobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TaskAddPage : ContentPage
     {
-        private readonly TaskService _service = new TaskService();
+        private readonly TaskService _taskSvc = new TaskService();
+        private readonly ProjectService _projSvc = new ProjectService();
+        private List<ProjectModel> _projects;
 
         public TaskAddPage()
         {
             InitializeComponent();
+            LoadProjects();
+        }
+
+        private async void LoadProjects()
+        {
+            _projects = await _projSvc.GetAllProjects();
+            ProjPicker.ItemsSource = _projects;
         }
 
         private async void OnSaveClicked(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(NameEntry.Text))
+            if (string.IsNullOrWhiteSpace(NameEntry.Text)
+             || !(ProjPicker.SelectedItem is ProjectModel selProj)
+             || !int.TryParse(PriorityEntry.Text, out int pr))
             {
-                await DisplayAlert("Validation", "Name required.", "OK");
-                return;
-            }
-            if (!int.TryParse(ProjectIdEntry.Text, out int projId))
-            {
-                await DisplayAlert("Validation", "Invalid Project ID.", "OK");
-                return;
-            }
-            if (!int.TryParse(PriorityEntry.Text, out int pr))
-            {
-                await DisplayAlert("Validation", "Invalid priority.", "OK");
+                await DisplayAlert("Validation", "Wypełnij wszystkie pola poprawnie.", "OK");
                 return;
             }
 
@@ -38,20 +41,20 @@ namespace TimeTrackingMobile.Views
             {
                 TaskName = NameEntry.Text.Trim(),
                 Description = DescEditor.Text?.Trim(),
-                ProjectID = projId,
+                ProjectID = selProj.ProjectID,
                 Status = StatusEntry.Text?.Trim(),
                 Priority = pr
             };
 
-            bool ok = await _service.CreateTask(task);
+            bool ok = await _taskSvc.CreateTask(task);
             if (ok)
             {
-                await DisplayAlert("Success", "Created", "OK");
+                await DisplayAlert("Success", "Zadanie dodane.", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
             {
-                await DisplayAlert("Error", "Create failed", "OK");
+                await DisplayAlert("Error", "Dodanie nie powiodło się.", "OK");
             }
         }
 

@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace TimeTrackingMobile.Views
 {
@@ -10,13 +14,15 @@ namespace TimeTrackingMobile.Views
     [QueryProperty(nameof(ProjectId), "projectId")]
     public partial class ProjectEditPage : ContentPage
     {
-        private readonly ProjectService _service = new ProjectService();
+        private readonly ProjectService _projectSvc = new ProjectService();
+        private readonly ProjectTypeService _typeSvc = new ProjectTypeService();
         private ProjectModel _current;
+        private List<ProjectTypeModel> _types;
 
         public int ProjectId
         {
+            set { _id = value; }
             get => _id;
-            set { _id = value; LoadProject(value); }
         }
         private int _id;
 
@@ -25,77 +31,80 @@ namespace TimeTrackingMobile.Views
             InitializeComponent();
         }
 
-        private async void LoadProject(int id)
+        protected override async void OnAppearing()
         {
-            try
+            base.OnAppearing();
+            await LoadTypesAsync();
+            await LoadProjectAsync();
+        }
+
+        private async Task LoadTypesAsync()
+        {
+            _types = await _typeSvc.GetAllProjectTypes();
+            TypePicker.ItemsSource = _types;
+        }
+
+        private async Task LoadProjectAsync()
+        {
+            _current = await _projectSvc.GetProject(_id);
+            if (_current == null)
             {
-                _current = await _service.GetProject(id);
-                if (_current == null) throw new Exception("Nie odnaleziono");
-                NameEntry.Text = _current.ProjectName;
-                TypeIdEntry.Text = _current.ProjectTypeID.ToString();
-                StartPicker.Date = _current.StartDate;
-                EndPicker.Date = _current.EndDate;
-                BudgetEntry.Text = _current.Budget.ToString();
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Error", ex.Message, "OK");
+                await DisplayAlert("Error", "Nie znaleziono projektu.", "OK");
                 await Shell.Current.GoToAsync("..");
+                return;
             }
+
+            NameEntry.Text = _current.ProjectName;
+            BudgetEntry.Text = _current.Budget.ToString();
+            StartPicker.Date = _current.StartDate;
+            EndPicker.Date = _current.EndDate;
+
+            // wybieramy w Pickerze ten typ
+            TypePicker.SelectedItem = _types
+              .FirstOrDefault(t => t.ProjectTypeID == _current.ProjectTypeID);
         }
 
         private async void OnSaveClicked(object sender, EventArgs e)
         {
-            // walidacja analogicznie do Add
-            if (string.IsNullOrWhiteSpace(NameEntry.Text))
+            if (string.IsNullOrWhiteSpace(NameEntry.Text)
+             || !(TypePicker.SelectedItem is ProjectTypeModel selType)
+             || !decimal.TryParse(BudgetEntry.Text, out decimal budget))
             {
-                await DisplayAlert("Validation", "Name required.", "OK");
-                return;
-            }
-            if (!int.TryParse(TypeIdEntry.Text, out int typeId))
-            {
-                await DisplayAlert("Validation", "Invalid Type ID.", "OK");
-                return;
-            }
-            if (!decimal.TryParse(BudgetEntry.Text, out decimal budget))
-            {
-                await DisplayAlert("Validation", "Invalid budget.", "OK");
+                await DisplayAlert("Validation", "Wypełnij wszystkie pola poprawnie.", "OK");
                 return;
             }
 
             _current.ProjectName = NameEntry.Text.Trim();
-            _current.ProjectTypeID = typeId;
+            _current.ProjectTypeID = selType.ProjectTypeID;
             _current.StartDate = StartPicker.Date;
             _current.EndDate = EndPicker.Date;
             _current.Budget = budget;
 
-            bool ok = await _service.UpdateProject(_current.ProjectID, _current);
+            bool ok = await _projectSvc.UpdateProject(_current.ProjectID, _current);
             if (ok)
             {
-                await DisplayAlert("Success", "Saved.", "OK");
+                await DisplayAlert("Success", "Zapisano zmiany.", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
             {
-                await DisplayAlert("Error", "Update failed.", "OK");
+                await DisplayAlert("Error", "Aktualizacja nie powiodła się.", "OK");
             }
         }
 
         private async void OnDeleteClicked(object sender, EventArgs e)
         {
-            bool confirm = await DisplayAlert(
-                "Confirm", "Delete this project?", "Yes", "No");
+            bool confirm = await DisplayAlert("Confirm", $"Usuń projekt '{_current.ProjectName}'?", "Tak", "Nie");
             if (!confirm) return;
 
-            bool ok = await _service.DeleteProject(_current.ProjectID);
-            if (ok)
+            if (await _projectSvc.DeleteProject(_current.ProjectID))
             {
-                await DisplayAlert("Success", "Deleted.", "OK");
+                await DisplayAlert("Success", "Usunięto.", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
             {
-                await DisplayAlert("Error", "Delete failed.", "OK");
+                await DisplayAlert("Error", "Usuwanie nie powiodło się.", "OK");
             }
         }
 
