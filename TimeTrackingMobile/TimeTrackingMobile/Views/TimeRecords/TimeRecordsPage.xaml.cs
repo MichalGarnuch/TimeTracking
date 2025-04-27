@@ -1,17 +1,17 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 
-namespace TimeTrackingMobile.Views
+namespace TimeTrackingMobile.Views.TimeRecords
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TimeRecordsPage : ContentPage
     {
-        private readonly TimeRecordService _service = new TimeRecordService();
+        private readonly TimeRecordService _trSvc = new TimeRecordService();
 
         public ObservableCollection<TimeRecordModel> TimeRecords { get; }
             = new ObservableCollection<TimeRecordModel>();
@@ -25,22 +25,15 @@ namespace TimeTrackingMobile.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            if (TimeRecords.Count == 0)
-                await LoadAsync();
+            await LoadAsync();
         }
-
-        private async void OnRefreshClicked(object sender, EventArgs e)
-            => await LoadAsync();
-
-        private async void OnAddClicked(object sender, EventArgs e)
-            => await Shell.Current.GoToAsync(nameof(TimeRecordAddPage));
 
         private async Task LoadAsync()
         {
             TimeRecords.Clear();
             try
             {
-                var list = await _service.GetAllTimeRecords();
+                var list = await _trSvc.GetAllTimeRecords();
                 foreach (var tr in list)
                     TimeRecords.Add(tr);
             }
@@ -50,6 +43,12 @@ namespace TimeTrackingMobile.Views
             }
         }
 
+        private async void OnRefreshClicked(object sender, EventArgs e)
+            => await LoadAsync();
+
+        private async void OnAddClicked(object sender, EventArgs e)
+            => await Shell.Current.GoToAsync(nameof(TimeRecordAddPage));
+
         private async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.CurrentSelection.Count == 0) return;
@@ -58,7 +57,7 @@ namespace TimeTrackingMobile.Views
             if (tr == null) return;
 
             string action = await DisplayActionSheet(
-                $"TimeRecord {tr.TimeRecordID}",
+                $"Record {tr.TimeRecordID}",
                 "Cancel", null,
                 "Edit", "Delete");
 
@@ -70,21 +69,11 @@ namespace TimeTrackingMobile.Views
                     break;
                 case "Delete":
                     bool c = await DisplayAlert(
-                        "Confirm",
-                        $"Delete record {tr.TimeRecordID}?",
-                        "Yes", "No");
-                    if (c)
+                        "Confirm", $"Delete record {tr.TimeRecordID}?", "Yes", "No");
+                    if (c && await _trSvc.DeleteTimeRecord(tr.TimeRecordID))
                     {
-                        bool ok = await _service.DeleteTimeRecord(tr.TimeRecordID);
-                        if (ok)
-                        {
-                            await DisplayAlert("OK", "Deleted", "OK");
-                            await LoadAsync();
-                        }
-                        else
-                        {
-                            await DisplayAlert("Error", "Delete failed", "OK");
-                        }
+                        await DisplayAlert("Deleted", "OK", "OK");
+                        await LoadAsync();
                     }
                     break;
             }

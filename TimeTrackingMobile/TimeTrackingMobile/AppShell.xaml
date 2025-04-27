@@ -3,6 +3,8 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:TimeTrackingMobile.Views"
+    xmlns:records="clr-namespace:TimeTrackingMobile.Views.TimeRecords"
+    xmlns:tt="clr-namespace:TimeTrackingMobile.Views.TaskTags"
     Title="TimeTrackingMobile"
     x:Class="TimeTrackingMobile.AppShell">
 
@@ -63,17 +65,18 @@
         </Tab>
 
         <Tab Title="TimeRecords" Icon="icon_timerecords.png">
-            <ShellContent ContentTemplate="{DataTemplate local:TimeRecordsPage}" />
+            <ShellContent Route="TimeRecordsPage"
+                          ContentTemplate="{DataTemplate records:TimeRecordsPage}" />
         </Tab>
 
         <Tab Title="TaskTags" Icon="icon_tasktags.png">
-            <ShellContent ContentTemplate="{DataTemplate local:TaskTagsPage}" />
+            <ShellContent Route="TaskTagsPage"
+                          ContentTemplate="{DataTemplate tt:TaskTagsPage}" />
         </Tab>
 
         <Tab Title="Login" Icon="icon_login.png">
             <ShellContent ContentTemplate="{DataTemplate local:LoginPage}" />
         </Tab>
-
     </TabBar>
 
     <!-- 🔒 Pozycja wylogowania w menu bocznym -->

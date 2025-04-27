@@ -1,40 +1,60 @@
 ﻿using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
 
-namespace TimeTrackingMobile.Views
+namespace TimeTrackingMobile.Views.TaskTags
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TaskTagAddPage : ContentPage
     {
-        private readonly TaskTagService _service = new TaskTagService();
+        private readonly TaskTagService _ttSvc = new TaskTagService();
+        private readonly TaskService _tSvc = new TaskService();
+        private readonly TagService _tagSvc = new TagService();
+
+        private List<TaskModel> _tasks;
+        private List<TagModel> _tags;
 
         public TaskTagAddPage()
         {
             InitializeComponent();
+            LoadPickers();
+        }
+
+        private async void LoadPickers()
+        {
+            _tasks = await _tSvc.GetAllTasks();
+            TaskPicker.ItemsSource = _tasks;
+
+            _tags = await _tagSvc.GetAllTags();
+            TagPicker.ItemsSource = _tags;
         }
 
         private async void OnSaveClicked(object sender, EventArgs e)
         {
-            if (!int.TryParse(TaskIdEntry.Text, out int taskId)
-             || !int.TryParse(TagIdEntry.Text, out int tagId))
+            if (!(TaskPicker.SelectedItem is TaskModel task) ||
+                !(TagPicker.SelectedItem is TagModel tag))
             {
-                await DisplayAlert("Validation", "Invalid IDs.", "OK");
+                await DisplayAlert("Validation", "Select both Task and Tag.", "OK");
                 return;
             }
 
-            var model = new TaskTagModel { TaskID = taskId, TagID = tagId };
-            bool ok = await _service.CreateTaskTag(model);
-            if (ok)
+            var model = new TaskTagModel
             {
-                await DisplayAlert("Success", "Link created", "OK");
+                TaskID = task.TaskID,
+                TagID = tag.TagID
+            };
+
+            if (await _ttSvc.CreateTaskTag(model))
+            {
+                await DisplayAlert("Success", "Link created.", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
             {
-                await DisplayAlert("Error", "Create failed", "OK");
+                await DisplayAlert("Error", "Failed to create link.", "OK");
             }
         }
 

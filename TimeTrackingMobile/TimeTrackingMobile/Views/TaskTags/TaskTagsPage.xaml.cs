@@ -1,17 +1,17 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 
-namespace TimeTrackingMobile.Views
+namespace TimeTrackingMobile.Views.TaskTags
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TaskTagsPage : ContentPage
     {
-        private readonly TaskTagService _service = new TaskTagService();
+        private readonly TaskTagService _ttSvc = new TaskTagService();
 
         public ObservableCollection<TaskTagModel> TaskTags { get; }
             = new ObservableCollection<TaskTagModel>();
@@ -25,22 +25,15 @@ namespace TimeTrackingMobile.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            if (TaskTags.Count == 0)
-                await LoadAsync();
+            await LoadAsync();
         }
-
-        private async void OnRefreshClicked(object sender, EventArgs e)
-            => await LoadAsync();
-
-        private async void OnAddClicked(object sender, EventArgs e)
-            => await Shell.Current.GoToAsync(nameof(TaskTagAddPage));
 
         private async Task LoadAsync()
         {
             TaskTags.Clear();
             try
             {
-                var list = await _service.GetAllTaskTags();
+                var list = await _ttSvc.GetAllTaskTags();
                 foreach (var tt in list)
                     TaskTags.Add(tt);
             }
@@ -49,6 +42,12 @@ namespace TimeTrackingMobile.Views
                 await DisplayAlert("Error", ex.Message, "OK");
             }
         }
+
+        private async void OnRefreshClicked(object sender, EventArgs e)
+            => await LoadAsync();
+
+        private async void OnAddClicked(object sender, EventArgs e)
+            => await Shell.Current.GoToAsync(nameof(TaskTagAddPage));
 
         private async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -63,16 +62,10 @@ namespace TimeTrackingMobile.Views
                 "Yes", "No");
             if (!confirm) return;
 
-            bool ok = await _service.DeleteTaskTag(model.TaskID, model.TagID);
-            if (ok)
-            {
-                await DisplayAlert("OK", "Deleted", "OK");
+            if (await _ttSvc.DeleteTaskTag(model.TaskID, model.TagID))
                 await LoadAsync();
-            }
             else
-            {
                 await DisplayAlert("Error", "Delete failed", "OK");
-            }
         }
     }
 }

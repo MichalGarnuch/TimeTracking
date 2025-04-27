@@ -1,49 +1,71 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ContentPage
-    x:Class="TimeTrackingMobile.Views.TimeRecordsPage"
+    x:Class="TimeTrackingMobile.Views.TimeRecords.TimeRecordsPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Time Records"
     BackgroundColor="{StaticResource PageBackgroundColor}">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="sync.png"
-                 Text="Refresh"
-                 Order="Primary"
-                 Priority="0"
-                 Clicked="OnRefreshClicked" />
-        <ToolbarItem IconImageSource="add.png"
-                 Text="Add"
-                 Order="Primary"
-                 Priority="1"
-                 Clicked="OnAddClicked" />
+        <ToolbarItem
+      IconImageSource="sync.png"
+      Text="Refresh"
+      Order="Primary"
+      Priority="0"
+      Clicked="OnRefreshClicked" />
+
+        <ToolbarItem
+      IconImageSource="add.png"
+      Text="Add"
+      Order="Primary"
+      Priority="1"
+      Clicked="OnAddClicked" />
     </ContentPage.ToolbarItems>
 
     <Grid RowDefinitions="120, *">
-        <Frame Grid.Row="0" Padding="20" HasShadow="False" CornerRadius="0">
+        <!-- Banner -->
+        <Frame
+      Grid.Row="0"
+      Padding="20"
+      HasShadow="False"
+      CornerRadius="0"
+      BackgroundColor="{StaticResource Primary}">
             <Frame.Background>
                 <StaticResource Key="AccentGradient"/>
             </Frame.Background>
-            <Label Text="Time Records"
-             FontSize="Large" FontAttributes="Bold"
-             TextColor="White"
-             VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label
+        Text="Time Records"
+        FontSize="Large"
+        FontAttributes="Bold"
+        TextColor="White"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"/>
         </Frame>
 
-        <CollectionView Grid.Row="1"
-                    ItemsSource="{Binding TimeRecords}"
-                    SelectionMode="Single"
-                    SelectionChanged="OnSelectionChanged"
-                    Margin="20">
+        <!-- Lista -->
+        <CollectionView
+      Grid.Row="1"
+      ItemsSource="{Binding TimeRecords}"
+      SelectionMode="Single"
+      SelectionChanged="OnSelectionChanged"
+      Margin="20">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Padding="10" Margin="0,0,0,10" CornerRadius="8" HasShadow="True" BackgroundColor="White">
-                        <StackLayout>
+                    <Frame
+            Padding="10"
+            Margin="0,0,0,10"
+            CornerRadius="8"
+            HasShadow="True"
+            BackgroundColor="White">
+                        <StackLayout Spacing="5">
                             <Label Text="{Binding EmployeeID, StringFormat='Emp: {0}'}" />
-                            <Label Text="{Binding TaskID, StringFormat='Task: {0}'}" />
-                            <Label Text="{Binding StartTime, StringFormat='Start: {0:MM/dd/yyyy HH:mm}'}" FontSize="Small"/>
-                            <Label Text="{Binding EndTime, StringFormat='End: {0:MM/dd/yyyy HH:mm}'}" FontSize="Small"/>
-                            <Label Text="{Binding HoursSpent, StringFormat='Hours: {0}'}" FontSize="Small"/>
+                            <Label Text="{Binding TaskID,     StringFormat='Task: {0}'}" />
+                            <Label Text="{Binding StartTime,  StringFormat='Start: {0:dd/MM/yyyy}'}"
+                     FontSize="Small"/>
+                            <Label Text="{Binding EndTime,    StringFormat='End: {0:dd/MM/yyyy}'}"
+                     FontSize="Small"/>
+                            <Label Text="{Binding HoursSpent, StringFormat='Hours: {0:F2}'}"
+                     FontSize="Small"/>
                         </StackLayout>
                     </Frame>
                 </DataTemplate>

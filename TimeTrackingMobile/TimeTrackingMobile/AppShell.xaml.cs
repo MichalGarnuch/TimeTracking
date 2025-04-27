@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using TimeTrackingMobile.ViewModels;
 using TimeTrackingMobile.Views;
 using Xamarin.Forms;
+using TimeTrackingMobile.Views.TaskTags;
+using TimeTrackingMobile.Views.TimeRecords;
+
 
 namespace TimeTrackingMobile
 {

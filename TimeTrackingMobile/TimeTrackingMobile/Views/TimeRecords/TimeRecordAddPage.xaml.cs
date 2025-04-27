@@ -1,49 +1,64 @@
 ﻿using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using TimeTrackingMobile.Models;
 using TimeTrackingMobile.Services;
 
-namespace TimeTrackingMobile.Views
+namespace TimeTrackingMobile.Views.TimeRecords
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TimeRecordAddPage : ContentPage
     {
-        private readonly TimeRecordService _service = new TimeRecordService();
+        private readonly TimeRecordService _trSvc = new TimeRecordService();
+        private readonly EmployeeService _eSvc = new EmployeeService();
+        private readonly TaskService _tSvc = new TaskService();
+
+        private List<EmployeeModel> _emps;
+        private List<TaskModel> _tasks;
 
         public TimeRecordAddPage()
         {
             InitializeComponent();
+            LoadPickers();
+        }
+
+        private async void LoadPickers()
+        {
+            _emps = await _eSvc.GetAllEmployees();
+            EmpPicker.ItemsSource = _emps;
+
+            _tasks = await _tSvc.GetAllTasks();
+            TaskPicker.ItemsSource = _tasks;
         }
 
         private async void OnSaveClicked(object sender, EventArgs e)
         {
-            if (!int.TryParse(EmpEntry.Text, out int empId)
-             || !int.TryParse(TaskEntry.Text, out int taskId)
-             || !decimal.TryParse(HoursEntry.Text, out decimal hrs))
+            if (!(EmpPicker.SelectedItem is EmployeeModel emp) ||
+                !(TaskPicker.SelectedItem is TaskModel task) ||
+                !decimal.TryParse(HoursEntry.Text, out var hrs))
             {
-                await DisplayAlert("Validation", "Invalid numeric fields.", "OK");
+                await DisplayAlert("Validation", "Fill all fields correctly.", "OK");
                 return;
             }
 
-            var record = new TimeRecordModel
+            var rec = new TimeRecordModel
             {
-                EmployeeID = empId,
-                TaskID = taskId,
-                StartTime = StartDatePicker.Date,
-                EndTime = EndDatePicker.Date,
+                EmployeeID = emp.EmployeeID,
+                TaskID = task.TaskID,
+                StartTime = StartPicker.Date,
+                EndTime = EndPicker.Date,
                 HoursSpent = hrs
             };
 
-            bool ok = await _service.CreateTimeRecord(record);
-            if (ok)
+            if (await _trSvc.CreateTimeRecord(rec))
             {
-                await DisplayAlert("Success", "Created", "OK");
+                await DisplayAlert("Success", "Record created.", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
             {
-                await DisplayAlert("Error", "Create failed", "OK");
+                await DisplayAlert("Error", "Creation failed.", "OK");
             }
         }
 
