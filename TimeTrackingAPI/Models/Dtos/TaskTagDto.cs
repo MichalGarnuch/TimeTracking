@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TimeTrackingMobile.Models
+﻿namespace TimeTrackingAPI.Models.Dtos
 {
-    public class TaskTagModel
+    /// <summary>
+    /// Dane powiązania zadania z tagiem wraz z nazwami.
+    /// </summary>
+    public class TaskTagDto
     {
         public int TaskID { get; set; }
         public string TaskName { get; set; }

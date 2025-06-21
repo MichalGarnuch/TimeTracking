@@ -21,9 +21,21 @@ namespace TimeTrackingAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TaskTagEntity>>> GetAll()
+        public async Task<ActionResult<IEnumerable<TaskTagDto>>> GetAll()
         {
-            return await _context.TaskTags.ToListAsync();
+            var list = await _context.TaskTags
+                .Include(tt => tt.Task)
+                .Include(tt => tt.Tag)
+                .Select(tt => new TaskTagDto
+                {
+                    TaskID = tt.TaskID,
+                    TaskName = tt.Task.TaskName,
+                    TagID = tt.TagID,
+                    TagName = tt.Tag.TagName
+                })
+                .ToListAsync();
+
+            return list;
         }
 
         [HttpPost]

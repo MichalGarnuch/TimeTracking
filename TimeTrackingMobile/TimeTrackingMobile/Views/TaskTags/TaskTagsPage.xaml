@@ -59,9 +59,9 @@
             BackgroundColor="White">
                         <StackLayout Orientation="Horizontal" Spacing="20">
                             <Label Text="Task:" FontAttributes="Bold"/>
-                            <Label Text="{Binding TaskID}" />
+                            <Label Text="{Binding TaskName}" />
                             <Label Text="Tag:"  FontAttributes="Bold"/>
-                            <Label Text="{Binding TagID}" />
+                            <Label Text="{Binding TagName}" />
                         </StackLayout>
                     </Frame>
                 </DataTemplate>

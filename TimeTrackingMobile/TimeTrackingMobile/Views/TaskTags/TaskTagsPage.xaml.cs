@@ -58,7 +58,7 @@ namespace TimeTrackingMobile.Views.TaskTags
 
             bool confirm = await DisplayAlert(
                 "Confirm",
-                $"Delete link Task {model.TaskID} ↔ Tag {model.TagID}?",
+                $"Delete link Task {model.TaskName} ↔ Tag {model.TagName}?",
                 "Yes", "No");
             if (!confirm) return;
 
