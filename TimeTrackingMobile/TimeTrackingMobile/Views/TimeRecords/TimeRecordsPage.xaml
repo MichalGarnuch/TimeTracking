@@ -58,8 +58,8 @@
             HasShadow="True"
             BackgroundColor="White">
                         <StackLayout Spacing="5">
-                            <Label Text="{Binding EmployeeID, StringFormat='Emp: {0}'}" />
-                            <Label Text="{Binding TaskID,     StringFormat='Task: {0}'}" />
+                            <Label Text="{Binding EmployeeName, StringFormat='Emp: {0}'}" />
+                            <Label Text="{Binding TaskName,     StringFormat='Task: {0}'}" />
                             <Label Text="{Binding StartTime,  StringFormat='Start: {0:dd/MM/yyyy}'}"
                      FontSize="Small"/>
                             <Label Text="{Binding EndTime,    StringFormat='End: {0:dd/MM/yyyy}'}"

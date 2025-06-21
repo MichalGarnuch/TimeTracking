@@ -12,5 +12,9 @@ namespace TimeTrackingMobile.Models
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public decimal HoursSpent { get; set; }
+
+        // nazwy dla wygodnego wyświetlania w aplikacji
+        public string EmployeeName { get; set; }
+        public string TaskName { get; set; }
     }
 }

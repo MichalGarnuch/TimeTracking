@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,6 +14,11 @@ namespace TimeTrackingMobile.Views.TimeRecords
     public partial class TimeRecordsPage : ContentPage
     {
         private readonly TimeRecordService _trSvc = new TimeRecordService();
+        private readonly EmployeeService _empSvc = new EmployeeService();
+        private readonly TaskService _taskSvc = new TaskService();
+
+        private List<EmployeeModel> _employees;
+        private List<TaskModel> _tasks;
 
         public ObservableCollection<TimeRecordModel> TimeRecords { get; }
             = new ObservableCollection<TimeRecordModel>();
@@ -33,9 +40,17 @@ namespace TimeTrackingMobile.Views.TimeRecords
             TimeRecords.Clear();
             try
             {
+                // pobierz listy pomocnicze
+                _employees = await _empSvc.GetAllEmployees();
+                _tasks = await _taskSvc.GetAllTasks();
+
                 var list = await _trSvc.GetAllTimeRecords();
                 foreach (var tr in list)
+                {
+                    tr.EmployeeName = _employees.FirstOrDefault(e => e.EmployeeID == tr.EmployeeID)?.Name;
+                    tr.TaskName = _tasks.FirstOrDefault(t => t.TaskID == tr.TaskID)?.TaskName;
                     TimeRecords.Add(tr);
+                }
             }
             catch (Exception ex)
             {
