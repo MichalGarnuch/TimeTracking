@@ -34,6 +34,7 @@
                     <Button x:Name="StartButton" Text="Start" Clicked="OnStartClicked" />
                     <Button x:Name="PauseButton" Text="Pause" Clicked="OnPauseClicked" IsEnabled="False" />
                     <Button x:Name="StopButton" Text="Stop" Clicked="OnStopClicked" IsEnabled="False" />
+                    <Button x:Name="SaveButton" Text="Save" Clicked="OnSaveClicked" IsEnabled="False" />
                 </StackLayout>
             </StackLayout>
         </ScrollView>

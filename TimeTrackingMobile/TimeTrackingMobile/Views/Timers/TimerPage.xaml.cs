@@ -22,6 +22,7 @@ namespace TimeTrackingMobile.Views.Timers
         private readonly Stopwatch _stopwatch = new Stopwatch();
         private bool _updating = false;
         private DateTime _startTime;
+        private TimeSpan _elapsedOnStop;
 
         public TimerPage()
         {
@@ -65,6 +66,7 @@ namespace TimeTrackingMobile.Views.Timers
             StartButton.IsEnabled = false;
             PauseButton.IsEnabled = true;
             StopButton.IsEnabled = true;
+            SaveButton.IsEnabled = false;
         }
 
         private void OnPauseClicked(object sender, EventArgs e)
@@ -88,14 +90,20 @@ namespace TimeTrackingMobile.Views.Timers
             }
         }
 
-        private async void OnStopClicked(object sender, EventArgs e)
+        private void OnStopClicked(object sender, EventArgs e)
         {
             _stopwatch.Stop();
+            _elapsedOnStop = _stopwatch.Elapsed;
             _updating = false;
             StartButton.IsEnabled = true;
             PauseButton.IsEnabled = false;
             StopButton.IsEnabled = false;
             PauseButton.Text = "Pause";
+            SaveButton.IsEnabled = true;
+        }
+
+        private async void OnSaveClicked(object sender, EventArgs e)
+        {
 
             if (EmpPicker.SelectedItem is EmployeeModel emp && TaskPicker.SelectedItem is TaskModel task)
             {
@@ -104,11 +112,19 @@ namespace TimeTrackingMobile.Views.Timers
                     EmployeeID = emp.EmployeeID,
                     TaskID = task.TaskID,
                     StartTime = _startTime,
-                    EndTime = DateTime.Now,
-                    HoursSpent = (decimal)_stopwatch.Elapsed.TotalHours
+                    EndTime = _startTime + _elapsedOnStop,
+                    HoursSpent = (decimal)_elapsedOnStop.TotalHours
                 };
-                await _trSvc.CreateTimeRecord(record);
+                if (await _trSvc.CreateTimeRecord(record))
+                {
+                    await DisplayAlert("Info", "Zapisano rekord czasu.", "OK");
+                }
+                else
+                {
+                    await DisplayAlert("Błąd", "Nie udało się zapisać rekordu.", "OK");
+                }
             }
+            SaveButton.IsEnabled = false;
         }
     }
 }
