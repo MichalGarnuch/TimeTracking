@@ -22,21 +22,6 @@ namespace TimeTrackingAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("TagEntityTaskEntity", b =>
-                {
-                    b.Property<int>("TagsTagId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TasksTaskId")
-                        .HasColumnType("int");
-
-                    b.HasKey("TagsTagId", "TasksTaskId");
-
-                    b.HasIndex("TasksTaskId");
-
-                    b.ToTable("TagEntityTaskEntity");
-                });
-
             modelBuilder.Entity("TimeTrackingAPI.Models.DepartmentEntity", b =>
                 {
                     b.Property<int>("DepartmentID")
@@ -252,21 +237,6 @@ namespace TimeTrackingAPI.Migrations
                     b.HasIndex("TaskId");
 
                     b.ToTable("TimeRecord", (string)null);
-                });
-
-            modelBuilder.Entity("TagEntityTaskEntity", b =>
-                {
-                    b.HasOne("TimeTrackingAPI.Models.TagEntity", null)
-                        .WithMany()
-                        .HasForeignKey("TagsTagId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TimeTrackingAPI.Models.TaskEntity", null)
-                        .WithMany()
-                        .HasForeignKey("TasksTaskId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("TimeTrackingAPI.Models.EmployeeEntity", b =>

@@ -11,7 +11,7 @@ namespace TimeTrackingAPI.Models
         public TaskEntity()
         {
             TimeRecords = new HashSet<TimeRecordEntity>();
-            Tags = new HashSet<TagEntity>();
+            TaskTags = new HashSet<TaskTagEntity>();
         }
         [Key]
         public int TaskId { get; set; }
@@ -24,7 +24,6 @@ namespace TimeTrackingAPI.Models
         public virtual ProjectEntity Project { get; set; }
         public virtual ICollection<TimeRecordEntity> TimeRecords { get; set; }
 
-        public virtual ICollection<TagEntity> Tags { get; set; }
         public ICollection<TaskTagEntity> TaskTags { get; set; }
 
     }

@@ -113,30 +113,6 @@ namespace TimeTrackingAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TagEntityTaskEntity",
-                columns: table => new
-                {
-                    TagsTagId = table.Column<int>(type: "int", nullable: false),
-                    TasksTaskId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TagEntityTaskEntity", x => new { x.TagsTagId, x.TasksTaskId });
-                    table.ForeignKey(
-                        name: "FK_TagEntityTaskEntity_Tag_TagsTagId",
-                        column: x => x.TagsTagId,
-                        principalTable: "Tag",
-                        principalColumn: "TagID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TagEntityTaskEntity_Task_TasksTaskId",
-                        column: x => x.TasksTaskId,
-                        principalTable: "Task",
-                        principalColumn: "TaskID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "TaskTag",
                 columns: table => new
                 {
@@ -196,11 +172,6 @@ namespace TimeTrackingAPI.Migrations
                 column: "ProjectTypeID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TagEntityTaskEntity_TasksTaskId",
-                table: "TagEntityTaskEntity",
-                column: "TasksTaskId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Task_ProjectID",
                 table: "Task",
                 column: "ProjectID");
@@ -223,9 +194,6 @@ namespace TimeTrackingAPI.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "TagEntityTaskEntity");
-
             migrationBuilder.DropTable(
                 name: "TaskTag");
 

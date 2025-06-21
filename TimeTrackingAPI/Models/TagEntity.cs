@@ -10,13 +10,12 @@ namespace TimeTrackingAPI.Models
     {
         public TagEntity()
         {
-            Tasks = new HashSet<TaskEntity>();
+            TaskTags = new HashSet<TaskTagEntity>();
         }
         [Key]
         public int TagId { get; set; }
         public string TagName { get; set; }
 
-        public virtual ICollection<TaskEntity> Tasks { get; set; }
         public ICollection<TaskTagEntity> TaskTags { get; set; }
 
     }
