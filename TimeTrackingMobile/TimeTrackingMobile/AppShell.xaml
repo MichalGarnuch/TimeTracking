@@ -74,6 +74,11 @@
                           ContentTemplate="{DataTemplate tt:TaskTagsPage}" />
         </Tab>
 
+        <Tab Title="Timer" Icon="icon_feed.png">
+            <ShellContent Route="TimerPage"
+                          ContentTemplate="{DataTemplate local:Timers.TimerPage}" />
+        </Tab>
+        
         <Tab Title="Login" Icon="icon_login.png">
             <ShellContent ContentTemplate="{DataTemplate local:LoginPage}" />
         </Tab>

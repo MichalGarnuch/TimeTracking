@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage
+    x:Class="TimeTrackingMobile.Views.Timers.TimerPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Timer"
+    BackgroundColor="{StaticResource PageBackgroundColor}">
+    <Grid RowDefinitions="120, *">
+        <Frame Grid.Row="0"
+               Padding="20"
+               HasShadow="False"
+               CornerRadius="0">
+            <Frame.Background>
+                <StaticResource Key="AccentGradient"/>
+            </Frame.Background>
+            <Label Text="Project Timer"
+                   FontSize="Large"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"/>
+        </Frame>
+        <ScrollView Grid.Row="1" Padding="20">
+            <StackLayout Spacing="15">
+                <Label Text="Employee" />
+                <Picker x:Name="EmpPicker" Title="Select employee" ItemDisplayBinding="{Binding Name}" />
+                <Label Text="Project" />
+                <Picker x:Name="ProjectPicker" Title="Select project" ItemDisplayBinding="{Binding ProjectName}" SelectedIndexChanged="OnProjectChanged" />
+                <Label Text="Task" />
+                <Picker x:Name="TaskPicker" Title="Select task" ItemDisplayBinding="{Binding TaskName}" />
+                <Label Text="Elapsed" />
+                <Label x:Name="TimeLabel" Text="00:00:00" FontSize="Large" HorizontalOptions="Center" />
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="20" Margin="0,20,0,0">
+                    <Button x:Name="StartButton" Text="Start" Clicked="OnStartClicked" />
+                    <Button x:Name="PauseButton" Text="Pause" Clicked="OnPauseClicked" IsEnabled="False" />
+                    <Button x:Name="StopButton" Text="Stop" Clicked="OnStopClicked" IsEnabled="False" />
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

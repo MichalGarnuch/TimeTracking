@@ -5,6 +5,7 @@ using TimeTrackingMobile.Views;
 using Xamarin.Forms;
 using TimeTrackingMobile.Views.TaskTags;
 using TimeTrackingMobile.Views.TimeRecords;
+using TimeTrackingMobile.Views.Timers;
 
 
 namespace TimeTrackingMobile
@@ -46,6 +47,8 @@ namespace TimeTrackingMobile
 
             Routing.RegisterRoute(nameof(TaskTagsPage), typeof(TaskTagsPage));
             Routing.RegisterRoute(nameof(TaskTagAddPage), typeof(TaskTagAddPage));
+
+            Routing.RegisterRoute(nameof(TimerPage), typeof(TimerPage));
 
             // analogicznie rejestruj kolejne strony dla innych encji
             // Routing.RegisterRoute(nameof(DepartmentAddPage), typeof(DepartmentAddPage)); itp.
