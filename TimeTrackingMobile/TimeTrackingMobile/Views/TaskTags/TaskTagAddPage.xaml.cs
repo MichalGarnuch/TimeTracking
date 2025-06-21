@@ -47,14 +47,15 @@ namespace TimeTrackingMobile.Views.TaskTags
                 TagID = tag.TagID
             };
 
-            if (await _ttSvc.CreateTaskTag(model))
+            var error = await _ttSvc.CreateTaskTag(model);
+            if (error == null)
             {
                 await DisplayAlert("Success", "Link created.", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
             {
-                await DisplayAlert("Error", "Failed to create link.", "OK");
+                await DisplayAlert("Error", error, "OK");
             }
         }
 

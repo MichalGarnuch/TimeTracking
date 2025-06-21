@@ -17,10 +17,23 @@ namespace TimeTrackingMobile.Services
             return result ?? new List<TaskTagModel>();
         }
 
-        public async Task<bool> CreateTaskTag(TaskTagModel taskTag)
+        public async Task<string> CreateTaskTag(TaskTagModel taskTag)
         {
-            var response = await _client.PostAsJsonAsync(BaseUrl, taskTag);
-            return response.IsSuccessStatusCode;
+            try
+            {
+                var response = await _client.PostAsJsonAsync(BaseUrl, taskTag);
+                if (response.IsSuccessStatusCode)
+                    return null;
+
+                var message = await response.Content.ReadAsStringAsync();
+                return string.IsNullOrWhiteSpace(message)
+                    ? response.ReasonPhrase
+                    : message;
+            }
+            catch (HttpRequestException ex)
+            {
+                return ex.Message;
+            }
         }
 
         public async Task<bool> DeleteTaskTag(int taskId, int tagId)

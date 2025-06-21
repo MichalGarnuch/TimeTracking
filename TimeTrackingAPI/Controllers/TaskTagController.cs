@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TimeTrackingAPI.Models;
+using TimeTrackingAPI.Models.Dtos;
+
 
 namespace TimeTrackingAPI.Controllers
 {
@@ -25,8 +27,24 @@ namespace TimeTrackingAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(TaskTagEntity taskTag)
+        public async Task<IActionResult> Create([FromBody] TaskTagCreateDto dto)
         {
+            var exists = await _context.TaskTags
+                .AnyAsync(tt => tt.TaskID == dto.TaskID && tt.TagID == dto.TagID);
+            if (exists)
+                return Conflict("Relation already exists");
+
+            bool taskExists = await _context.Tasks.AnyAsync(t => t.TaskId == dto.TaskID);
+            bool tagExists = await _context.Tags.AnyAsync(t => t.TagId == dto.TagID);
+            if (!taskExists || !tagExists)
+                return NotFound("Task or Tag not found");
+
+            var taskTag = new TaskTagEntity
+            {
+                TaskID = dto.TaskID,
+                TagID = dto.TagID
+            };
+
             _context.TaskTags.Add(taskTag);
             await _context.SaveChangesAsync();
             return Ok();
