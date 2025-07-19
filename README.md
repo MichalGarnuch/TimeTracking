@@ -2,12 +2,30 @@
 
 ## Wprowadzenie
 
-Repozytorium zawiera rozwijaną w ramach przykładu aplikację składającą się z:
+Przykładowy system do ewidencji czasu pracy składający się z dwóch głównych części:
 
-- **TimeTrackingAPI** – serwera API opartego o ASP.NET Core 6
-- **TimeTrackingMobile** – aplikacji mobilnej stworzonej w Xamarin.Forms (projekty Android, iOS oraz UWP)
+- **TimeTrackingAPI** – serwer REST zbudowany w oparciu o ASP.NET Core 6 i Entity Framework Core,
+- **TimeTrackingMobile** – mobilna aplikacja Xamarin.Forms (Android, iOS oraz UWP).
 
-Celem projektu jest umożliwienie rejestrowania czasu pracy oraz zarządzania danymi takimi jak projekty, zadania czy pracownicy.
+Celem projektu jest ułatwienie rejestracji przepracowanych godzin oraz zarządzanie danymi takimi jak projekty, zadania czy pracownicy.
+
+Poniższy opis zawiera skrócony przewodnik technologiczny oraz instrukcję uruchomienia obu aplikacji.
+
+## Technologie
+
+- **ASP.NET Core 6** – tworzenie usług HTTP
+- **Entity Framework Core** – mapowanie obiektowo-relacyjne i migracje bazy
+- **SQL Server** – przechowywanie danych
+- **Xamarin.Forms** – warstwa prezentacji dla urządzeń mobilnych
+
+Kod podzielony jest na dwa niezależne projekty współdzielone w ramach rozwiązania Visual Studio.
+
+## Funkcjonalności
+
+- zarządzanie pracownikami i działami firmy,
+- ewidencja projektów, zadań oraz przypisanych tagów,
+- rejestrowanie czasu pracy wraz z wygodnym timerem,
+- prezentacja i edycja danych w aplikacji mobilnej.
 
 ## Wymagania
 
@@ -53,6 +71,10 @@ docker run -p 5215:80 timetrackingapi
 3. Przed uruchomieniem zaktualizuj w plikach `Services/*Service.cs` stałe `BaseUrl`, aby wskazywały na adres działającego API (np. `http://localhost:5215`).
 4. Uruchom aplikację na emulatorze lub podłączonym urządzeniu.
 
+### Zrzuty ekranu
+
+
+
 ## Struktura projektu
 
 ```
@@ -61,6 +83,19 @@ TimeTrackingMobile/   # Aplikacja mobilna (Xamarin.Forms)
 TimeTrackingDB.bak    # Kopia zapasowa bazy danych
 TimeTrackingSolution.sln  # Plik rozwiązania Visual Studio
 ```
+
+**Główne katalogi API**
+
+- `Controllers` – implementacja końcówek REST dla wszystkich encji (CRUD)
+- `Models` – klasy encji wygenerowane przez EF Core wraz z kontekstem `TimeTrackingDBContext`
+- `Migrations` – pliki migracji bazy danych
+
+**Główne katalogi aplikacji mobilnej**
+
+- `Views` – definicje stron w XAML (np. DepartmentsPage, TimerPage)
+- `ViewModels` – logika prezentacji dla poszczególnych widoków
+- `Services` – klasy korzystające z `HttpClient` do komunikacji z API
+- `Models` – obiekty DTO wykorzystywane w aplikacji
 
 ## Kontakt
 
