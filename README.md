@@ -73,7 +73,23 @@ docker run -p 5215:80 timetrackingapi
 
 ### Zrzuty ekranu
 
+![Zrzut ekranu 2025-07-21 195232](https://github.com/user-attachments/assets/1e4edde3-0aeb-4f28-a2ba-7adcad2e7c11)
 
+![Zrzut ekranu 2025-07-21 222602](https://github.com/user-attachments/assets/78985c01-7975-4099-84f9-0c12352c3916)
+
+![Zrzut ekranu 2025-07-21 222627](https://github.com/user-attachments/assets/01dc37b5-7d8f-4f33-8ff3-e53f6459f9c7)
+
+![Zrzut ekranu 2025-07-21 222709](https://github.com/user-attachments/assets/1a0f5000-f87a-4e5f-a5e5-d90447df385a)
+
+![Zrzut ekranu 2025-07-21 222745](https://github.com/user-attachments/assets/10a2b92c-1841-4617-ab78-395c7205ce25)
+
+![Zrzut ekranu 2025-07-21 222818](https://github.com/user-attachments/assets/28afa4f0-2a76-4a6e-8c53-834f7165e1e3)
+
+![Zrzut ekranu 2025-07-21 222835](https://github.com/user-attachments/assets/eb8f75be-b59c-4fcc-993c-8c2bfbd57fcc)
+
+![Zrzut ekranu 2025-07-21 222854](https://github.com/user-attachments/assets/1d9afe27-71fd-45a7-86f0-37e2fbb10738)
+
+![Zrzut ekranu 2025-07-21 222924](https://github.com/user-attachments/assets/d2664398-e9ad-411e-bac6-b009b3faf67c)
 
 ## Struktura projektu
 
