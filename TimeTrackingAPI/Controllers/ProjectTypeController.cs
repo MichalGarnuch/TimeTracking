@@ -1,4 +1,5 @@
-﻿using System;
+using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -52,6 +53,7 @@ namespace TimeTrackingAPI.Controllers
         // PUT: api/ProjectType/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Policy = "ApiWrite")]
         public async Task<IActionResult> PutProjectType(int id, ProjectTypeEntity projectType)
         {
             if (id != projectType.ProjectTypeId)
@@ -83,6 +85,7 @@ namespace TimeTrackingAPI.Controllers
         // POST: api/ProjectType
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Policy = "ApiWrite")]
         public async Task<ActionResult<ProjectTypeEntity>> PostProjectType(ProjectTypeEntity projectType)
         {
           if (_context.ProjectTypes == null)
@@ -97,6 +100,7 @@ namespace TimeTrackingAPI.Controllers
 
         // DELETE: api/ProjectType/5
         [HttpDelete("{id}")]
+        [Authorize(Policy = "ApiWrite")]
         public async Task<IActionResult> DeleteProjectType(int id)
         {
             if (_context.ProjectTypes == null)

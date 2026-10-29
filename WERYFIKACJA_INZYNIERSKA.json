@@ -1,0 +1,23 @@
+{
+  "repository": "TimeTracking",
+  "branch": "wersja-inzynierska-2026",
+  "base_ref": "master",
+  "base_commit": "05e593407956f6cbe4b7e7796cd2b01a5762a44d",
+  "date": "2026-10-29",
+  "checks": [
+    {
+      "command_or_scope": "Testy kontraktu autoryzacji (Roslyn/.NET 8)",
+      "result": "PASS: 5 sprawdzeń na rzeczywistej klasie AuthenticationSetup"
+    },
+    {
+      "command_or_scope": "Pełny build solucji / docelowego TFM",
+      "result": "NIEWYKONANY: MSBuild nie uruchamia się poprawnie w tym środowisku"
+    },
+    {
+      "command_or_scope": "Test API + OIDC + SQL Server",
+      "result": "NIEWYKONANY: wymaga skonfigurowanych usług"
+    }
+  ],
+  "limitations": "MSBuild w środowisku roboczym przerwał inicjalizację procesu (odczyt informacji procesu), dlatego nie wykonano pełnego restore/build całej solucji ani testów HTTP z prawdziwym IdP i SQL Server. Kontrakt konfiguracji skompilowano i uruchomiono bezpośrednio na .NET/ASP.NET 8.0.33 z JwtBearer 8; nie jest to kompilacja docelowego net6.0/JwtBearer 6. Projekt aplikacji pozostaje na .NET 6 — przed produkcją wymaga migracji do wspieranej wersji. Klient mobilny i przepływ pobrania tokena nie zostały przebudowane.",
+  "production_deployment_performed": false
+}

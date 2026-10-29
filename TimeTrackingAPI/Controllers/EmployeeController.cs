@@ -1,4 +1,5 @@
-﻿using System;
+using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -52,6 +53,7 @@ namespace TimeTrackingAPI.Controllers
         // PUT: api/Employee/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Policy = "ApiWrite")]
         public async Task<IActionResult> PutEmployee(int id, EmployeeEntity employee)
         {
             if (id != employee.EmployeeID)
@@ -83,6 +85,7 @@ namespace TimeTrackingAPI.Controllers
         // POST: api/Employee
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Policy = "ApiWrite")]
         public async Task<ActionResult<EmployeeEntity>> PostEmployee(EmployeeEntity employee)
         {
             if (_context.Employees == null)
@@ -97,6 +100,7 @@ namespace TimeTrackingAPI.Controllers
 
         // DELETE: api/Employee/5
         [HttpDelete("{id}")]
+        [Authorize(Policy = "ApiWrite")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
             if (_context.Employees == null)

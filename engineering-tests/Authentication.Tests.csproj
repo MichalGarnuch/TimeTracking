@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net6.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable></PropertyGroup>
+  <ItemGroup><FrameworkReference Include="Microsoft.AspNetCore.App" /><PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.36" /><Compile Include="../TimeTrackingAPI/Security/AuthenticationSetup.cs" Link="AuthenticationSetup.cs" /></ItemGroup>
+</Project>

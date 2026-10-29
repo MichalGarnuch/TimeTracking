@@ -1,3 +1,4 @@
+using TimeTrackingAPI.Security;
 using TimeTrackingAPI.Models; // <- Dodaj to na górze
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +11,7 @@ namespace TimeTrackingAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.WebHost.UseKestrel().UseUrls("http://0.0.0.0:5215");
+            builder.WebHost.UseKestrel(); // Configure binding through ASPNETCORE_URLS.
 
 
             builder.Services.AddDbContext<TimeTrackingDBContext>(options =>
@@ -23,6 +24,8 @@ namespace TimeTrackingAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddRequiredBearerAuthentication(builder.Configuration);
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -34,6 +37,7 @@ namespace TimeTrackingAPI
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();

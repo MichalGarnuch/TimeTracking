@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,7 @@ namespace TimeTrackingAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "ApiWrite")]
         public async Task<IActionResult> Create([FromBody] TaskTagCreateDto dto)
         {
             var exists = await _context.TaskTags
@@ -63,6 +65,7 @@ namespace TimeTrackingAPI.Controllers
         }
 
         [HttpDelete("{taskId}/{tagId}")]
+        [Authorize(Policy = "ApiWrite")]
         public async Task<IActionResult> Delete(int taskId, int tagId)
         {
             var entity = await _context.TaskTags
