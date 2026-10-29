@@ -1,0 +1,221 @@
+# TimeTracking — mapa plików (1/1)
+
+Wykaz śledzonych plików z badanego commita. Liczba wierszy i nazwy deklaracji są wyciągane automatycznie z dostępnej kopii tekstowej; nie oznaczają ręcznej oceny pliku. Brak opisu oznacza, że zawartość nie była analizowana tą metodą (np. plik binarny, zasób lub pominięty plik).
+
+[Wróć do audytu](AUDYT_EDUKACYJNY.md) · [1](AUDYT_MAPA_01.md)
+
+- [.dockerignore](.dockerignore)
+- [.gitattributes](.gitattributes)
+- [.gitignore](.gitignore)
+- [README.md](README.md) — 118 wierszy
+- [TimeTrackingAPI/Controllers/DepartmentController.cs](TimeTrackingAPI/Controllers/DepartmentController.cs) — 133 wierszy; deklaracje: `DepartmentController:14`
+- [TimeTrackingAPI/Controllers/EmployeeController.cs](TimeTrackingAPI/Controllers/EmployeeController.cs) — 139 wierszy; deklaracje: `EmployeeController:14`
+- [TimeTrackingAPI/Controllers/ProjectController.cs](TimeTrackingAPI/Controllers/ProjectController.cs) — 123 wierszy; deklaracje: `ProjectController:14`
+- [TimeTrackingAPI/Controllers/ProjectTypeController.cs](TimeTrackingAPI/Controllers/ProjectTypeController.cs) — 123 wierszy; deklaracje: `ProjectTypeController:14`
+- [TimeTrackingAPI/Controllers/TagController.cs](TimeTrackingAPI/Controllers/TagController.cs) — 123 wierszy; deklaracje: `TagController:14`
+- [TimeTrackingAPI/Controllers/TaskController.cs](TimeTrackingAPI/Controllers/TaskController.cs) — 124 wierszy; deklaracje: `TaskController:15`
+- [TimeTrackingAPI/Controllers/TaskTagController.cs](TimeTrackingAPI/Controllers/TaskTagController.cs) — 79 wierszy; deklaracje: `TaskTagController:14`
+- [TimeTrackingAPI/Controllers/TimeRecordController.cs](TimeTrackingAPI/Controllers/TimeRecordController.cs) — 123 wierszy; deklaracje: `TimeRecordController:14`
+- [TimeTrackingAPI/Controllers/WeatherForecastController.cs](TimeTrackingAPI/Controllers/WeatherForecastController.cs) — 32 wierszy; deklaracje: `WeatherForecastController:7`
+- [TimeTrackingAPI/Dockerfile](TimeTrackingAPI/Dockerfile)
+- [TimeTrackingAPI/Migrations/20250325232004_AddTaskTagEntity.Designer.cs](TimeTrackingAPI/Migrations/20250325232004_AddTaskTagEntity.Designer.cs) — 352 wierszy; deklaracje: `AddTaskTagEntity:16`
+- [TimeTrackingAPI/Migrations/20250325232004_AddTaskTagEntity.cs](TimeTrackingAPI/Migrations/20250325232004_AddTaskTagEntity.cs) — 222 wierszy; deklaracje: `AddTaskTagEntity:8`
+- [TimeTrackingAPI/Migrations/TimeTrackingDBContextModelSnapshot.cs](TimeTrackingAPI/Migrations/TimeTrackingDBContextModelSnapshot.cs) — 347 wierszy; deklaracje: `TimeTrackingDBContextModelSnapshot:14`
+- [TimeTrackingAPI/Models/DepartmentEntity.cs](TimeTrackingAPI/Models/DepartmentEntity.cs) — 21 wierszy; deklaracje: `DepartmentEntity:9`
+- [TimeTrackingAPI/Models/Dtos/TaskTagCreateDto.cs](TimeTrackingAPI/Models/Dtos/TaskTagCreateDto.cs) — 11 wierszy; deklaracje: `TaskTagCreateDto:6`
+- [TimeTrackingAPI/Models/Dtos/TaskTagDto.cs](TimeTrackingAPI/Models/Dtos/TaskTagDto.cs) — 13 wierszy; deklaracje: `TaskTagDto:6`
+- [TimeTrackingAPI/Models/EmployeeEntity.cs](TimeTrackingAPI/Models/EmployeeEntity.cs) — 24 wierszy; deklaracje: `EmployeeEntity:9`
+- [TimeTrackingAPI/Models/ProjectEntity.cs](TimeTrackingAPI/Models/ProjectEntity.cs) — 26 wierszy; deklaracje: `ProjectEntity:9`
+- [TimeTrackingAPI/Models/ProjectTypeEntity.cs](TimeTrackingAPI/Models/ProjectTypeEntity.cs) — 21 wierszy; deklaracje: `ProjectTypeEntity:9`
+- [TimeTrackingAPI/Models/TagEntity.cs](TimeTrackingAPI/Models/TagEntity.cs) — 22 wierszy; deklaracje: `TagEntity:9`
+- [TimeTrackingAPI/Models/TaskEntity.cs](TimeTrackingAPI/Models/TaskEntity.cs) — 30 wierszy; deklaracje: `TaskEntity:9`
+- [TimeTrackingAPI/Models/TaskTagEntity.cs](TimeTrackingAPI/Models/TaskTagEntity.cs) — 16 wierszy; deklaracje: `TaskTagEntity:5`
+- [TimeTrackingAPI/Models/TimeRecordEntity.cs](TimeTrackingAPI/Models/TimeRecordEntity.cs) — 22 wierszy; deklaracje: `TimeRecordEntity:9`
+- [TimeTrackingAPI/Models/TimeTrackingDBContext.cs](TimeTrackingAPI/Models/TimeTrackingDBContext.cs) — 207 wierszy; deklaracje: `TimeTrackingDBContext:10`
+- [TimeTrackingAPI/Program.cs](TimeTrackingAPI/Program.cs) — 44 wierszy; deklaracje: `Program:7`
+- [TimeTrackingAPI/Properties/launchSettings.json](TimeTrackingAPI/Properties/launchSettings.json) — 41 wierszy
+- [TimeTrackingAPI/TimeTrackingAPI.csproj](TimeTrackingAPI/TimeTrackingAPI.csproj) — 32 wierszy
+- [TimeTrackingAPI/WeatherForecast.cs](TimeTrackingAPI/WeatherForecast.cs) — 13 wierszy; deklaracje: `WeatherForecast:3`
+- [TimeTrackingAPI/appsettings.Development.json](TimeTrackingAPI/appsettings.Development.json) — 8 wierszy
+- [TimeTrackingAPI/appsettings.json](TimeTrackingAPI/appsettings.json) — 12 wierszy
+- [TimeTrackingAPI/efpt.config.json](TimeTrackingAPI/efpt.config.json) — 77 wierszy
+- [TimeTrackingDB.bak](TimeTrackingDB.bak)
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Assets/AboutAssets.txt](TimeTrackingMobile/TimeTrackingMobile.Android/Assets/AboutAssets.txt)
+- [TimeTrackingMobile/TimeTrackingMobile.Android/MainActivity.cs](TimeTrackingMobile/TimeTrackingMobile.Android/MainActivity.cs) — 28 wierszy; deklaracje: `MainActivity:11`
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Properties/AndroidManifest.xml](TimeTrackingMobile/TimeTrackingMobile.Android/Properties/AndroidManifest.xml) — 6 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Properties/AssemblyInfo.cs](TimeTrackingMobile/TimeTrackingMobile.Android/Properties/AssemblyInfo.cs) — 30 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Resources/AboutResources.txt](TimeTrackingMobile/TimeTrackingMobile.Android/Resources/AboutResources.txt)
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Resources/Resource.designer.cs](TimeTrackingMobile/TimeTrackingMobile.Android/Resources/Resource.designer.cs)
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Resources/drawable/icon_about.png](TimeTrackingMobile/TimeTrackingMobile.Android/Resources/drawable/icon_about.png)
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Resources/drawable/icon_feed.png](TimeTrackingMobile/TimeTrackingMobile.Android/Resources/drawable/icon_feed.png)
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Resources/drawable/xamarin_logo.png](TimeTrackingMobile/TimeTrackingMobile.Android/Resources/drawable/xamarin_logo.png)
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-anydpi-v26/icon.xml](TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-anydpi-v26/icon.xml) — 5 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-anydpi-v26/icon_round.xml](TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-anydpi-v26/icon_round.xml) — 5 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-hdpi/icon.png](TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-hdpi/icon.png)
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-hdpi/launcher_foreground.png](TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-hdpi/launcher_foreground.png)
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-mdpi/icon.png](TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-mdpi/icon.png)
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-mdpi/launcher_foreground.png](TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-mdpi/launcher_foreground.png)
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-xhdpi/icon.png](TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-xhdpi/icon.png)
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-xhdpi/launcher_foreground.png](TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-xhdpi/launcher_foreground.png)
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-xxhdpi/icon.png](TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-xxhdpi/icon.png)
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-xxhdpi/launcher_foreground.png](TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-xxhdpi/launcher_foreground.png)
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-xxxhdpi/icon.png](TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-xxxhdpi/icon.png)
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-xxxhdpi/launcher_foreground.png](TimeTrackingMobile/TimeTrackingMobile.Android/Resources/mipmap-xxxhdpi/launcher_foreground.png)
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Resources/values/colors.xml](TimeTrackingMobile/TimeTrackingMobile.Android/Resources/values/colors.xml) — 7 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile.Android/Resources/values/styles.xml](TimeTrackingMobile/TimeTrackingMobile.Android/Resources/values/styles.xml) — 18 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile.Android/TimeTrackingMobile.Android.csproj](TimeTrackingMobile/TimeTrackingMobile.Android/TimeTrackingMobile.Android.csproj) — 100 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/App.xaml](TimeTrackingMobile/TimeTrackingMobile.UWP/App.xaml) — 7 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/App.xaml.cs](TimeTrackingMobile/TimeTrackingMobile.UWP/App.xaml.cs) — 106 wierszy; deklaracje: `App:23`
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/LargeTile.scale-100.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/LargeTile.scale-100.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/LargeTile.scale-200.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/LargeTile.scale-200.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/LargeTile.scale-400.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/LargeTile.scale-400.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/SmallTile.scale-100.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/SmallTile.scale-100.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/SmallTile.scale-200.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/SmallTile.scale-200.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/SmallTile.scale-400.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/SmallTile.scale-400.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/SplashScreen.scale-100.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/SplashScreen.scale-100.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/SplashScreen.scale-200.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/SplashScreen.scale-200.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/SplashScreen.scale-400.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/SplashScreen.scale-400.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square150x150Logo.scale-100.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square150x150Logo.scale-100.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square150x150Logo.scale-200.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square150x150Logo.scale-200.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square150x150Logo.scale-400.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square150x150Logo.scale-400.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square44x44Logo.altform-unplated_targetsize-16.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square44x44Logo.altform-unplated_targetsize-16.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square44x44Logo.altform-unplated_targetsize-256.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square44x44Logo.altform-unplated_targetsize-256.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square44x44Logo.altform-unplated_targetsize-48.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square44x44Logo.altform-unplated_targetsize-48.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square44x44Logo.scale-100.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square44x44Logo.scale-100.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square44x44Logo.scale-200.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square44x44Logo.scale-200.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square44x44Logo.scale-400.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square44x44Logo.scale-400.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square44x44Logo.targetsize-16.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square44x44Logo.targetsize-16.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square44x44Logo.targetsize-256.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square44x44Logo.targetsize-256.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square44x44Logo.targetsize-48.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Square44x44Logo.targetsize-48.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/StoreLogo.backup.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/StoreLogo.backup.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/StoreLogo.scale-100.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/StoreLogo.scale-100.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/StoreLogo.scale-200.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/StoreLogo.scale-200.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/StoreLogo.scale-400.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/StoreLogo.scale-400.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Wide310x150Logo.scale-100.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Wide310x150Logo.scale-100.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Wide310x150Logo.scale-200.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Wide310x150Logo.scale-200.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Wide310x150Logo.scale-400.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/Wide310x150Logo.scale-400.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/power.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/power.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/sync.png](TimeTrackingMobile/TimeTrackingMobile.UWP/Assets/sync.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/MainPage.xaml](TimeTrackingMobile/TimeTrackingMobile.UWP/MainPage.xaml) — 12 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/MainPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile.UWP/MainPage.xaml.cs) — 27 wierszy; deklaracje: `MainPage:18`
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Package.appxmanifest](TimeTrackingMobile/TimeTrackingMobile.UWP/Package.appxmanifest)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Properties/AssemblyInfo.cs](TimeTrackingMobile/TimeTrackingMobile.UWP/Properties/AssemblyInfo.cs) — 29 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/Properties/Default.rd.xml](TimeTrackingMobile/TimeTrackingMobile.UWP/Properties/Default.rd.xml) — 31 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/TimeTrackingMobile.UWP.csproj](TimeTrackingMobile/TimeTrackingMobile.UWP/TimeTrackingMobile.UWP.csproj) — 173 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/icon_about.png](TimeTrackingMobile/TimeTrackingMobile.UWP/icon_about.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/icon_feed.png](TimeTrackingMobile/TimeTrackingMobile.UWP/icon_feed.png)
+- [TimeTrackingMobile/TimeTrackingMobile.UWP/xamarin_logo.png](TimeTrackingMobile/TimeTrackingMobile.UWP/xamarin_logo.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/AppDelegate.cs](TimeTrackingMobile/TimeTrackingMobile.iOS/AppDelegate.cs) — 31 wierszy; deklaracje: `AppDelegate:14`
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Contents.json](TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Contents.json) — 117 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon1024.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon1024.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon120.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon120.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon152.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon152.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon167.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon167.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon180.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon180.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon20.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon20.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon29.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon29.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon40.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon40.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon58.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon58.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon60.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon60.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon76.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon76.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon80.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon80.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon87.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Assets.xcassets/AppIcon.appiconset/Icon87.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Entitlements.plist](TimeTrackingMobile/TimeTrackingMobile.iOS/Entitlements.plist)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Info.plist](TimeTrackingMobile/TimeTrackingMobile.iOS/Info.plist)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Main.cs](TimeTrackingMobile/TimeTrackingMobile.iOS/Main.cs) — 20 wierszy; deklaracje: `Application:10`
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Properties/AssemblyInfo.cs](TimeTrackingMobile/TimeTrackingMobile.iOS/Properties/AssemblyInfo.cs) — 36 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/Default-568h@2x.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/Default-568h%402x.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/Default-Portrait.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/Default-Portrait.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/Default-Portrait@2x.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/Default-Portrait%402x.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/Default.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/Default.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/Default@2x.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/Default%402x.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/LaunchScreen.storyboard](TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/LaunchScreen.storyboard)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/icon_about.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/icon_about.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/icon_about@2x.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/icon_about%402x.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/icon_about@3x.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/icon_about%403x.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/icon_feed.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/icon_feed.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/icon_feed@2x.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/icon_feed%402x.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/icon_feed@3x.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/icon_feed%403x.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/xamarin_logo.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/xamarin_logo.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/xamarin_logo@2x.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/xamarin_logo%402x.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/xamarin_logo@3x.png](TimeTrackingMobile/TimeTrackingMobile.iOS/Resources/xamarin_logo%403x.png)
+- [TimeTrackingMobile/TimeTrackingMobile.iOS/TimeTrackingMobile.iOS.csproj](TimeTrackingMobile/TimeTrackingMobile.iOS/TimeTrackingMobile.iOS.csproj) — 148 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/App.xaml](TimeTrackingMobile/TimeTrackingMobile/App.xaml) — 65 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/App.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/App.xaml.cs) — 35 wierszy; deklaracje: `App:9`
+- [TimeTrackingMobile/TimeTrackingMobile/AppShell.xaml](TimeTrackingMobile/TimeTrackingMobile/AppShell.xaml) — 90 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/AppShell.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/AppShell.xaml.cs) — 71 wierszy; deklaracje: `AppShell:13`
+- [TimeTrackingMobile/TimeTrackingMobile/AssemblyInfo.cs](TimeTrackingMobile/TimeTrackingMobile/AssemblyInfo.cs) — 3 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/GettingStarted.txt](TimeTrackingMobile/TimeTrackingMobile/GettingStarted.txt)
+- [TimeTrackingMobile/TimeTrackingMobile/Models/DepartmentModel.cs](TimeTrackingMobile/TimeTrackingMobile/Models/DepartmentModel.cs) — 12 wierszy; deklaracje: `DepartmentModel:7`
+- [TimeTrackingMobile/TimeTrackingMobile/Models/EmployeeModel.cs](TimeTrackingMobile/TimeTrackingMobile/Models/EmployeeModel.cs) — 14 wierszy; deklaracje: `EmployeeModel:7`
+- [TimeTrackingMobile/TimeTrackingMobile/Models/ProjectModel.cs](TimeTrackingMobile/TimeTrackingMobile/Models/ProjectModel.cs) — 16 wierszy; deklaracje: `ProjectModel:7`
+- [TimeTrackingMobile/TimeTrackingMobile/Models/ProjectTypeModel.cs](TimeTrackingMobile/TimeTrackingMobile/Models/ProjectTypeModel.cs) — 12 wierszy; deklaracje: `ProjectTypeModel:7`
+- [TimeTrackingMobile/TimeTrackingMobile/Models/TagModel.cs](TimeTrackingMobile/TimeTrackingMobile/Models/TagModel.cs) — 12 wierszy; deklaracje: `TagModel:7`
+- [TimeTrackingMobile/TimeTrackingMobile/Models/TaskModel.cs](TimeTrackingMobile/TimeTrackingMobile/Models/TaskModel.cs) — 16 wierszy; deklaracje: `TaskModel:7`
+- [TimeTrackingMobile/TimeTrackingMobile/Models/TaskTagModel.cs](TimeTrackingMobile/TimeTrackingMobile/Models/TaskTagModel.cs) — 14 wierszy; deklaracje: `TaskTagModel:7`
+- [TimeTrackingMobile/TimeTrackingMobile/Models/TimeRecordModel.cs](TimeTrackingMobile/TimeTrackingMobile/Models/TimeRecordModel.cs) — 20 wierszy; deklaracje: `TimeRecordModel:7`
+- [TimeTrackingMobile/TimeTrackingMobile/Services/DepartmentService.cs](TimeTrackingMobile/TimeTrackingMobile/Services/DepartmentService.cs) — 64 wierszy; deklaracje: `DepartmentService:9`
+- [TimeTrackingMobile/TimeTrackingMobile/Services/EmployeeService.cs](TimeTrackingMobile/TimeTrackingMobile/Services/EmployeeService.cs) — 52 wierszy; deklaracje: `EmployeeService:9`
+- [TimeTrackingMobile/TimeTrackingMobile/Services/ProjectService.cs](TimeTrackingMobile/TimeTrackingMobile/Services/ProjectService.cs) — 45 wierszy; deklaracje: `ProjectService:9`
+- [TimeTrackingMobile/TimeTrackingMobile/Services/ProjectTypeService.cs](TimeTrackingMobile/TimeTrackingMobile/Services/ProjectTypeService.cs) — 45 wierszy; deklaracje: `ProjectTypeService:9`
+- [TimeTrackingMobile/TimeTrackingMobile/Services/TagService.cs](TimeTrackingMobile/TimeTrackingMobile/Services/TagService.cs) — 45 wierszy; deklaracje: `TagService:9`
+- [TimeTrackingMobile/TimeTrackingMobile/Services/TaskService.cs](TimeTrackingMobile/TimeTrackingMobile/Services/TaskService.cs) — 45 wierszy; deklaracje: `TaskService:9`
+- [TimeTrackingMobile/TimeTrackingMobile/Services/TaskTagService.cs](TimeTrackingMobile/TimeTrackingMobile/Services/TaskTagService.cs) — 46 wierszy; deklaracje: `TaskTagService:9`
+- [TimeTrackingMobile/TimeTrackingMobile/Services/TimeRecordService.cs](TimeTrackingMobile/TimeTrackingMobile/Services/TimeRecordService.cs) — 45 wierszy; deklaracje: `TimeRecordService:9`
+- [TimeTrackingMobile/TimeTrackingMobile/TimeTrackingMobile.csproj](TimeTrackingMobile/TimeTrackingMobile/TimeTrackingMobile.csproj) — 104 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/ViewModels/AboutViewModel.cs](TimeTrackingMobile/TimeTrackingMobile/ViewModels/AboutViewModel.cs) — 18 wierszy; deklaracje: `AboutViewModel:8`
+- [TimeTrackingMobile/TimeTrackingMobile/ViewModels/BaseViewModel.cs](TimeTrackingMobile/TimeTrackingMobile/ViewModels/BaseViewModel.cs) — 54 wierszy; deklaracje: `BaseViewModel:13`
+- [TimeTrackingMobile/TimeTrackingMobile/ViewModels/LoginViewModel.cs](TimeTrackingMobile/TimeTrackingMobile/ViewModels/LoginViewModel.cs) — 24 wierszy; deklaracje: `LoginViewModel:9`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/About/AboutPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/About/AboutPage.xaml) — 54 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/About/AboutPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/About/AboutPage.xaml.cs) — 24 wierszy; deklaracje: `AboutPage:6`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Departments/DepartmentAddPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/Departments/DepartmentAddPage.xaml) — 42 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Departments/DepartmentAddPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/Departments/DepartmentAddPage.xaml.cs) — 46 wierszy; deklaracje: `DepartmentAddPage:10`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Departments/DepartmentEditPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/Departments/DepartmentEditPage.xaml) — 42 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Departments/DepartmentEditPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/Departments/DepartmentEditPage.xaml.cs) — 95 wierszy; deklaracje: `DepartmentEditPage:11`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Departments/DepartmentsPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/Departments/DepartmentsPage.xaml) — 70 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Departments/DepartmentsPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/Departments/DepartmentsPage.xaml.cs) — 108 wierszy; deklaracje: `DepartmentsPage:12`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Employees/EmployeeAddPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/Employees/EmployeeAddPage.xaml) — 45 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Employees/EmployeeAddPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/Employees/EmployeeAddPage.xaml.cs) — 63 wierszy; deklaracje: `EmployeeAddPage:12`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Employees/EmployeeEditPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/Employees/EmployeeEditPage.xaml) — 46 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Employees/EmployeeEditPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/Employees/EmployeeEditPage.xaml.cs) — 100 wierszy; deklaracje: `EmployeeEditPage:14`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Employees/EmployeesPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/Employees/EmployeesPage.xaml) — 66 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Employees/EmployeesPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/Employees/EmployeesPage.xaml.cs) — 104 wierszy; deklaracje: `EmployeesPage:13`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Login/LoginPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/Login/LoginPage.xaml) — 37 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Login/LoginPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/Login/LoginPage.xaml.cs) — 20 wierszy; deklaracje: `LoginPage:7`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/ProjectTypes/ProjectTypeAddPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/ProjectTypes/ProjectTypeAddPage.xaml) — 39 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/ProjectTypes/ProjectTypeAddPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/ProjectTypes/ProjectTypeAddPage.xaml.cs) — 44 wierszy; deklaracje: `ProjectTypeAddPage:10`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/ProjectTypes/ProjectTypeEditPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/ProjectTypes/ProjectTypeEditPage.xaml) — 40 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/ProjectTypes/ProjectTypeEditPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/ProjectTypes/ProjectTypeEditPage.xaml.cs) — 85 wierszy; deklaracje: `ProjectTypeEditPage:11`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/ProjectTypes/ProjectTypesPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/ProjectTypes/ProjectTypesPage.xaml) — 64 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/ProjectTypes/ProjectTypesPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/ProjectTypes/ProjectTypesPage.xaml.cs) — 94 wierszy; deklaracje: `ProjectTypesPage:12`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Projects/ProjectAddPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/Projects/ProjectAddPage.xaml) — 56 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Projects/ProjectAddPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/Projects/ProjectAddPage.xaml.cs) — 65 wierszy; deklaracje: `ProjectAddPage:13`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Projects/ProjectEditPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/Projects/ProjectEditPage.xaml) — 57 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Projects/ProjectEditPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/Projects/ProjectEditPage.xaml.cs) — 114 wierszy; deklaracje: `ProjectEditPage:15`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Projects/ProjectsPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/Projects/ProjectsPage.xaml) — 66 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Projects/ProjectsPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/Projects/ProjectsPage.xaml.cs) — 94 wierszy; deklaracje: `ProjectsPage:12`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Tags/TagAddPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/Tags/TagAddPage.xaml) — 39 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Tags/TagAddPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/Tags/TagAddPage.xaml.cs) — 44 wierszy; deklaracje: `TagAddPage:10`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Tags/TagEditPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/Tags/TagEditPage.xaml) — 40 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Tags/TagEditPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/Tags/TagEditPage.xaml.cs) — 85 wierszy; deklaracje: `TagEditPage:11`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Tags/TagsPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/Tags/TagsPage.xaml) — 66 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Tags/TagsPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/Tags/TagsPage.xaml.cs) — 91 wierszy; deklaracje: `TagsPage:12`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/TaskTags/TaskTagAddPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/TaskTags/TaskTagAddPage.xaml) — 57 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/TaskTags/TaskTagAddPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/TaskTags/TaskTagAddPage.xaml.cs) — 65 wierszy; deklaracje: `TaskTagAddPage:11`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/TaskTags/TaskTagsPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/TaskTags/TaskTagsPage.xaml) — 71 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/TaskTags/TaskTagsPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/TaskTags/TaskTagsPage.xaml.cs) — 71 wierszy; deklaracje: `TaskTagsPage:12`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Tasks/TaskAddPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/Tasks/TaskAddPage.xaml) — 56 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Tasks/TaskAddPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/Tasks/TaskAddPage.xaml.cs) — 64 wierszy; deklaracje: `TaskAddPage:12`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Tasks/TaskEditPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/Tasks/TaskEditPage.xaml) — 57 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Tasks/TaskEditPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/Tasks/TaskEditPage.xaml.cs) — 111 wierszy; deklaracje: `TaskEditPage:13`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Tasks/TasksPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/Tasks/TasksPage.xaml) — 66 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Tasks/TasksPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/Tasks/TasksPage.xaml.cs) — 91 wierszy; deklaracje: `TasksPage:12`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/TimeRecords/TimeRecordAddPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/TimeRecords/TimeRecordAddPage.xaml) — 65 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/TimeRecords/TimeRecordAddPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/TimeRecords/TimeRecordAddPage.xaml.cs) — 68 wierszy; deklaracje: `TimeRecordAddPage:11`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/TimeRecords/TimeRecordEditPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/TimeRecords/TimeRecordEditPage.xaml) — 60 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/TimeRecords/TimeRecordEditPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/TimeRecords/TimeRecordEditPage.xaml.cs) — 123 wierszy; deklaracje: `TimeRecordEditPage:13`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/TimeRecords/TimeRecordsPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/TimeRecords/TimeRecordsPage.xaml) — 75 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/TimeRecords/TimeRecordsPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/TimeRecords/TimeRecordsPage.xaml.cs) — 97 wierszy; deklaracje: `TimeRecordsPage:14`
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Timers/TimerPage.xaml](TimeTrackingMobile/TimeTrackingMobile/Views/Timers/TimerPage.xaml) — 42 wierszy
+- [TimeTrackingMobile/TimeTrackingMobile/Views/Timers/TimerPage.xaml.cs](TimeTrackingMobile/TimeTrackingMobile/Views/Timers/TimerPage.xaml.cs) — 130 wierszy; deklaracje: `TimerPage:13`
+- [TimeTrackingSolution.sln](TimeTrackingSolution.sln)
